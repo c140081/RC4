@@ -12,10 +12,10 @@ h1 {
 }
 
 h2 {
-	height: 60px;
+	height: 50px;
 	text-align: left;
 	margin-left: 10%;
-	margin-top: 80px;
+	margin-top: 60px;
 }
 
 h3 {
@@ -28,7 +28,7 @@ p {
 	text-align: left;
 	margin: 2% 10% 2%;	
 	line-height: 35px;
-	font-size: 20px;
+	font-size: 18px;
 }
 
 .flowbox {                /* box used to show RC4 flow */
@@ -85,69 +85,6 @@ li {
 	display: table-cell;
 }
 
-form {
-	text-align: left;
-	margin-left: 0;
-}
-
-input {
-	height: 30px;
-	width: 160px;
-	margin-top: 30px;
-	margin-left: 10%;
-	display: inline-block;
-	position: relative;
-	float: left;
-}
-
-button {
-	height: 30px;
-	width: 340px;
-	margin-top: 30px;
-	margin-left: 10%;
-	display: block;	
-}
-
-button.confirm {
-	margin-left: 1%;
-	width: 160px;
-	margin-top: 30px; 
-	display: inline-block;
-	position: relative;
-	float: left;
-}
-
-button.proceed {
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-div.bpf {
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 50px;
-	margin-bottom: 500px;
-	display: block;
-}
-
-.grid-container {
-	display: grid;
-	grid-template-columns: 40% auto;
-	padding: 15px 50px 20px 50px ;
-	background-color: rebeccapurple;
-}
-
-.grid-container > div {
-	background-color: lightblue;
-	padding: 5px;
-	margin: 15px;
-}
-
-.nextstage {
-	text-decoration: none;
-}
-
 .velement {
 	border-style: solid;
 	border-width: 5px;
@@ -181,6 +118,115 @@ div.bpf {
 	right:-10%;
 }
 
+input {
+	height: 30px;
+	width: 160px;
+	margin-top: 0;
+	margin-left: 10%;
+	display: inline-block;
+	position: relative;
+	float: left;
+}
+
+button {
+	margin-left: 1%;
+	height: 30px;
+	width: 160px;
+	margin-top: 30px;
+	display: inline-block;
+	position: relative;
+	float: center;
+}
+
+button#initiate {
+	width: 340px;
+	margin: 1% 10% 1%;
+	display: block;	
+}
+
+button.confirm {
+	margin-top: 0;
+	float: left;
+}
+
+#backbutton, #togglebutton, #forthbutton {
+	max-width: 100px;
+	width: 90px;
+	height: 40px;
+	margin: 5% 2% 5%;
+
+}
+
+div.bpf {
+	display: block;
+	margin: 5% 8% 8%;
+	border: 1px solid black;
+}
+
+.counterbox {
+	width: 84%;
+	height: 40%;
+	border: 1px solid black;
+	margin: 8% 8% 1%;
+}
+
+tr {
+	background-color: white;   /* change counter background color*/
+}
+
+th {
+	width: 40%;
+	font-size: 30px;
+}
+
+.stage2counter {
+	margin-bottom: 0px;
+}
+
+.stage2counterpaused {
+	color: black;
+	transform: translate(0px, 0px);
+	font-size: 200%;
+	transition: color .2s ease-out, transform .2s ease-out, font-size .2s ease-out;
+}
+.stage2counterrunning {
+	color: red;
+	transform: translate(0px, -3px);
+	font-size: 220%;
+	transition: color .2s ease-out, transform .2s ease-out, font-size .2s ease-out;	
+}
+
+
+.gridelement1, .gridelement2, .gridelement3, .gridelement4 { border: 1px solid black; }
+
+.gridelement1 {grid-area: column1; }
+.gridelement2 {grid-area: column2; }
+.gridelement3 {grid-area: column3; }
+.gridelement4 {grid-area: rowforvector; }
+
+.gridcontainer1 {
+	margin: 1% auto 1% 10%;
+	display: grid;
+	grid-row-gap: 20px;
+	grid-template-columns: 30% 30% 30%;
+	grid-template-areas:
+	'column1 column2 column3'
+	'rowforvector rowforvector rowforvector';	
+}
+
+.gridcontainer2 {
+	display: grid;
+	grid-template-columns: 40% auto;
+	padding: 15px 50px 20px 50px ;
+	background-color: rebeccapurple;
+}
+
+.gridcontainer2 > div {
+	background-color: lightblue;
+	padding: 5px;
+	margin: 15px;
+}
+
 .super{
  	vertical-align: super;
  	font-size: xx-small;
@@ -206,6 +252,13 @@ div.bpf {
 	display: block;
 	margin-bottom: 150px;
 }
+
+
+
+
+
+
+
 
 
 
