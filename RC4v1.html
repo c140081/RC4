@@ -659,33 +659,31 @@
 				<div class="gridelement1">				
 					<table class="counterbox"><tr>
 						<th>Round</th>
-						<th class="stage2counter stage2counterpaused">1</th>	
+						<th class="stage2counter">1</th>	
 					</tr></table>				
 					<div class="bpf">
 						<button type="button" id="backbutton">BACKWARD</button>
-						<button type="button" id="togglebutton">PAUSE</button>
+						<button type="button" id="togglebutton">PLAY</button>
 						<button type="button" id="forthbutton">FORWARD</button>
 					</div>
 				</div>
 
-				
-
 				<div class="gridelement2">
-					<p>Step 1: <br/> 
+					<p class="stage2var">Temporary variables: <br/> 
 						i = <a class="ivalue" >0</a>, j = <a class="jvalue">0</a>
 					</p>
-					<p><br/>Step 2: <br/> 
-						Find S[i] <br/>
-						S[<a class="ivalue" >i</a>] =
+					<p><br/>Step 1: Find S[j] <br>
+						j = (j + S[i] + T[i]) mod 256 <br>
+						j = (<a class="jvalue">j</a> + S[<a class="ivalue">i</a>] + T[<a class="ivalue">i</a>]) mod 256 <br>
+						S[<a class="jvalue">j</a>] = 
 					</p>
 					</div>
 					<div class="gridelement3">
-					<p>Step 3: <br/>
-						Find S[j] <br/>
-						j = (j + S[i] + T[i]) mod 256 <br>
-						j = (<a class="jvalue">j</a> + S[<a class="ivalue">i</a>] + T[<a class="ivalue">i</a>]) mod 256 <br>
+					<p>Step 2: Find S[i] <br>
+						S[<a class="ivalue" >i</a>] =
 					</p>
-					<p><br/>Step 4: <br/>Swap S[i], S[j]</p>				
+					<p><br>Step 3: Swap S[i], S[j]</p>
+					<p><br>Step 4: Increment i</p>				
 				</div>
 
 				<div class="gridelement4">
@@ -969,35 +967,52 @@
 
 				<script>
 					var stage2counter = document.getElementsByClassName("stage2counter")[0];
+					var stage2var = document.getElementsByClassName("stage2var")[0];
 					var togglebutton = document.getElementById("togglebutton");
-					var autoplay = false;
+					var autoplay = true;
 
-					function stage2counteranimtn(state){
+					function stage2counteranimatn(state){  // states: bounce / static
 						if(state == "bounce") {
 							stage2counter.classList.add("stage2counterrunning");
-							stage2counter.classList.remove("stage2counterpaused");
-							stage2counter.addEventListener("transitionend", function() { stage2counteranimtn("static"); }, false);
-							stage2counter.addEventListener("webkitTransitionEnd", function() { stage2counteranimtn("static"); }, false);
-							stage2counter.addEventListener("mozTransitionEnd", function() { stage2counteranimtn("static"); }, false);
-							stage2counter.addEventListener("msTransitionEnd", function() { stage2counteranimtn("static"); }, false);
-							stage2counter.addEventListener("oTransitionEnd", function() { stage2counteranimtn("static"); }, false);
+							stage2counter.addEventListener("transitionend", function() { stage2counteranimatn("static"); }, false);
+							stage2counter.addEventListener("webkitTransitionEnd", function() { stage2counteranimatn("static"); }, false);
+							stage2counter.addEventListener("mozTransitionEnd", function() { stage2counteranimatn("static"); }, false);
+							stage2counter.addEventListener("msTransitionEnd", function() { stage2counteranimatn("static"); }, false);
+							stage2counter.addEventListener("oTransitionEnd", function() { stage2counteranimatn("static"); }, false);
 						}
 						if(state == "static") {
-							stage2counter.classList.add("stage2counterpaused");
 							stage2counter.classList.remove("stage2counterrunning");
 						}
 					}
 
+					function stage2varanimatn(highlight){  // boolean param
+						if(highlight){
+							stage2var.classList.add("stage2highlight");
+							stage2var.addEventListener("transitionend", function() { stage2varanimatn(false); }, false);
+							stage2var.addEventListener("webkitTransitionEnd", function() { stage2varanimatn(false); }, false);
+							stage2var.addEventListener("mozTransitionEnd", function() { stage2varanimatn(false); }, false);
+							stage2var.addEventListener("msTransitionEnd", function() { stage2varanimatn(false); }, false);
+							stage2var.addEventListener("oTransitionEnd", function() { stage2varanimatn(false); }, false);
+						}
+						if(!highlight){
+							stage2var.classList.remove("stage2highlight");
+						}
+					}
+
 					function togglebuttonvaluechange() {			
-						if (!autoplay){ 							
+						if (autoplay){ 							
 							document.getElementById("togglebutton").innerHTML = "PAUSE"; 
-							autoplay = true;
-							stage2counteranimtn("bounce");
+							autoplay = false;
+							stage2counteranimatn("bounce");
+							setTimeout("stage2varanimatn(true)", 1000);
 							}
-						else if (autoplay){
+						else if (!autoplay){
 							document.getElementById("togglebutton").innerHTML = "PLAY";
-							autoplay = false;	
-							stage2counteranimtn("static");
+							autoplay = true;	
+							stage2counteranimatn("static");
+							stage2var.style.transitionDelay = "0s";
+							stage2varanimatn(false);
+							stage2var.style.transitionDelay = "3s";
 						}
 					}
 

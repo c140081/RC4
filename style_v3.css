@@ -179,24 +179,6 @@ th {
 	font-size: 30px;
 }
 
-.stage2counter {
-	margin-bottom: 0px;
-}
-
-.stage2counterpaused {
-	color: black;
-	transform: translate(0px, 0px);
-	font-size: 200%;
-	transition: color .2s ease-out, transform .2s ease-out, font-size .2s ease-out;
-}
-.stage2counterrunning {
-	color: red;
-	transform: translate(0px, -3px);
-	font-size: 220%;
-	transition: color .2s ease-out, transform .2s ease-out, font-size .2s ease-out;	
-}
-
-
 .gridelement1, .gridelement2, .gridelement3, .gridelement4 { border: 1px solid black; }
 
 .gridelement1 {grid-area: column1; }
@@ -252,6 +234,36 @@ th {
 	display: block;
 	margin-bottom: 150px;
 }
+
+.stage2counter {
+	margin-bottom: 0px;
+	color: black;
+	font-size: 200%;
+	transition: all .2s ease-out;
+	transition-delay: 0.5s;
+}
+
+.stage2counterrunning {
+	color: red;
+	transform: translate(0px, -3px);
+	font-size: 220%;
+	transition: color .2s ease-out, transform .2s ease-out, font-size .2s ease-out;	
+}
+
+.stage2var {
+	color: black;
+	font-weight: normal;
+	transition: all .1s linear;
+	transition-delay: 3s;
+}
+
+.stage2highlight {
+	color: blue;
+	font-weight: bold;
+	transition: color .1s linear, font-weight .1s linear;
+}
+
+
 
 
 
