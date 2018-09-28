@@ -974,79 +974,48 @@
 					var roundcounter = 0;
 					var stepcounter = 1;  // step 1 to 4, back and forth
 
-					function stage2counteraddanim(add){
-						if(add){ stage2counter.classList.add("stage2counteranim"); }
-						else{ 
-							if( stage2counter.classList.contains("stage2counteranim") ){		
-								stage2counter.classList.remove("stage2counteranim"); 
+					function stage2addanim(add, itemx, animx){
+						if(add && (!itemx.classList.contains(animx) )) { 
+							itemx.classList.add(animx); 
+						}
+						else if ((!add) && itemx.classList.contains(animx) ) { 
+								itemx.classList.remove(animx); 
 								stepincre();
-								}
 						}
 					}
 
-					function stage2counterrunning(running){   
-						if(running) { stage2counter.style.animationPlayState = "running"; }
-						else { stage2counter.style.animationPlayState = "paused"; }
+					function stage2lineanimrunning(running, itemx){   
+						if(running) { itemx.style.animationPlayState = "running"; }
+						else { itemx.style.animationPlayState = "paused"; }
+					}	
+
+					function checkanimend(itemx, animx){
+						itemx.addEventListener("webkitAnimationEnd", function(){stage2addanim(false, itemx, animx); }, true);
 					}
 
-					function stage2highlight(hl, linex){
-						if(hl) { linex.classList.add("stage2highlight"); }
-						else { 
-							if( linex.classList.contains("stage2highlight") ){
-							linex.classList.remove("stage2highlight"); 
-							stepincre();
-							}
-						}
-					}
-
-					function stage2lineanimrunning(running, linex){   
-						if(running) { linex.style.animationPlayState = "running"; }
-						else { linex.style.animationPlayState = "paused"; }
-					}
-
-
-					
-					function checkanimend(){
-						stage2counter.addEventListener("webkitAnimationEnd", function(){stage2counteraddanim(false) }, true);
-					}
-
-					function stepincre(){							
-								stepcounter = stepcounter + 1; 
-								document.getElementById("backbutton").innerHTML = stepcounter;
-								pauserunanim();
-														
-					}
-
-					function checkanimend2(){
-						stage2var.addEventListener("webkitAnimationEnd", function(){stage2highlight(false, stage2var) },  true);
-						
-					}
+					function stepincre(){ stepcounter = stepcounter + 1; pauserunanim(); }
 
 					function pauserunanim(){
 						if ( stepcounter >= 3 ){ stepcounter = 1;  }
 						if(autoplay) {
 							switch(stepcounter){
 								case 1: 
-									if( !stage2counter.classList.contains("stage2counteranim") ){
-										stage2counteraddanim(true);
-									} 
-									stage2counterrunning(true);
-									checkanimend();								
+									stage2addanim(true, stage2counter, "stage2counteranim");
+									stage2lineanimrunning(true, stage2counter);
+									checkanimend(stage2counter, "stage2counteranim");
 									break;
 
-								case 2:
-									if( !stage2var.classList.contains("stage2highlight") ){
-										stage2highlight(true, stage2var) ;
-									} 
+								case 2:									
+									stage2addanim(true, stage2var, "stage2highlight") ;		
 									stage2lineanimrunning(true, stage2var);
-									checkanimend2();
+									checkanimend(stage2var, "stage2highlight");
 									break;
 							}
 						}
 						else {
 							switch(stepcounter){
 								case 1:
-									stage2counterrunning(false);
+									stage2lineanimrunning(false, stage2counter);
 									break;
 								case 2:
 									stage2lineanimrunning(false, stage2var);
@@ -1054,8 +1023,6 @@
 							}
 						}
 					}
-					
-
 					
 
 					function togglebuttonvaluechange() {			
