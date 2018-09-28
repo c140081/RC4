@@ -971,13 +971,17 @@
 					var stage2var = document.getElementsByClassName("stage2var")[0];
 					var togglebutton = document.getElementById("togglebutton");
 					var autoplay = false;
-					var animationrun = true;
 					var roundcounter = 0;
 					var stepcounter = 1;  // step 1 to 4, back and forth
 
 					function stage2counteraddanim(add){
 						if(add){ stage2counter.classList.add("stage2counteranim"); }
-							else{ stage2counter.classList.remove("stage2counteranim"); }
+						else{ 
+							if( stage2counter.classList.contains("stage2counteranim") ){		
+								stage2counter.classList.remove("stage2counteranim"); 
+								stepincre();
+								}
+						}
 					}
 
 					function stage2counterrunning(running){   
@@ -987,7 +991,12 @@
 
 					function stage2highlight(hl, linex){
 						if(hl) { linex.classList.add("stage2highlight"); }
-						else { linex.classList.remove("stage2highlight"); }
+						else { 
+							if( linex.classList.contains("stage2highlight") ){
+							linex.classList.remove("stage2highlight"); 
+							stepincre();
+							}
+						}
 					}
 
 					function stage2lineanimrunning(running, linex){   
@@ -995,24 +1004,21 @@
 						else { linex.style.animationPlayState = "paused"; }
 					}
 
-					function stage2varanimatn(highlight){  // boolean param
-						if(highlight){
-							stage2var.style.animationPlayState = "running";
-							setTimeout("stage2varanimatn(false)", 5000);
-						}
-						if(!highlight){
-							stage2var.style.animationPlayState = "paused";
-						}
-					}
+
 					
 					function checkanimend(){
-						stage2counter.addEventListener("webkitAnimationEnd", function(){stage2counteraddanim(false), stepincre() }, true);
+						stage2counter.addEventListener("webkitAnimationEnd", function(){stage2counteraddanim(false) }, true);
 					}
 
-					function stepincre(){	stepcounter = stepcounter + 1; pauserunanim();	}
+					function stepincre(){							
+								stepcounter = stepcounter + 1; 
+								document.getElementById("backbutton").innerHTML = stepcounter;
+								pauserunanim();
+														
+					}
 
 					function checkanimend2(){
-						stage2var.addEventListener("webkitAnimationEnd", function(){stage2highlight(false, stage2var), stepincre() },  true);
+						stage2var.addEventListener("webkitAnimationEnd", function(){stage2highlight(false, stage2var) },  true);
 						
 					}
 
@@ -1025,7 +1031,7 @@
 										stage2counteraddanim(true);
 									} 
 									stage2counterrunning(true);
-									checkanimend();									
+									checkanimend();								
 									break;
 
 								case 2:
@@ -1034,7 +1040,6 @@
 									} 
 									stage2lineanimrunning(true, stage2var);
 									checkanimend2();
-									document.getElementById("backbutton").innerHTML = 33;									
 									break;
 							}
 						}
@@ -1059,6 +1064,7 @@
 							autoplay = true;
 							pauserunanim();
 							}
+							
 						else if (autoplay){
 							document.getElementById("togglebutton").innerHTML = "PLAY";
 							autoplay = false;	
