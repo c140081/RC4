@@ -970,11 +970,12 @@
 					var stage2counter = document.getElementsByClassName("stage2counter")[0];
 					var stage2var = document.getElementsByClassName("stage2var")[0];
 					var stage2step1 = document.getElementsByClassName("stage2step1")[0];
-					var stage2array = [ stage2counter, stage2var, stage2step1];
+					var stage2items = [stage2counter, stage2var, stage2step1];
+					var stage2anims = ["stage2counteranim", "stage2highlight", "stage2stephighlight"];
 					var togglebutton = document.getElementById("togglebutton");
 					var autoplay = false;
 					var roundcounter = 0;
-					var stepcounter = 1;  // step 1 to 4, back and forth
+					var stepcounter = 0;  // step 1 to 4, back and forth
 
 					function stage2addanim(add, itemx, animx){
 						if(add && (!itemx.classList.contains(animx) )) { 
@@ -999,9 +1000,18 @@
 
 
 					function pauserunanim(){
-						if ( stepcounter >= 4 ){ stepcounter = 1;  }
+						if ( stepcounter >= 3 ){ stepcounter = 0;  }
 						if(autoplay) {
+							var playitem = stage2items[stepcounter];
+							var playanim = stage2anims[stepcounter];
+							stage2addanim(true, playitem, playanim);
+							stage2lineanimrunning(true, playitem);
+							checkanimend(playitem, playanim);
+
+							/*
 							switch(stepcounter){
+
+								
 								case 1: 
 									stage2addanim(true, stage2counter, "stage2counteranim");
 									stage2lineanimrunning(true, stage2counter);
@@ -1018,22 +1028,15 @@
 									stage2lineanimrunning(true, stage2step1);
 									checkanimend(stage2step1, "stage2stephighlight");
 									break;
+									
 
 							}
+							*/
 						}
 						else {
-							switch(stepcounter){
-								case 1:
-									stage2lineanimrunning(false, stage2counter);
-									break;
-								case 2:
-									stage2lineanimrunning(false, stage2var);
-									break;
-								case 3:
-									stage2lineanimrunning(false, stage2step1);
-									break;
-
-							}
+							var playitem = stage2items[stepcounter];
+							var playanim = stage2anims[stepcounter];
+							stage2lineanimrunning(false, playitem);			
 						}
 					}
 					
