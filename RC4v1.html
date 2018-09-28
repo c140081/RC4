@@ -673,8 +673,8 @@
 					<p class="stage2var">Temporary variables: <br/> 
 						i = <a class="ivalue" >0</a>, j = <a class="jvalue">0</a>
 					</p>
-					<p><br/>Step 1: Find S[j] <br>
-						j = (j + S[i] + T[i]) mod 256 <br>
+					<p class="stage2step1"><br/>Step 1: Find S[j]<br>
+						j = (j + S[i] + T[i]) mod 256<br>
 						j = (<a class="jvalue">j</a> + S[<a class="ivalue">i</a>] + T[<a class="ivalue">i</a>]) mod 256 <br>
 						S[<a class="jvalue">j</a>] = 
 					</p>
@@ -969,6 +969,8 @@
 				<script>
 					var stage2counter = document.getElementsByClassName("stage2counter")[0];
 					var stage2var = document.getElementsByClassName("stage2var")[0];
+					var stage2step1 = document.getElementsByClassName("stage2step1")[0];
+					var stage2array = [ stage2counter, stage2var, stage2step1];
 					var togglebutton = document.getElementById("togglebutton");
 					var autoplay = false;
 					var roundcounter = 0;
@@ -995,8 +997,9 @@
 
 					function stepincre(){ stepcounter = stepcounter + 1; pauserunanim(); }
 
+
 					function pauserunanim(){
-						if ( stepcounter >= 3 ){ stepcounter = 1;  }
+						if ( stepcounter >= 4 ){ stepcounter = 1;  }
 						if(autoplay) {
 							switch(stepcounter){
 								case 1: 
@@ -1010,6 +1013,12 @@
 									stage2lineanimrunning(true, stage2var);
 									checkanimend(stage2var, "stage2highlight");
 									break;
+								case 3:
+									stage2addanim(true, stage2step1, "stage2stephighlight") ;		
+									stage2lineanimrunning(true, stage2step1);
+									checkanimend(stage2step1, "stage2stephighlight");
+									break;
+
 							}
 						}
 						else {
@@ -1020,6 +1029,10 @@
 								case 2:
 									stage2lineanimrunning(false, stage2var);
 									break;
+								case 3:
+									stage2lineanimrunning(false, stage2step1);
+									break;
+
 							}
 						}
 					}

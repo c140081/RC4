@@ -279,6 +279,14 @@ th {
 	font-weight: normal;
 }
 
+.stage2step1 {
+}
+
+.stage2stephighlight {
+	animation: highlight 4s 1;
+	animation-play-state: paused;
+}
+
 .stage2highlight {
 		animation: highlight 3s 1;
 		animation-play-state: paused;
