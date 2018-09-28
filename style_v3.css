@@ -239,29 +239,77 @@ th {
 	margin-bottom: 0px;
 	color: black;
 	font-size: 200%;
-	transition: all .2s ease-out;
-	transition-delay: 0.5s;
 }
 
-.stage2counterrunning {
-	color: red;
-	transform: translate(0px, -3px);
-	font-size: 220%;
-	transition: color .2s ease-out, transform .2s ease-out, font-size .2s ease-out;	
+.stage2counteranim {
+	animation: bounce 0.5s 2, blacktored 1s 1;
+	animation-play-state: paused;
+}
+
+@keyframes bounce {
+	0% {
+		transform: translate(0px, 0px);
+		font-size: 200%;
+		animation-timing-function: ease-in;
+
+	}
+	50% { 
+		transform: translate(0px, -3px);
+		font-size: 220%;
+		animation-timing-function: ease-out;
+
+	}
+	100% {
+		transform: translate(0px, 0px);
+		font-size: 200%;
+		animation-delay: 0.4s;
+		animation-timing-function: ease-in;
+	}
+}
+
+@keyframes blacktored {
+	0%{ color: black;	}
+	5%{ color: red; }
+	95%{ color: red; }
+	100%{ color: black; }
 }
 
 .stage2var {
 	color: black;
 	font-weight: normal;
-	transition: all .1s linear;
-	transition-delay: 3s;
 }
 
 .stage2highlight {
-	color: blue;
-	font-weight: bold;
-	transition: color .1s linear, font-weight .1s linear;
+		animation: highlight 5s 1;
+		animation-play-state: paused;
 }
+
+@keyframes highlight {
+	0% {
+		color: black;
+		font-weight: normal;  
+		animation-timing-function: linear;
+		}
+	5% {
+		color: blue;
+		font-weight: bold;
+		animation-timing-function: linear;
+	}
+	95% {
+		color: blue;
+		font-weight: bold;
+		animation-timing-function: linear;
+	}
+	100% {
+		color: black;
+		font-weight: normal; 
+		animation-timing-function: linear;
+	}
+
+}
+
+
+
 
 
 

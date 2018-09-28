@@ -4,6 +4,7 @@
 		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
 		<link rel='stylesheet' type='text/css' href='style_v3.css' />
 		<title>RC4</title>
+		<script src="https://www.kirupa.com/js/prefixfree.min.js"></script>
 		<script type = "text/javascript">
 			// e.g.: <div class="vbox"><div class="velement">0</div><div>S<span class="sub">0</span></div></div>
 			var s1 = '<div class="vbox"><div class="velement">' ;
@@ -969,54 +970,103 @@
 					var stage2counter = document.getElementsByClassName("stage2counter")[0];
 					var stage2var = document.getElementsByClassName("stage2var")[0];
 					var togglebutton = document.getElementById("togglebutton");
-					var autoplay = true;
+					var autoplay = false;
+					var animationrun = true;
+					var roundcounter = 0;
+					var stepcounter = 1;  // step 1 to 4, back and forth
 
-					function stage2counteranimatn(state){  // states: bounce / static
-						if(state == "bounce") {
-							stage2counter.classList.add("stage2counterrunning");
-							stage2counter.addEventListener("transitionend", function() { stage2counteranimatn("static"); }, false);
-							stage2counter.addEventListener("webkitTransitionEnd", function() { stage2counteranimatn("static"); }, false);
-							stage2counter.addEventListener("mozTransitionEnd", function() { stage2counteranimatn("static"); }, false);
-							stage2counter.addEventListener("msTransitionEnd", function() { stage2counteranimatn("static"); }, false);
-							stage2counter.addEventListener("oTransitionEnd", function() { stage2counteranimatn("static"); }, false);
-						}
-						if(state == "static") {
-							stage2counter.classList.remove("stage2counterrunning");
-						}
+					function stage2counteraddanim(add){
+						if(add){ stage2counter.classList.add("stage2counteranim"); }
+							else{ stage2counter.classList.remove("stage2counteranim"); }
+					}
+
+					function stage2counterrunning(running){   
+						if(running) { stage2counter.style.animationPlayState = "running"; }
+						else { stage2counter.style.animationPlayState = "paused"; }
+					}
+
+					function stage2highlight(hl, linex){
+						if(hl) { linex.classList.add("stage2highlight"); }
+						else { linex.classList.remove("stage2highlight"); }
+					}
+
+					function stage2lineanimrunning(running, linex){   
+						if(running) { linex.style.animationPlayState = "running"; }
+						else { linex.style.animationPlayState = "paused"; }
 					}
 
 					function stage2varanimatn(highlight){  // boolean param
 						if(highlight){
-							stage2var.classList.add("stage2highlight");
-							stage2var.addEventListener("transitionend", function() { stage2varanimatn(false); }, false);
-							stage2var.addEventListener("webkitTransitionEnd", function() { stage2varanimatn(false); }, false);
-							stage2var.addEventListener("mozTransitionEnd", function() { stage2varanimatn(false); }, false);
-							stage2var.addEventListener("msTransitionEnd", function() { stage2varanimatn(false); }, false);
-							stage2var.addEventListener("oTransitionEnd", function() { stage2varanimatn(false); }, false);
+							stage2var.style.animationPlayState = "running";
+							setTimeout("stage2varanimatn(false)", 5000);
 						}
 						if(!highlight){
-							stage2var.classList.remove("stage2highlight");
+							stage2var.style.animationPlayState = "paused";
 						}
 					}
+					
+					function checkanimend(){
+						stage2counter.addEventListener("webkitAnimationEnd", function(){stage2counteraddanim(false), stepincre() }, true);
+					}
+
+					function stepincre(){	stepcounter = stepcounter + 1; pauserunanim();	}
+
+					function checkanimend2(){
+						stage2var.addEventListener("webkitAnimationEnd", function(){stage2highlight(false, stage2var), stepincre() },  true);
+						
+					}
+
+					function pauserunanim(){
+						if ( stepcounter >= 3 ){ stepcounter = 1;  }
+						if(autoplay) {
+							switch(stepcounter){
+								case 1: 
+									if( !stage2counter.classList.contains("stage2counteranim") ){
+										stage2counteraddanim(true);
+									} 
+									stage2counterrunning(true);
+									checkanimend();									
+									break;
+
+								case 2:
+									if( !stage2var.classList.contains("stage2highlight") ){
+										stage2highlight(true, stage2var) ;
+									} 
+									stage2lineanimrunning(true, stage2var);
+									checkanimend2();
+									document.getElementById("backbutton").innerHTML = 33;									
+									break;
+							}
+						}
+						else {
+							switch(stepcounter){
+								case 1:
+									stage2counterrunning(false);
+									break;
+								case 2:
+									stage2lineanimrunning(false, stage2var);
+									break;
+							}
+						}
+					}
+					
+
+					
 
 					function togglebuttonvaluechange() {			
-						if (autoplay){ 							
+						if (!autoplay){ 							
 							document.getElementById("togglebutton").innerHTML = "PAUSE"; 
-							autoplay = false;
-							stage2counteranimatn("bounce");
-							setTimeout("stage2varanimatn(true)", 1000);
+							autoplay = true;
+							pauserunanim();
 							}
-						else if (!autoplay){
+						else if (autoplay){
 							document.getElementById("togglebutton").innerHTML = "PLAY";
-							autoplay = true;	
-							stage2counteranimatn("static");
-							stage2var.style.transitionDelay = "0s";
-							stage2varanimatn(false);
-							stage2var.style.transitionDelay = "3s";
-						}
+							autoplay = false;	
+							pauserunanim();	
+							}
 					}
 
-					togglebutton.addEventListener("click", function(){ togglebuttonvaluechange()}, false);
+					togglebutton.addEventListener("click", function(){togglebuttonvaluechange()}, false);
 				</script>
 
 				
