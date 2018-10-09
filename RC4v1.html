@@ -5,6 +5,8 @@
 		<link rel='stylesheet' type='text/css' href='style_v3.css' />
 		<title>RC4</title>
 		<script src="https://www.kirupa.com/js/prefixfree.min.js"></script>
+		<script src="jquery-3.3.1.min.js"></script>
+		<script src="jquery.animateNumber.min.js"></script>
 		<script type = "text/javascript">
 			var defaultkey = "8163"   
 			// e.g.: <div class="vbox"><div class="velement">0</div><div>S<span class="sub">0</span></div></div>
@@ -665,7 +667,7 @@
 				<div class="gridelement1">				
 					<table class="counterbox"><tr>
 						<th>Round</th>
-						<th class="stage2counter">1</th>	
+						<th class="stage2counter">0</th>	
 					</tr></table>				
 					<div class="bpf">
 						<button type="button" id="backbutton">BACKWARD</button>
@@ -986,12 +988,17 @@
 					var stage2step9 = document.getElementsByClassName("stage2step9")[0];
 					var stage2step10 = document.getElementsByClassName("stage2step10")[0];
 					var stage2items = [stage2counter, stage2step1, stage2step2, stage2step3, stage2step4, stage2step5, stage2step6, stage2step7, stage2step8, stage2step9, stage2step10];
-					var stage2anims = ["stage2counteranim", "stage2highlight", "stage2stephighlight"];
+					var stage2anims = ["stage2counteranim", "stage2highlight"];
 
 					var togglebutton = document.getElementById("togglebutton");
 					var autoplay = false;
-					var roundcounter = 0;
 					var stepcounter = 0;  // step 1 to 4, back and forth
+
+					function test1(){
+						stage2step4.addEventListener("webkitAnimationStart", stage2step4j);
+						stage2step4.addEventListener("animationstart", stage2step4j);
+
+					}
 
 					function stage2step4j(){
 						var jvalue1 = document.getElementById("jvalue1").textContent;
@@ -1020,6 +1027,28 @@
 						document.getElementById("step6Sj").innerHTML = sj;
 					}
 
+					function stage2step10i(){
+						var beforestep10 = parseInt($("#ivalue1").text()) ;
+						var afterstep10 = beforestep10 + 1  ;
+						//$("#ivalue1").text(afterstep10.toString());
+						$("#ivalue1").prop('number', beforestep10);  // change number by 1
+						$("#ivalue1").animateNumber(
+							{
+								number: afterstep10
+							}
+							);
+					}
+
+					$("#togglebutton").click(
+						function(){
+							if(autoplay == false && (stepcounter == 10)){
+								$("#ivalue1").stop();
+							}
+						}
+						)
+
+
+
 
 					function stage2addanim(add, itemx, animx){
 						if(add && (!itemx.classList.contains(animx) )) { 
@@ -1036,29 +1065,40 @@
 						else { itemx.style.animationPlayState = "paused"; }
 					}	
 
-					function checkanimend(itemx, animx){
+					//  current anim ends, remove its anim-triggering class. clean element for next round
+					function checkanimend(itemx, animx){  
 						itemx.addEventListener("webkitAnimationEnd", function(){stage2addanim(false, itemx, animx); }, true);
 					}
 
+					// incre stepcounter, move on to next step
+					// call pauserunanim which calls itself, form a loop
 					function stepincre(){ stepcounter = stepcounter + 1; pauserunanim(); }
 
-					function pauserunanim(){                // pause/run the stage2 animation
-						if ( stepcounter >= 11 ){ stepcounter = 0;  }
+					function pauserunanim(){    // loop, pause/run the stage2 animation
+						if ( stepcounter >= 11 ){ 
+							stepcounter = 0; 
+							var roundcounter = parseInt(stage2counter.textContent);   
+							roundcounter += 1; 
+							stage2counter.innerHTML = roundcounter;
+						}
 						if(autoplay) {
 							var playitem = stage2items[stepcounter];
-							if ( stepcounter <=1 ){ var playanim = stage2anims[stepcounter]; }
+							if ( stepcounter == 0 ){ var playanim = stage2anims[0]; }
 							else {	var playanim = stage2anims[1];	}
-							stage2addanim(true, playitem, playanim);
-							stage2lineanimrunning(true, playitem);
-							if (stepcounter == 4) { stage2step4j();}
+							stage2addanim(true, playitem, playanim);   // add paused anim to CLEAN el
+							stage2lineanimrunning(true, playitem);     // set anim running
+							//if (stepcounter == 4) { stage2step4j();}
+							//---special effects for j, i, Sj, Si calculations---
+							test1();
 							if (stepcounter == 5) { stage2step5j();}
 							if (stepcounter == 6) { stage2step6j();}
-							checkanimend(playitem, playanim);
+							if (stepcounter == 10) { stage2step10i();}
+							//------
+							checkanimend(playitem, playanim);        // remove anim, move to next step
 						}
 						else {
 							var playitem = stage2items[stepcounter];
-							if ( stepcounter <=1 ){ var playanim = stage2anims[stepcounter]; }
-							else { var playanim = stage2anims[1];	}
+							//if ( stepcounter == 0 ){ var playanim = stage2anims[0]; } else { var playanim = stage2anims[1];	}
 							stage2lineanimrunning(false, playitem);			
 						}
 					}
