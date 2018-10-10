@@ -677,13 +677,20 @@
 				</div>
 
 				<div class="gridelement2">
-					<p class="stage2step1">Temporary variables:</p>
-					<p class="stage2step2">i = <a id="ivalue1">0</a>, j = <a id="jvalue1">0</a>
+					<p class="stage2step1">Temporary variables:
+						i = <a id="ivalue1">0</a>, j = <a id="jvalue1">0</a>
 					</p>
-					<p class="stage2step3"><br/> Step 1: Find S[j] </p>
+					<p class="stage2step2"><br/> Step 1: Find S[j] </p>
 						<!--- j = (j + S[i] + T[i]) mod 256<br> --->
-						<p class="stage2step4"> j = (<a id="jvalue2">j</a> + S[<a id="ivalue2">i</a>] + T[<a id="ivalue3">i</a>]) mod 256 </p> 
-						<p class="stage2step5"> j = <a id="jvalue3">j</a> mod 256 </p> 
+						<p class="stage2step3"> j = (<a id="jvalue2">j</a> + S[<a id="ivalue2">i</a>] + T[<a id="ivalue3">i</a>]) mod 256 </p> 
+						<p>
+							<a class="stage2step4"> j = 
+								<a id="jvalue3part1">0</a> mod 256  
+							</a>
+							<a class="stage2step5"> = 
+								<a id="jvalue3part2">0</a>
+							</a> 
+						</p>
 						<p class="stage2step6"> S[<a id="jvalue4">j</a>] = <a id="step6Sj"></a> </p>
 					
 					</div>
@@ -1025,23 +1032,17 @@
 						var ivalue1 = document.getElementById("ivalue1").textContent;
 						var si = document.getElementById("stage2S" + ivalue1).textContent;
 						var ti = document.getElementById("stage2T" + ivalue1).textContent;
-						document.getElementById("jvalue3").innerHTML = jvalue1 + " + " + si + " + " + ti;
-						//$("#jvalue3").slidedown("linear", stage2step5j3part2(jvalue1, si, ti));
-						$("#jvalue3").animate(
-						{
-							color: "green"
-						},
-						"slow",
-						stage2step5j3part2(jvalue1, si, ti)
-						)
+						document.getElementById("jvalue3part1").innerHTML = jvalue1 + " + " + si + " + " + ti;						
 					}
 
-					function stage2step5j3part2(jvalue1, si, ti){
+					function stage2step5j3part2(){
+						var jvalue1 = document.getElementById("jvalue1").textContent;
+						var ivalue1 = document.getElementById("ivalue1").textContent;
+						var si = document.getElementById("stage2S" + ivalue1).textContent;
+						var ti = document.getElementById("stage2T" + ivalue1).textContent;
 						var jvalue3after = (parseInt(jvalue1) + parseInt(si) + parseInt(ti) ) % 256;
-						$("#jvalue3").prop('number', jvalue1);
-						$("#jvalue3")
-						.css("color", "red")
-						.animateNumber( { number: jvalue3after }, "linear");
+						$("#jvalue3part2").prop('number', jvalue1);
+						$("#jvalue3part2").animateNumber( { number: jvalue3after }, "linear");
 						$("#jvalue1").prop('number', jvalue1);
 						$("#jvalue1").animateNumber( { number:jvalue3after }, "linear");
 					}
@@ -1097,13 +1098,14 @@
 						if(autoplay) {
 							var playitem = stage2items[stepcounter];
 							if ( stepcounter == 0 ){ var playanim = stage2anims[0]; }
-							else if (stepcounter == 4 ){var playanim = stage2anims[2]; }
+							else if (4 <= stepcounter <= 5 ){var playanim = stage2anims[2]; }
 							else {	var playanim = stage2anims[1];	}
+							if (stepcounter == 4) { stage2step5j3part1();}
 							stage2addanim(true, playitem, playanim);   // add paused anim to CLEAN el
 							stage2lineanimrunning(true, playitem);     // set anim running
 							//---special effects for j, i, Sj, Si calculations---
-							if (stepcounter == 4) { stage2step4j2();}
-							if (stepcounter == 5) { stage2step5j3part1();}
+							if (stepcounter == 3) { stage2step4j2();}
+							if (stepcounter == 5) { stage2step5j3part2();}
 							if (stepcounter == 6) { stage2step6j();}
 							if (stepcounter == 10) { stage2step10i();}
 							//------
@@ -1113,6 +1115,7 @@
 							var playitem = stage2items[stepcounter];
 							//if ( stepcounter == 0 ){ var playanim = stage2anims[0]; } else { var playanim = stage2anims[1];	}
 							stage2lineanimrunning(false, playitem);	
+							//--- pause special effects ---
 							if(stepcounter == 4){
 								$("#jvalue2").stop();
 								$("#ivalue2").stop();
