@@ -683,14 +683,14 @@
 					<p class="stage2step3"><br/> Step 1: Find S[j] </p>
 						<!--- j = (j + S[i] + T[i]) mod 256<br> --->
 						<p class="stage2step4"> j = (<a id="jvalue2">j</a> + S[<a id="ivalue2">i</a>] + T[<a id="ivalue3">i</a>]) mod 256 </p> 
-						<p class="stage2step5"> j = <a id="jvalue3"> </a></p> 
+						<p class="stage2step5"> j = <a id="jvalue3"> </a> mod 256 </p> 
 						<p class="stage2step6"> S[<a id="jvalue4">j</a>] = <a id="step6Sj"></a> </p>
 					
 					</div>
 
 				<div class="gridelement3">
 					<p class="stage2step7"> Step 2: Find S[i] </p> 
-					<p class="stage2step8"> S[<a id="ivalue4" >i</a>] =  </p>					
+					<p class="stage2step8"> S[<a id="ivalue4" >i</a>] = <a id="step6Si"></a> </p>					
 					<p class="stage2step9"><br> Step 3: Swap S[i], S[j] </p>
 					<p class="stage2step10"><br> Step 4: Increment i </p>				
 				</div>
@@ -989,24 +989,46 @@
 					var stage2step10 = document.getElementsByClassName("stage2step10")[0];
 					var stage2items = [stage2counter, stage2step1, stage2step2, stage2step3, stage2step4, stage2step5, stage2step6, stage2step7, stage2step8, stage2step9, stage2step10];
 					var stage2anims = ["stage2counteranim", "stage2highlight"];
-
 					var togglebutton = document.getElementById("togglebutton");
 					var autoplay = false;
+					var roundcounter = parseInt(stage2counter.textContent); 
 					var stepcounter = 0;  // step 1 to 4, back and forth
+					var tempvari = 0;   // temporary variable
+					var tempvarj = 0;
 
 					function test1(){
-						stage2step4.addEventListener("webkitAnimationStart", stage2step4j);
-						stage2step4.addEventListener("animationstart", stage2step4j);
+						//stage2step4.addEventListener("webkitAnimationStart", stage2step4j2);
+						//stage2step4.addEventListener("animationstart", stage2step4j2);
+						setTimeout('stage2step4j2()', 1000);
+						setTimeout('stage2step4i2()', 2000);
+						setTimeout('stage2step4i3()', 3000);
+
 
 					}
 
-					function stage2step4j(){
-						var jvalue1 = document.getElementById("jvalue1").textContent;
-						var ivalue1 = document.getElementById("ivalue1").textContent;
-						document.getElementById("jvalue2").innerHTML = jvalue1;
-						document.getElementById("ivalue2").innerHTML = ivalue1;
-						document.getElementById("ivalue3").innerHTML = ivalue1;
+					// change digital itemx, from numberbefore to numberafter
+					function numberchange(itemx, numberbefore, numberafter){
+						$(itemx).prop('number', numberbefore);  // change number by 1
+						$(itemx).animateNumber( { number: numberafter } );
 					}
+
+					function stage2step4j2(){
+						var jvalue1 = parseInt(document.getElementById("jvalue1").textContent);
+						numberchange("#jvalue2", (jvalue1 ), jvalue1);
+
+					}
+
+					function stage2step4i2(){
+						var ivalue1 = parseInt(document.getElementById("ivalue1").textContent);
+						numberchange("#ivalue2", (ivalue1 ), ivalue1);
+					}
+
+					function stage2step4i3(){
+						var ivalue1 = parseInt(document.getElementById("ivalue1").textContent);
+						numberchange("#ivalue3", (ivalue1 ), ivalue1);
+					}
+
+
 
 					function stage2step5j(){
 						var jvalue1 = document.getElementById("jvalue1").textContent;
@@ -1028,15 +1050,9 @@
 					}
 
 					function stage2step10i(){
-						var beforestep10 = parseInt($("#ivalue1").text()) ;
-						var afterstep10 = beforestep10 + 1  ;
-						//$("#ivalue1").text(afterstep10.toString());
-						$("#ivalue1").prop('number', beforestep10);  // change number by 1
-						$("#ivalue1").animateNumber(
-							{
-								number: afterstep10
-							}
-							);
+						var beforestep10 = tempvari;
+						if(tempvari == roundcounter){	tempvari += 1; }   // condition necessary, pause/run may call this function multiple times
+						numberchange("#ivalue1", beforestep10, tempvari);
 					}
 
 					$("#togglebutton").click(
@@ -1076,8 +1092,7 @@
 
 					function pauserunanim(){    // loop, pause/run the stage2 animation
 						if ( stepcounter >= 11 ){ 
-							stepcounter = 0; 
-							var roundcounter = parseInt(stage2counter.textContent);   
+							stepcounter = 0;   
 							roundcounter += 1; 
 							stage2counter.innerHTML = roundcounter;
 						}
@@ -1087,9 +1102,13 @@
 							else {	var playanim = stage2anims[1];	}
 							stage2addanim(true, playitem, playanim);   // add paused anim to CLEAN el
 							stage2lineanimrunning(true, playitem);     // set anim running
-							//if (stepcounter == 4) { stage2step4j();}
 							//---special effects for j, i, Sj, Si calculations---
-							test1();
+							if (stepcounter == 4) { 
+								//stage2step4j();
+								stage2step4.addEventListener("webkitAnimationStart", test1());
+								}
+							
+							//test1();
 							if (stepcounter == 5) { stage2step5j();}
 							if (stepcounter == 6) { stage2step6j();}
 							if (stepcounter == 10) { stage2step10i();}
