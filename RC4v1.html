@@ -1004,21 +1004,60 @@
 
 					document.getElementById("stage2vectorti").innerHTML = document.getElementById("stage2T0").textContent;
 
+					function scrollanim(scrollclassname, elementindex){
+						var element = document.getElementById(elementindex);
+						var elementoffset = $("#"+elementindex).offset().left ;
+
+						if( scrollclassname == "hscrollS"){
+							var defaultSoffset = $("#stage2S7").offset().left;}
+						else if( scrollclassname == "hscrollT"){
+							var defaultSoffset = $("#stage2T7").offset().left;}
+						
+						$("."+scrollclassname).animate(
+							{ scrollLeft:(elementoffset-defaultSoffset)},
+							500,
+							function(){
+								stage2addanim(true, element, "vectorred");
+								stage2lineanimrunning(true, element);
+								element.addEventListener(
+									"webkitAnimationEnd", 
+									function(){
+										if (element.classList.contains("vectorred")){ element.classList.remove("vectorred");}
+									},
+								true
+								);	}	)	
+					}
 
 					function stage2step3j2(){
 						var jvalue1 = parseInt(document.getElementById("jvalue1").textContent);
 						var jvalue2 = parseInt(document.getElementById("jvalue2").textContent);
 						$("#jvalue2").prop('number', jvalue2);  // change number by 1
 						$("#jvalue2").animateNumber( { number: jvalue1 }, 'linear', stage2step3i() );
+
 					}
 
 					function stage2step3i(){
 						var ivalue1 = parseInt(document.getElementById("ivalue1").textContent);
 						var ivalue2 = parseInt(document.getElementById("ivalue2").textContent);
+						//scrollanim(scrollclassname, elementindex)   
+						// scroll and red anim
+						// red anim start trigger .aN
+						// red anim end, repeat for T[i]
 						$("#ivalue2").prop('number', ivalue2);
 						$("#ivalue2").animateNumber( { number: ivalue1 }, "linear" );
 						$("#ivalue3").prop('number', ivalue2);
-						$("#ivalue3").animateNumber( { number: ivalue1 }, "linear");
+						$("#ivalue3").animateNumber( { number: ivalue1 }, "linear" );
+						var indexSi = "stage2S"+ivalue1; 
+						var elementSi = document.getElementById(indexSi);
+						var indexTi = "stage2T"+ivalue1;
+						var elementTi = document.getElementById(indexTi);
+
+						scrollanim("hscrollS", (indexSi) );
+						elementSi.addEventListener(
+							"webkitAnimationEnd", 
+							scrollanim("hscrollT", (indexTi) ),
+							 true
+						);
 					}
 
 					function stage2step4j3(){
@@ -1086,36 +1125,30 @@
 						$("#jvalue6").animateNumber( { number:jvalue6 }, "linear", stage2swap());
 					}
 
-					function scrollonce(scrollclassname, elementindex){
-						if( scrollclassname == "hscrollS"){
-							var defaultSoffset = $("#stage2S7").offset().left;}
-						else if( scrollclassname == "hscrollT"){
-							var defaultSoffset = $("#stage2T7").offset().left;}
-						var elementoffset = $("#"+elementindex).offset().left ;
-						$("."+scrollclassname).animate({scrollLeft:(elementoffset-defaultSoffset)},500)
-					}
-
 					function stage2swap(){
 						var indexi = "stage2S" + document.getElementById("ivalue1").textContent ;
 						var indexj = "stage2S" + document.getElementById("jvalue4").textContent;
 						var si = document.getElementById(indexi);
 						var sj = document.getElementById(indexj);
-						scrollonce('hscrollS', indexj);
-						stage2addanim(true, si, "vectorred");
-						stage2lineanimrunning(true, si);
-						stage2addanim(true, sj, "vectorred");
-						var temp = si.textContent;
-						si.innerHTML = sj.textContent;
-						sj.innerHTML = temp;
-						si.addEventListener("webkitAnimationEnd", function(){ si.classList.remove("vectorred"); }, true);
-						sj.addEventListener("webkitAnimationEnd", function(){ sj.classList.remove("vectorred"); }, true);
+						scrollanim("hscrollS", indexi);
+						si.addEventListener(
+							"webkitAnimationEnd",
+							scrollanim("hscrollS", indexj),
+							true
+							);
+						sj.addEventListener(
+							"webkitAnimationEnd",
+							function(){
+								var temp = si.textContent;
+								si.innerHTML = sj.textContent;
+								sj.innerHTML = temp;
+							},
+							true
+							);
+						
 					}
 
 					function stage2step10i(){
-						if(tempvari >= 255){
-							alert("Initial Permutation of vector S is done.");
-							return;
-						}
 						var beforestep10 = tempvari;
 						// condition necessary, pause/run may call this function multiple times
 						if(tempvari == roundcounter){	tempvari += 1; }   
@@ -1146,18 +1179,19 @@
 					function stepincre(){ stepcounter = stepcounter + 1; pauserunanim(); }
 
 					function pauserunanim(){    // loop, pause/run the stage2 animation
-						if( roundcounter >=256){
-							return;
-						}
 						if ( stepcounter >= 11 ){ 
 							stepcounter = 0;   
-							roundcounter += 1; 
+							roundcounter += 1;
+							if( roundcounter >=256){
+								alert("Initial Permutation of S is done.");
+								return;
+							} 
 							stage2counter.innerHTML = roundcounter;
 						}
 						var playitem = stage2items[stepcounter];
 						if(autoplay) {							
 							if ( stepcounter == 0 ){ var playanim = stage2anims[0]; }
-							//else if ((stepcounter >= 3) && (stepcounter <= 5) ){var playanim = stage2anims[2]; }
+							else if ((stepcounter >= 3) && (stepcounter <= 5) ){var playanim = stage2anims[2]; }
 							else {	var playanim = stage2anims[1];	}
 							stage2addanim(true, playitem, playanim);   // add paused anim to CLEAN el
 							stage2lineanimrunning(true, playitem);     // set anim running
@@ -1178,6 +1212,17 @@
 						}
 						else {
 							stage2lineanimrunning(false, playitem);	
+							if(stepcounter == 3){
+								var indexi = document.getElementById("ivalue1").textContent;
+								var elementSi = document.getElementById( "stage2S"+indexi );
+								var elementTi =  document.getElementById( "stage2T"+indexi );
+								if( elementSi.classList.contains("vectorred") ){
+									stage2lineanimrunning(false, elementSi);	
+								}
+								if( elementTi.classList.contains("vectorred") ){
+									stage2lineanimrunning(false, elementTi);	
+								}
+							}
 						}
 					}
 					

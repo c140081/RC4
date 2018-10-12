@@ -333,7 +333,7 @@ th {
 
 
 .vectorred {
-		animation: vectorred 2s 1;
+		animation: vectorred 1.5s 1;
 		animation-play-state: paused;
 }
 
