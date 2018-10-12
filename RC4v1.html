@@ -1009,22 +1009,16 @@
 						var jvalue1 = parseInt(document.getElementById("jvalue1").textContent);
 						var jvalue2 = parseInt(document.getElementById("jvalue2").textContent);
 						$("#jvalue2").prop('number', jvalue2);  // change number by 1
-						$("#jvalue2").animateNumber( { number: jvalue1 }, 'linear', stage2step3i2() );
+						$("#jvalue2").animateNumber( { number: jvalue1 }, 'linear', stage2step3i() );
 					}
 
-					function stage2step3i2(){
+					function stage2step3i(){
 						var ivalue1 = parseInt(document.getElementById("ivalue1").textContent);
 						var ivalue2 = parseInt(document.getElementById("ivalue2").textContent);
 						$("#ivalue2").prop('number', ivalue2);
-						$("#ivalue2").animateNumber( { number: ivalue1 }, "linear", stage2step3i3() );
-					}
-
-					function stage2step3i3(){
-						var ivalue1 = parseInt(document.getElementById("ivalue1").textContent);
-						var ivalue3 = parseInt(document.getElementById("ivalue3").textContent);
-						$("#ivalue3").prop('number', ivalue3);
-						$("#ivalue3")
-						.animateNumber( { number: ivalue1 }, "linear");
+						$("#ivalue2").animateNumber( { number: ivalue1 }, "linear" );
+						$("#ivalue3").prop('number', ivalue2);
+						$("#ivalue3").animateNumber( { number: ivalue1 }, "linear");
 					}
 
 					function stage2step4j3(){
@@ -1038,7 +1032,6 @@
 						$("#stage2vectorsi").animateNumber( { number: si }, 'linear');
 						$("#stage2vectorti").prop('number', ti); 
 						$("#stage2vectorti").animateNumber( { number: ti }, 'linear');
-
 					}
 
 					function stage2step5j4part1(){
@@ -1093,32 +1086,24 @@
 						$("#jvalue6").animateNumber( { number:jvalue6 }, "linear", stage2swap());
 					}
 
+					function scrollonce(scrollclassname, elementindex){
+						if( scrollclassname == "hscrollS"){
+							var defaultSoffset = $("#stage2S7").offset().left;}
+						else if( scrollclassname == "hscrollT"){
+							var defaultSoffset = $("#stage2T7").offset().left;}
+						var elementoffset = $("#"+elementindex).offset().left ;
+						$("."+scrollclassname).animate({scrollLeft:(elementoffset-defaultSoffset)},500)
+					}
 
 					function stage2swap(){
 						var indexi = "stage2S" + document.getElementById("ivalue1").textContent ;
 						var indexj = "stage2S" + document.getElementById("jvalue4").textContent;
 						var si = document.getElementById(indexi);
 						var sj = document.getElementById(indexj);
+						scrollonce('hscrollS', indexj);
 						stage2addanim(true, si, "vectorred");
 						stage2lineanimrunning(true, si);
 						stage2addanim(true, sj, "vectorred");
-						//sj.scrollIntoView(false);
-						var defaultSoffset = $("#stage2S7").offset().left ;
-						var elementoffset = $("#"+indexj).offset().left ;
-						var hscrollffset = $(".hscroll").offset().left ;
-						$(".hscrollS").animate(
-						{
-							//scrollLeft: $("#"+indexj).offset().left
-							scrollLeft: ( elementoffset - defaultSoffset )
-						}, 
-						500,
-						function(){
-							$(".hscrollS").delay(1000).animate( {scrollLeft: 0} )
-						}
-						)
-						//$(".hscroll").scrollLeft(100);
-
-						stage2lineanimrunning(true, sj);
 						var temp = si.textContent;
 						si.innerHTML = sj.textContent;
 						sj.innerHTML = temp;
@@ -1127,6 +1112,10 @@
 					}
 
 					function stage2step10i(){
+						if(tempvari >= 255){
+							alert("Initial Permutation of vector S is done.");
+							return;
+						}
 						var beforestep10 = tempvari;
 						// condition necessary, pause/run may call this function multiple times
 						if(tempvari == roundcounter){	tempvari += 1; }   
@@ -1157,16 +1146,16 @@
 					function stepincre(){ stepcounter = stepcounter + 1; pauserunanim(); }
 
 					function pauserunanim(){    // loop, pause/run the stage2 animation
+						if( roundcounter >=256){
+							return;
+						}
 						if ( stepcounter >= 11 ){ 
 							stepcounter = 0;   
 							roundcounter += 1; 
 							stage2counter.innerHTML = roundcounter;
 						}
-						if( roundcounter >=256){
-							return;
-						}
-						if(autoplay) {
-							var playitem = stage2items[stepcounter];
+						var playitem = stage2items[stepcounter];
+						if(autoplay) {							
 							if ( stepcounter == 0 ){ var playanim = stage2anims[0]; }
 							//else if ((stepcounter >= 3) && (stepcounter <= 5) ){var playanim = stage2anims[2]; }
 							else {	var playanim = stage2anims[1];	}
@@ -1188,7 +1177,6 @@
 							checkanimend(playitem, playanim);  
 						}
 						else {
-							var playitem = stage2items[stepcounter];
 							stage2lineanimrunning(false, playitem);	
 						}
 					}
