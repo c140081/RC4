@@ -163,8 +163,7 @@ button.confirm {
 	max-width: 100px;
 	width: 90px;
 	height: 40px;
-	margin: 5% 2% 5%;
-
+	margin: 3% 2% 3%;
 }
 
 div.bpf {
@@ -297,12 +296,17 @@ th {
 
 
 
-.stage2stephighlight {
+.stage2highlight3s {
+	animation: highlight 3s 1;
+	animation-play-state: paused;
+}
+
+.stage2highlight2s {
 	animation: highlight 2s 1;
 	animation-play-state: paused;
 }
 
-.stage2highlight {
+.stage2highlight1s {
 		animation: highlight 1s 1;
 		animation-play-state: paused;
 }
@@ -333,7 +337,7 @@ th {
 
 
 .vectorred {
-		animation: vectorred 1.5s 1;
+		animation: vectorred 2s 1;
 		animation-play-state: paused;
 }
 
