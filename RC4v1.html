@@ -703,18 +703,8 @@
 				</div>
 
 				<div class="gridelement4">
-					
-					<p>Temporary vector T (initiated): </p>	
-					<div id='tvalue2' name='tvalue2'></div>
-					<div class="clear"> </div>	
-					<script type="text/javascript">
-						fillt("tvalue2", true);
-						var initiate = document.getElementById("initiate");
-			    		initiate.addEventListener("click", function(){fillt("tvalue2", true);},  false);    
-					</script>
-
-					<p><br>State vector S:
-						<div>
+					<p>State vector S: </p>
+					<div>
 							<div class="vbox"><div class="velement" id="stage2S0">0</div><div>S<span class="sub">0</span></div></div>
 							<div class="vbox"><div class="velement" id="stage2S1">1</div><div>S<span class="sub">1</span></div></div>
 							<div class="vbox"><div class="velement" id="stage2S2">2</div><div>S<span class="sub">2</span></div></div>
@@ -975,10 +965,18 @@
 							<div class="vbox"><div class="velement" id="stage2S253">253</div><div>S<span class="sub">253</span></div></div>
 							<div class="vbox"><div class="velement" id="stage2S254">254</div><div>S<span class="sub">254</span></div></div>
 							<div class="vbox"><div class="velement" id="stage2S255">255</div><div>S<span class="sub">255</span></div></div>
-						</div>
-						<div class="clear"> </div>
-						<div></div>   <!---JS needed to show changing vector--->
-					</p>
+					</div>
+					<div class="clear"> </div>
+					
+
+					<p>Temporary vector T (initiated): </p>	
+					<div id='tvalue2' name='tvalue2'></div>
+					<div class="clear"> </div>	
+					<script type="text/javascript">
+						fillt("tvalue2", true);
+						var initiate = document.getElementById("initiate");
+			    		initiate.addEventListener("click", function(){fillt("tvalue2", true);},  false);    
+					</script>
 
 				</div>
 
@@ -1001,6 +999,7 @@
 					var roundcounter = parseInt(stage2counter.textContent); 
 					var stepcounter = 0;  // step 1 to 4, back and forth
 					var tempvari = 0;   // tracks temporary variable i
+					var swapstep = 0;
 
 					document.getElementById("stage2vectorti").innerHTML = document.getElementById("stage2T0").textContent;
 
@@ -1121,31 +1120,84 @@
 					function stage2step9j(){
 						var jvalue6 = parseInt($("#jvalue4").text()) ;
 						$("#jvalue6").prop('number', jvalue6);
-						$("#jvalue6").animateNumber( { number:jvalue6 }, "linear", stage2swap());
+						$("#jvalue6").animateNumber( { number:jvalue6 }, "linear", stage2swapstep(swapstep));
 					}
 
 					function stage2swap(){
-						var indexi = "stage2S" + document.getElementById("ivalue1").textContent ;
-						var indexj = "stage2S" + document.getElementById("jvalue4").textContent;
+						stage2swapstep(swapstep);							
+					}
+
+					function stage2swapstep(swapstep){
+						var indexi = "stage2S" + document.getElementById("ivalue1").textContent;
+						var indexj = "stage2S" + document.getElementById("jvalue1").textContent;
 						var si = document.getElementById(indexi);
 						var sj = document.getElementById(indexj);
-						scrollanim("hscrollS", indexi, "vectorred");
-						si.addEventListener(
-							"webkitAnimationEnd",
-							scrollanim("hscrollS", indexj, "vectorred"),
-							true
-							);
-						sj.addEventListener(
-							"webkitAnimationEnd",
-							function(){
-								var temp = si.textContent;
-								si.innerHTML = sj.textContent;
-								sj.innerHTML = temp;
-							},
-							true
-							);
-						
+						var tempi = parseInt(si.textContent);
+						var tempj = parseInt(sj.textContent);
+						if(swapstep > 4){
+							swapstep = 0;
+							return;
+						}
+						switch(swapstep){
+							case 0: 
+								stage2lineanimrunning(true, si);
+								scrollanim("hscrollS", indexi, "vectoreldrop");
+								stage2swapanimend(si, "vectoreldrop", true);
+								break;
+							case 1:
+								stage2lineanimrunning(true, sj);
+								scrollanim("hscrollS", indexj, "vectoreldrop");
+								stage2swapanimend(sj, "vectoreldrop", true);
+								break;
+							case 2: 
+								stage2swapaddanim(true, si, "vectorelflip", false);
+								stage2swapaddanim(true, sj, "vectorelflip", false);
+								stage2lineanimrunning(true, si);
+								stage2lineanimrunning(true, sj);
+								$("#"+indexi).prop('number', tempi);
+								$("#"+indexi).animateNumber( { number: tempj }, "linear");
+								$("#"+indexj).prop('number', tempj);
+								$("#"+indexj).animateNumber( { number: tempi }, "linear", 
+									stage2swapanimend(sj, "vectorelflip", false)
+									);
+								stage2swapanimend(si, "vectorelflip", false);
+								break;
+							case 3:
+								stage2swapanimend(si, "vectorelflip", true);
+								break;
+							case 4: 
+								stage2swapaddanim(true, si, "vectorelup", false);
+								stage2swapaddanim(true, sj, "vectorelup", false);
+								stage2lineanimrunning(true, si);
+								stage2lineanimrunning(true, sj);
+								stage2swapanimend(si, "vectorelup", true);
+								stage2swapanimend(sj, "vectorelup", true);
+								break;								
+						}
 					}
+
+					function stage2swapstepincre(){
+						swapstep += 1;
+						stage2swapstep(swapstep);
+					}
+
+					function stage2swapaddanim(add, animitem, animname, stepincre){   // boolean stepincre
+						if(add && (!animitem.classList.contains(animname) )) { 
+							animitem.classList.add(animname); 
+						}
+						else if ( animitem.classList.contains(animname) ) { 
+							stage2lineanimrunning(false, animitem);
+							animitem.style.animationDirection = "normal";
+							animitem.classList.remove(animname); 
+							if(stepincre){ stage2swapstepincre(); };							
+						}
+					}
+
+					function stage2swapanimend(animitem, animname, stepincre){ // boolean stepincre
+						animitem.addEventListener("webkitAnimationEnd", function(){stage2swapaddanim(false, animitem, animname, stepincre);}, true);
+					}
+
+
 
 					function stage2step10i(){
 						var beforestep10 = tempvari;
@@ -1189,9 +1241,8 @@
 						}
 						var playitem = stage2items[stepcounter];
 						if(autoplay) {							
-							//if ( stepcounter == 0 ){ var playanim = stage2anims[0]; }
-							//else if ((stepcounter >= 3) && (stepcounter <= 5) ){var playanim = stage2anims[2]; }
 							if ( stepcounter <= 4) { var playanim = stage2anims[stepcounter];}
+							else if ( stepcounter == 9) { var playanim = "stage2highlight5s";}
 							else {	var playanim = stage2anims[1];	}
 							stage2addanim(true, playitem, playanim);   // add paused anim to CLEAN el
 							stage2lineanimrunning(true, playitem);     // set anim running

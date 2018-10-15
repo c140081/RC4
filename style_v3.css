@@ -294,6 +294,10 @@ th {
 }
 
 
+.stage2highlight5s {
+	animation: highlight 10s 1;
+	animation-play-state: paused;
+}
 
 
 .stage2highlight3s {
@@ -341,7 +345,6 @@ th {
 		animation-play-state: paused;
 }
 
-
 @keyframes vectorred {
 	0% {
 		border-color: forestgreen;
@@ -360,6 +363,61 @@ th {
 		background-color: yellowgreen;
 	}
 }
+
+.vectoreldrop {
+	animation: eldrop 1s 1;
+	animation-fill-mode: forwards;
+	animation-play-state: paused;
+	animation-direction: normal;
+}
+
+.vectorelup {
+	animation: eldrop 1s 1;
+	animation-fill-mode: forwards;
+	animation-play-state: paused;
+	animation-direction: reverse;
+}
+
+@keyframes eldrop {
+	0% {
+		border-color: forestgreen;
+		background-color: yellowgreen;
+		transform: translateY(0px);
+	}
+	100% {
+		background-color: red;
+		border-color: brown;
+		transform: translateY(30px);
+	}
+}
+
+.vectorelflip {
+	animation: elflip 2s 1;
+	animation-fill-mode: backwards;
+	animation-play-state: paused;
+	animation-direction: normal;
+}
+
+@keyframes elflip {
+	0% {
+		transform: rotateY(0deg);
+	}
+	25% {
+		transform: rotateY(45deg)
+	}
+	50% {
+		transform: rotateY(90deg)
+	}
+	75% {
+		transform: rotateY(135deg)
+	}
+	100% {
+		transform: rotateY(180deg);
+	}
+}
+
+
+
 
 
 
