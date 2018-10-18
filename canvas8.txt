@@ -1,0 +1,8 @@
+<div class="vbox" id="stage2S253"><div class="velement">253</div><div>S<span class="sub">253</span></div></div>
+<div class="vbox" id="stage2S254"><div class="velement">254</div><div>S<span class="sub">254</span></div></div>
+<div class="vbox" id="stage2S253"><div class="velement">253</div><div>S<span class="sub">253</span></div></div>
+<div class="vbox" id="stage2S254"><div class="velement">254</div><div>S<span class="sub">254</span></div></div>
+<div class="vbox" id="stage2S255"><div class="velement">255</div><div>S<span class="sub">255</span></div></div>
+<div class="vbox" id="stage2S0"><div class="velement">0</div><div>S<span class="sub">0</span></div></div>
+<div class="vbox" id="stage2S1"><div class="velement">1</div><div>S<span class="sub">1</span></div></div>
+<div class="vbox" id="stage2S2"><div class="velement">2</div><div>S<span class="sub">2</span></div></div>

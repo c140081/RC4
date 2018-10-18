@@ -1,9 +1,9 @@
 example = '<li><div class="vbox"><div class="velement" id=" IDValue "> elValue </div>'
 example = '<div>T<span class="sub"> elIndex </span></div></div></li>'
 l0 = '<li>'
-s0 = '<div class="vbox"><div class="velement" id="stage2S'
+s0 = '<div class="vbox" id="stage2S' 
 IDValue = 0;
-s1 = '">'
+s1 = '"><div class="velement">'
 elValue = 0;
 s2 = '</div><div>S<span class="sub">'
 elIndex = 0;
@@ -35,15 +35,16 @@ def f3 ():
     for x in range(3, 253):
         xstr = str(x)
         vectors = l0 + s0 + xstr + s1 + xstr + s2 + xstr + s3 + l1 + '\n'
-        with open("canvas5.txt", "a") as f:
+        with open("canvas7.txt", "a") as f:
             f.write(vectors)
         
 def f4 ():
-    for x in range(253, 255):
+    for x in range(0, 3):
         xstr = str(x)
         vectors = s0 + xstr + s1 + xstr + s2 + xstr + s3 + '\n'
-        with open("canvas6.txt", "a") as f:
+        with open("canvas8.txt", "a") as f:
             f.write(vectors)        
         
         
+
 f4()

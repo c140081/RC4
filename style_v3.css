@@ -31,6 +31,7 @@ p {
 	font-size: 18px;
 }
 
+
 .styledlikep {
 	display: inline-block;
 	float: left;
@@ -95,6 +96,16 @@ li {
 	display: table-cell;
 }
 
+.zindex1 {
+	z-index: 1;
+	position: relative;
+}
+
+.zindex2 {
+	z-index: 2;
+	position: absolute;
+}
+
 .velement {
 	border-style: solid;
 	border-width: 5px;
@@ -116,6 +127,20 @@ li {
 	float: left;
 	right:-10%;
 	display: inline-block;
+}
+
+#swapslot1 {
+	left: -28%;
+	opacity: 0.5;
+	background-color: skyblue;
+	border-color: blue;
+}
+
+#swapslot2 {
+	left: -25%;
+	opacity: 0.5;
+	background-color: skyblue;
+	border-color: blue;
 }
 
 .hscroll {
@@ -295,7 +320,7 @@ th {
 
 
 .stage2highlight5s {
-	animation: highlight 10s 1;
+	animation: highlight 1s 1;
 	animation-play-state: paused;
 }
 
