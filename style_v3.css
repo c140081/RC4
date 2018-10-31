@@ -320,7 +320,7 @@ th {
 
 
 .stage2highlight5s {
-	animation: highlight 1s 1;
+	animation: highlight 10s 1;
 	animation-play-state: paused;
 }
 

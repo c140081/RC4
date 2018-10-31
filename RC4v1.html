@@ -965,9 +965,10 @@
 						<div class="vbox" id="stage2S253"><div class="velement">253</div><div>S<span class="sub">253</span></div></div>
 						<div class="vbox" id="stage2S254"><div class="velement">254</div><div>S<span class="sub">254</span></div></div>
 						<div class="vbox" id="stage2S255"><div class="velement">255</div><div>S<span class="sub">255</span></div></div>
-					</div>
-					<div class="velement zindex2" id="swapslot1"></div>
-					<div class="velement zindex2" id="swapslot2"></div>
+						</div>
+						<div class="velement zindex2" id="swapslot1"></div>
+						<div class="velement zindex2" id="swapslot2"></div>
+					
 					<div class="clear"> </div>
 					
 					
@@ -1011,73 +1012,38 @@
 					var stage2step9sj = document.getElementById(stage2step9sjid).firstChild;
 					var stage2step9tempi = parseInt(stage2step9si.textContent);
 					var stage2step9tempj = parseInt(stage2step9sj.textContent);
-					var swapslot1left = $("#swapslot1").offset().left; 
-					var swapslot2left = $("#swapslot2").offset().left;
-
-					var sjanim = stage2step9sj.animate( 
-						[	{
-							transform: "translateX(0px)",
-							backgroundColor: "yellowgreen",
-							borderColor: "forestgreen"
-							}, {
-							transform: "translateX(0px)",
-							backgroundColor: "red",
-							borderColor: "brown"
-							}
-						], {
-							direction: "normal",
-							easing: 'linear',
-							fill: "backwards",
-							duration: 1000
-							}
-						);
-
-					var sianim = stage2step9si.animate( 
-						[	{
-							transform: "translateX(0px)",
-							backgroundColor: "yellowgreen",
-							borderColor: "forestgreen"
-							}, {
-							transform: "translateX(0px)",
-							backgroundColor: "red",
-							borderColor: "brown"
-							}
-						], 	{
-							direction: "normal",
-							easing: 'linear',
-							fill: "backwards",
-							duration: 1000
-							}
-						);
-						
-					sjanim.pause();
-					sianim.pause();
 
 
-					document.getElementById("stage2vectorti").innerHTML = document.getElementById("stage2T0").textContent;
+					document.getElementById("stage2vectorti").innerHTML = document.getElementById("stage2T0").firstChild.textContent;
 
 					function scrollanim(scrollclassname, elementindex, playanim){
-						var element = document.getElementById(elementindex).firstChild;
-						var elementoffset = $("#"+elementindex).offset().left ;
+						var element = document.getElementById(elementindex).firstChild;				
 
+						function coloranim(){
+							stage2addanim(true, element, playanim);
+							stage2lineanimrunning(true, element);
+							element.addEventListener(
+								"webkitAnimationEnd", 
+								function(){
+									if (element.classList.contains(playanim)){ element.classList.remove(playanim);}
+								} );	
+						};
+						hscrollto(scrollclassname, elementindex, coloranim);	
+					}
+
+					function hscrollto(scrollclassname, elementindex, callback){
+						var elementoffset = $("#"+elementindex).offset().left ;
+						var defaultSoffset = 0;
 						if( scrollclassname == "hscrollS"){
-							var defaultSoffset = $("#stage2S7").first().offset().left;}
+							defaultSoffset = $("#stage2S7").first().offset().left;}
 						else if( scrollclassname == "hscrollT"){
-							var defaultSoffset = $("#stage2T7").offset().left;}
-						
-						$("."+scrollclassname).animate(
-							{ scrollLeft:(elementoffset-defaultSoffset)},
-							500,
-							function(){
-								stage2addanim(true, element, playanim);
-								stage2lineanimrunning(true, element);
-								element.addEventListener(
-									"webkitAnimationEnd", 
-									function(){
-										if (element.classList.contains(playanim)){ element.classList.remove("vectorred");}
-									},
-								true
-								);	}	)	
+							defaultSoffset = $("#stage2T7").first().offset().left;}
+
+						if( callback == false ) {
+							$("."+scrollclassname).animate( { scrollLeft:(elementoffset - defaultSoffset) }, 500);
+						} else {
+							$("."+scrollclassname).animate( { scrollLeft:(elementoffset - defaultSoffset) }, 500, callback());
+						}							
 					}
 
 					function stage2step3j2(){
@@ -1199,69 +1165,163 @@
 
 					function stage2swapstep1(){
 						if(!swapstart){
-							stage2step9siid = "stage2S" + document.getElementById("ivalue1").textContent;
-							stage2step9sjid = "stage2S" + document.getElementById("jvalue1").textContent;
-							stage2step9si = document.getElementById(stage2step9siid).firstChild;
-							stage2step9sj = document.getElementById(stage2step9sjid).firstChild;
-							stage2step9sivalue = parseInt(stage2step9si.textContent);
-							stage2step9sjvalue = parseInt(stage2step9sj.textContent);
-							var sileft = $("#" + stage2step9siid).first().offset().left;
-							var sjleft = $("#" + stage2step9sjid).first().offset().left;
-							var sishift = (swapslot2left - sileft).toString() ;
-							var sjshift = (swapslot1left - sjleft).toString() ;
-							sjanim = stage2step9sj.animate( 
-								[	{
-									transform: "translateX(0px)",
-									backgroundColor: "yellowgreen",
-									borderColor: "forestgreen"
-									}, {
-									transform: "translateX("+ sjshift +"px)",
-									backgroundColor: "red",
-									borderColor: "brown"
-									}, {
-									transform: "translateX("+ sjshift +"px)",
-									backgroundColor: "red",
-									borderColor: "brown"
-									}
-								], {
-									direction: "normal",
-									easing: 'linear',
-									fill: "forwards",
-									duration: 2000
-									}
-								);
-							sianim = stage2step9si.animate( 
-								[	{
-									transform: "translateX(0px)",
-									backgroundColor: "yellowgreen",
-									borderColor: "forestgreen"
-									}, {
-									transform: "translateX("+ sishift +"px)",
-									backgroundColor: "red",
-									borderColor: "brown"
-									}, {
-									transform: "translateX("+ sishift +"px)",
-									backgroundColor: "red",
-									borderColor: "brown"
-									}
-								], 	{
-									direction: "normal",
-									easing: 'linear',
-									fill: "forwards",
-									duration: 2000
-									}
-								);
-							swapstart = true;
-							sjanim.pause();
-							sianim.pause();
+							stage2step9siid = "stage2S" + document.getElementById("ivalue1").textContent;  // id: stage2Si
+							stage2step9sjid = "stage2S" + document.getElementById("jvalue1").textContent;  // id: stage2Sj
+							stage2step9si = document.getElementById(stage2step9siid).firstChild;           // object S[i]
+							stage2step9sj = document.getElementById(stage2step9sjid).firstChild;	       // object: S[j]
+							stage2step9sivalue = parseInt(stage2step9si.textContent);                      // S[i] numeric value
+							stage2step9sjvalue = parseInt(stage2step9sj.textContent);                      // S[j] numeric value
+							var sileft = $("#" + stage2step9siid).first().offset().left;                  // S[i] object leftOffset
+							var sjleft = $("#" + stage2step9sjid).first().offset().left;                  // S[j] object leftOffset
+							var swapslot1 = document.getElementById("swapslot1") ;                     // swapslot1 object
+							var swapslot2 = document.getElementById("swapslot2") ;                     // swapslot2 object
+							var swapslot1left = $("#swapslot1").offset().left;                         // swapslot1 leftOffset
+							var swapslot2left = $("#swapslot2").offset().left;                         // swapslot2 leftOffset
+							var defaultSoffset = $("#stage2S7").first().offset().left;
+							var S0Soffset = $("#stage2S0").first().offset().left;
+							var tempdistance = 0;                                                     // swapslot1 anim1 x-distance
 
-							stage2swapstep2(sianim, stage2step9si, stage2step9sj);
+							$("#swapslot1").offset({left: (sileft + 5)});
 
+							if( parseInt(document.getElementById("ivalue1").textContent) == 0 ){
+								tempdistance = defaultSoffset - S0Soffset ;
 							}
-						else{   // for pause/run
-							sjanim.play();
-							sianim.play();
-						}	
+							if( parseInt(document.getElementById("ivalue1").textContent) == 1 ){
+								tempdistance = defaultSoffset - sileft ;
+								var temp0 = $("#stage2S2").first().offset().left;
+								var temp1 = sileft + temp0 + 9;
+								$("#swapslot1").offset({left: temp1});
+							}
+							if( parseInt(document.getElementById("ivalue1").textContent) == 2 ){
+								tempdistance = defaultSoffset - sileft - 50;
+								var temp1 = sileft * 2 + 7;
+								$("#swapslot1").offset({left: temp1});
+							}
+							if( parseInt(document.getElementById("ivalue1").textContent) == 3 ){
+								tempdistance = defaultSoffset - sileft ;
+								//var temp1 = sileft + defaultSoffset + 9;
+								//$("#swapslot1").offset({left: temp1});
+							}
+
+
+
+							
+							 
+							swapslot1.innerHTML = stage2step9sivalue;
+							stage2step9si.style.opacity = "0.5";
+							swapslot1.style.opacity = "1";
+							
+							var swapslot1anim1 = swapslot1.animate( [
+								{
+									transform:"translateY(0px) translateX(0px)"
+								},
+								{
+									transform:"translateY(0px) translateX(0px)"
+								},
+								{
+									transform:"translateY(-50px) translateX(0px)"
+								}, {
+									transform:"translateY(-50px) translateX("  +  tempdistance  + "px)"
+								}], {
+									duration: 1000,
+									direction: "normal",
+									fill: "forwards",
+									easing:"linear"
+								}
+							);
+
+							var swapslot2anim1 = swapslot2.animate(
+								[{
+									transform:"translateY(0px) translateX(0px)"
+								}, {
+									transform:"translateY(0px) translateX(0px)"
+								}, {
+									transform:"translateY(50px) translateX(0px)"
+								}, {
+									transform:"translateY(50px) translateX(50px)"
+								}],{
+									duration: 1000,
+									direction:"normal",
+									fill:"forwards",
+									easing:"linear"
+								});
+
+							swapslot2anim1.pause();
+								
+							swapslot1anim1.addEventListener("finish", function(){scrolltosj();});
+
+							function scrolltosj(){									
+								$(".hscrollS").first().animate(
+									{ scrollLeft:( sjleft - defaultSoffset) }, 
+									500, 
+									function(){
+										sjleft = $("#" + stage2step9sjid).first().offset().left;
+										$("#swapslot2").offset({left: sjleft + 5 });
+										swapslot2.innerHTML = stage2step9sjvalue;
+										stage2step9sj.style.opacity = "0.5";
+										swapslot2.style.opacity = "1";
+										swapslot2anim1.play();
+										} 
+									);
+								};
+			
+							swapslot2anim1.addEventListener("finish", function(){swaptosj();});
+
+
+							function swaptosj(){
+								var swapslot1anim2 = swapslot1.animate(
+									[ {
+										transform: "translateY(-50px) translateX("  +  tempdistance   + "px)"
+									},{
+										transform: "translateY(-50px) translateX("  +  tempdistance   + "px)"
+									},{
+										transform: "translateY(0px) translateX("  +  tempdistance   + "px)"
+									} ], {
+										duration: 1000,
+										fill:"forwards"
+									});
+								
+								swapslot1anim2.addEventListener("finish", function(){
+									stage2step9sj.innerHTML = stage2step9sivalue;
+									stage2step9si.style.opacity = "1";
+									swapslot1.style.opacity = "0.5";
+									scrolltosi();});
+							};
+
+							function scrolltosi(){
+								$(".hscrollS").first().delay(200).animate(
+									{ scrollLeft:( sileft - defaultSoffset) }, 
+									500,
+									function(){
+										sileft = $("#" + stage2step9siid).first().offset().left;
+										swapslot2left = $("#swapslot2").offset().left;
+										var temp2 = sileft - swapslot2left + 5 + 50 ; 
+										var swapslot2anim2 = swapslot2.animate(
+											[ {
+												transform: "translateY(50px) translateX(50px)"
+											},{
+												transform: "translateY(50px) translateX(50px)"
+											},{
+												transform: "translateY(50px) translateX("+ temp2 +"px)"
+											},{
+												transform: "translateY(0px) translateX("+ temp2 +"px)"
+											}],{
+												duration: 1500,
+												fill:"forwards"
+											}
+										);
+										swapslot2anim2.addEventListener("finish", 
+											function(){
+												stage2step9si.innerHTML = stage2step9sjvalue;
+												stage2step9sj.style.opacity = "1";
+												swapslot2.style.opacity = "0";	
+												$("#swapslot1").offset({left: defaultSoffset});
+												
+										} );
+									}
+								)
+							};
+							}
 					}
 
 
@@ -1358,8 +1418,6 @@
 						else if (autoplay){
 							document.getElementById("togglebutton").innerHTML = "PLAY";
 							autoplay = false;
-							sjanim.pause();
-							sianim.pause();	
 							pauserunanim();	
 							}
 					}

@@ -1,0 +1,21 @@
+1. swapslot1 move to si pos
+2. swapslot1 copy si
+3. si opacity 0, swapslot1 opacity 1
+
+4. swapslot1 move to center top
+
+5. scroll to sj
+6. swapslot2 move to sj pos
+7. swapslot2 copy sj
+8. swapslot2 opacity 1, sj opacity 0
+9. swapslot2 move down
+
+10. swapslot1 move into sj
+11. sj copy swapslot1
+12. sj opacity 1, swapslot opacity 0
+
+13. scroll to si
+14. swapslot2 move into si
+15. si copy swapslot2
+16. swapslot2 opacity 0
+17. si opacity 1
