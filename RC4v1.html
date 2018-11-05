@@ -1049,7 +1049,7 @@
 					function stage2step3j2(){
 						var jvalue1 = parseInt(document.getElementById("jvalue1").textContent);
 						var jvalue2 = parseInt(document.getElementById("jvalue2").textContent);
-						$("#jvalue2").prop('number', jvalue2);  // change number by 1
+						$("#jvalue2").prop('number', jvalue1);  // change number by 1
 						$("#jvalue2").animateNumber( { number: jvalue1 }, 'linear', stage2step3i() );
 					}
 
@@ -1086,7 +1086,7 @@
 					function stage2step4j3(){
 						var jvalue1 = document.getElementById("jvalue1").textContent;
 						var ivalue3 = document.getElementById("ivalue3").textContent;		
-						$("#jvalue3").prop('number', jvalue3); 
+						$("#jvalue3").prop('number', jvalue1); 
 						$("#jvalue3").animateNumber( { number: jvalue1 }, 'linear');
 					}
 
@@ -1113,7 +1113,7 @@
 					}
 
 					function stage2Sj(sindex){
-						var sj = document.getElementById("stage2T" + sindex).firstChild.textContent;
+						var sj = document.getElementById("stage2S" + sindex).firstChild.textContent;
 						$("#step6Sj").prop('number', sj);
 						$("#step6Sj").animateNumber( { number:sj }, "linear");
 					}
@@ -1165,50 +1165,35 @@
 
 					function stage2swapstep1(){
 						if(!swapstart){
-							stage2step9siid = "stage2S" + document.getElementById("ivalue1").textContent;  // id: stage2Si
+							var siid = document.getElementById("ivalue1").textContent;
+							stage2step9siid = "stage2S" + siid;  // id: stage2Si
 							stage2step9sjid = "stage2S" + document.getElementById("jvalue1").textContent;  // id: stage2Sj
 							stage2step9si = document.getElementById(stage2step9siid).firstChild;           // object S[i]
 							stage2step9sj = document.getElementById(stage2step9sjid).firstChild;	       // object: S[j]
 							stage2step9sivalue = parseInt(stage2step9si.textContent);                      // S[i] numeric value
 							stage2step9sjvalue = parseInt(stage2step9sj.textContent);                      // S[j] numeric value
-							var sileft = $("#" + stage2step9siid).first().offset().left;                  // S[i] object leftOffset
-							var sjleft = $("#" + stage2step9sjid).first().offset().left;                  // S[j] object leftOffset
+							var sileft = $("#" + stage2step9siid).first().offset().left;            
+							var sjleft = $("#" + stage2step9sjid).first().offset().left;  
 							var swapslot1 = document.getElementById("swapslot1") ;                     // swapslot1 object
 							var swapslot2 = document.getElementById("swapslot2") ;                     // swapslot2 object
 							var swapslot1left = $("#swapslot1").offset().left;                         // swapslot1 leftOffset
 							var swapslot2left = $("#swapslot2").offset().left;                         // swapslot2 leftOffset
 							var defaultSoffset = $("#stage2S7").first().offset().left;
-							var S0Soffset = $("#stage2S0").first().offset().left;
-							var tempdistance = 0;                                                     // swapslot1 anim1 x-distance
+							var tempdistance = 0; 
 
-							$("#swapslot1").offset({left: (sileft + 5)});
 
-							if( parseInt(document.getElementById("ivalue1").textContent) == 0 ){
-								tempdistance = defaultSoffset - S0Soffset ;
-							}
-							if( parseInt(document.getElementById("ivalue1").textContent) == 1 ){
+							if ( siid <= 7 ) {
+								$("#swapslot1").offset({ left:sileft + 5 });
 								tempdistance = defaultSoffset - sileft ;
-								var temp0 = $("#stage2S2").first().offset().left;
-								var temp1 = sileft + temp0 + 9;
-								$("#swapslot1").offset({left: temp1});
 							}
-							if( parseInt(document.getElementById("ivalue1").textContent) == 2 ){
-								tempdistance = defaultSoffset - sileft - 50;
-								var temp1 = sileft * 2 + 7;
-								$("#swapslot1").offset({left: temp1});
-							}
-							if( parseInt(document.getElementById("ivalue1").textContent) == 3 ){
+
+							if ( siid >= 249 ) {
+								$("#swapslot1").offset({ left:sileft + 5 });
 								tempdistance = defaultSoffset - sileft ;
-								//var temp1 = sileft + defaultSoffset + 9;
-								//$("#swapslot1").offset({left: temp1});
 							}
-
-
-
-							
 							 
 							swapslot1.innerHTML = stage2step9sivalue;
-							stage2step9si.style.opacity = "0.5";
+							stage2step9si.style.opacity = "0";
 							swapslot1.style.opacity = "1";
 							
 							var swapslot1anim1 = swapslot1.animate( [
@@ -1258,7 +1243,7 @@
 										sjleft = $("#" + stage2step9sjid).first().offset().left;
 										$("#swapslot2").offset({left: sjleft + 5 });
 										swapslot2.innerHTML = stage2step9sjvalue;
-										stage2step9sj.style.opacity = "0.5";
+										stage2step9sj.style.opacity = "0";
 										swapslot2.style.opacity = "1";
 										swapslot2anim1.play();
 										} 
@@ -1283,8 +1268,8 @@
 								
 								swapslot1anim2.addEventListener("finish", function(){
 									stage2step9sj.innerHTML = stage2step9sivalue;
-									stage2step9si.style.opacity = "1";
-									swapslot1.style.opacity = "0.5";
+									stage2step9sj.style.opacity = "1";
+									swapslot1.style.opacity = "0";
 									scrolltosi();});
 							};
 
@@ -1306,16 +1291,24 @@
 											},{
 												transform: "translateY(0px) translateX("+ temp2 +"px)"
 											}],{
-												duration: 1500,
+												duration: 1000,
 												fill:"forwards"
 											}
 										);
 										swapslot2anim2.addEventListener("finish", 
 											function(){
 												stage2step9si.innerHTML = stage2step9sjvalue;
-												stage2step9sj.style.opacity = "1";
+												stage2step9si.style.opacity = "1";
 												swapslot2.style.opacity = "0";	
-												$("#swapslot1").offset({left: defaultSoffset});
+												swapslot1.animate([{
+													transform: " translateX("  +  tempdistance   + "px)"
+												}, {
+													transform: " translateX(0px)"
+												}],{
+													duration: 100,
+													fill:"forwards"
+												});
+												//$("#swapslot1").offset({left: defaultSoffset });
 												
 										} );
 									}
