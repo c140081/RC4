@@ -1006,13 +1006,6 @@
 					var stepcounter = 0;  // step 1 to 4, back and forth
 					var tempvari = 0;   // used in stage2step10i(),  tracks temporary variable i
 					var swapstart = false;  // checks if step9swap starts
-					var stage2step9siid = "stage2S" + document.getElementById("ivalue1").textContent;
-					var stage2step9sjid = "stage2S" + document.getElementById("jvalue1").textContent;
-					var stage2step9si = document.getElementById(stage2step9siid).firstChild;
-					var stage2step9sj = document.getElementById(stage2step9sjid).firstChild;
-					var stage2step9tempi = parseInt(stage2step9si.textContent);
-					var stage2step9tempj = parseInt(stage2step9sj.textContent);
-
 
 					document.getElementById("stage2vectorti").innerHTML = document.getElementById("stage2T0").firstChild.textContent;
 
@@ -1166,12 +1159,13 @@
 					function stage2swapstep1(){
 						if(!swapstart){
 							var siid = document.getElementById("ivalue1").textContent;
-							stage2step9siid = "stage2S" + siid;  // id: stage2Si
-							stage2step9sjid = "stage2S" + document.getElementById("jvalue1").textContent;  // id: stage2Sj
-							stage2step9si = document.getElementById(stage2step9siid).firstChild;           // object S[i]
-							stage2step9sj = document.getElementById(stage2step9sjid).firstChild;	       // object: S[j]
-							stage2step9sivalue = parseInt(stage2step9si.textContent);                      // S[i] numeric value
-							stage2step9sjvalue = parseInt(stage2step9sj.textContent);                      // S[j] numeric value
+							var sjid = document.getElementById("jvalue1").textContent;
+							var stage2step9siid = "stage2S" + siid;  // id: stage2Si
+							var stage2step9sjid = "stage2S" + sjid;  // id: stage2Sj
+							var stage2step9si = document.getElementById(stage2step9siid).firstChild;           // object S[i]
+							var stage2step9sj = document.getElementById(stage2step9sjid).firstChild;	       // object: S[j]
+							var stage2step9sivalue = parseInt(stage2step9si.textContent);               // S[i] numeric value
+							var stage2step9sjvalue = parseInt(stage2step9sj.textContent);               // S[j] numeric value
 							var sileft = $("#" + stage2step9siid).first().offset().left;            
 							var sjleft = $("#" + stage2step9sjid).first().offset().left;  
 							var swapslot1 = document.getElementById("swapslot1") ;                     // swapslot1 object
@@ -1179,8 +1173,14 @@
 							var swapslot1left = $("#swapslot1").offset().left;                         // swapslot1 leftOffset
 							var swapslot2left = $("#swapslot2").offset().left;                         // swapslot2 leftOffset
 							var defaultSoffset = $("#stage2S7").first().offset().left;
+							var S248offset = $("#stage2S248").first().offset().left;
 							var tempdistance = 0; 
 
+							$("#swapslot1").offset({ left:sileft + 5 });
+
+							if ( sjid <= 7 ){
+								tempdistance = defaultSoffset - sjleft ;
+							}
 
 							if ( siid <= 7 ) {
 								$("#swapslot1").offset({ left:sileft + 5 });
@@ -1188,8 +1188,11 @@
 							}
 
 							if ( siid >= 249 ) {
-								$("#swapslot1").offset({ left:sileft + 5 });
-								tempdistance = defaultSoffset - sileft ;
+								tempdistance = S248offset - sileft + 5 ;	
+							}	
+
+							if ( sjid >= 249 ) {
+								tempdistance = S248offset - sjleft + 49 ;
 							}
 							 
 							swapslot1.innerHTML = stage2step9sivalue;
@@ -1316,10 +1319,6 @@
 							};
 							}
 					}
-
-
-
-
 
 					function stage2step10i(){
 						var beforestep10 = tempvari;

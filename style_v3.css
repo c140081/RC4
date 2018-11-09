@@ -131,14 +131,14 @@ li {
 
 #swapslot1 {
 	left: -28%;
-	opacity: 0.5;
+	opacity: 0;
 	background-color: skyblue;
 	border-color: blue;
 }
 
 #swapslot2 {
 	left: -25%;
-	opacity: 0.5;
+	opacity: 0;
 	background-color: skyblue;
 	border-color: blue;
 }
@@ -147,7 +147,7 @@ li {
 	display: inline-block;
 	overflow-x: scroll;
 	overflow-y: hidden;
-	width: 40%;
+	width: 450px;
 	position: relative;
 	float: left;
 	right:-10%;
