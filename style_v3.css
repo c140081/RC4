@@ -20,7 +20,7 @@ h2 {
 
 h3 {
 	text-align: left;
-	margin-left: 15%;
+	margin-left: 10%;
 	margin-top: 30px;
 }
 
@@ -125,20 +125,20 @@ li {
 	height: 80px;
 	position: relative;
 	float: left;
-	right:-10%;
+	left: 10%;
 	display: inline-block;
 }
 
 #swapslot1 {
 	left: -28%;
-	opacity: 0;
+	opacity: 0.5;
 	background-color: skyblue;
 	border-color: blue;
 }
 
 #swapslot2 {
 	left: -25%;
-	opacity: 0;
+	opacity: 0.5;
 	background-color: skyblue;
 	border-color: blue;
 }
@@ -191,7 +191,7 @@ button.confirm {
 	margin: 3% 2% 3%;
 }
 
-div.bpf {
+div.bpf1 {
 	display: block;
 	margin: 5% 8% 8%;
 	border: 1px solid black;
@@ -228,19 +228,6 @@ th {
 	grid-template-areas:
 	'column1 column2 column3'
 	'rowforvector rowforvector rowforvector';	
-}
-
-.gridcontainer2 {
-	display: grid;
-	grid-template-columns: 40% auto;
-	padding: 15px 50px 20px 50px ;
-	background-color: rebeccapurple;
-}
-
-.gridcontainer2 > div {
-	background-color: lightblue;
-	padding: 5px;
-	margin: 15px;
 }
 
 .super{
@@ -441,12 +428,40 @@ th {
 	}
 }
 
+stage3vectorspace {
+	width: 10%;
+	display: block;
+	margin: 5% 8% 8%;
+	border: 1px solid black;
+	text-align: right;
+}
+
+.gridcontainer2 {
+	display: grid;
+	margin: 1% auto 1% 10%;
+	grid-row-gap: 20px;
+	grid-template-columns: 30% 30% 30%;
+	grid-template-rows: 250px auto;
+	grid-template-areas:
+	'forbuttons forvectorS forvectorS'
+	'col1 col2 col3';
+}
+
+.griditem1, .griditem2, .griditem3, .griditem4, .griditem5 { border: 1px solid black; }
+
+.griditem1 {grid-area: forbuttons; }
+.griditem2 {grid-area: forvectorS; }
+.griditem3 {grid-area: col1; }
+.griditem4 {grid-area: col2; }
+.griditem5 {grid-area: col3; }
 
 
 
-
-
-
+div.bpf2 {
+	display: block;
+	border: 1px solid black;
+	padding:10%;
+}	
 
 
 

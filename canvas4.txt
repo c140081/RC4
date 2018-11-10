@@ -1,9 +1,0 @@
-<div class="vbox"><div class="velement" id="0</div><div>S<span class="sub">0</span></div></div>
-<div class="vbox"><div class="velement" id="1</div><div>S<span class="sub">1</span></div></div>
-<div class="vbox"><div class="velement" id="2</div><div>S<span class="sub">2</span></div></div>
-<div class="vbox"><div class="velement" id="0">0</div><div>S<span class="sub">0</span></div></div>
-<div class="vbox"><div class="velement" id="1">1</div><div>S<span class="sub">1</span></div></div>
-<div class="vbox"><div class="velement" id="2">2</div><div>S<span class="sub">2</span></div></div>
-<div class="vbox"><div class="velement" id="stage2S0">0</div><div>S<span class="sub">0</span></div></div>
-<div class="vbox"><div class="velement" id="stage2S1">1</div><div>S<span class="sub">1</span></div></div>
-<div class="vbox"><div class="velement" id="stage2S2">2</div><div>S<span class="sub">2</span></div></div>
