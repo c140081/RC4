@@ -1841,6 +1841,8 @@
 					var stage3step13 = document.getElementsByClassName("stage3step13")[0];
 					var stage3items = [stage3counter, stage3step1, stage3step2, stage3step3, stage3step4, stage3step5, stage3step6, stage3step7, stage3step8, stage3step9, stage3step10, stage3step11, stage3step12, stage3step13];
 					var stage3anims = ["stage2counteranim", "stage2highlight1s", "stage2highlight1s", "stage2highlight2s", "stage2highlight2s"];
+
+					var section3 = document.getElementById("section3");
 					var toggle = document.getElementById("stage3toggle");
 					var forward = document.getElementById("stage3forth");
 					var stage3autoplay = false;
@@ -1850,6 +1852,8 @@
 					var temp1 = 0;   // used in stage2step10i(),  tracks temporary variable i
 					var swapstate = false;  // checks if step9swap starts
 					var section3 = document.getElementById("section3");
+					var stage3hl = true;
+					
 
 
 					function stage3counterpostfix(){
@@ -1951,6 +1955,7 @@
 					}
 
 					function stage3hlsisj(newivalue, newjvalue, siid, sjid){
+						var siel = section3.querySelector("#stage3S" + newivalue).firstChild ; 
 						var sivalue = parseInt(section3.querySelector("#stage3S" + newivalue).firstChild.textContent);
 						var sjvalue = parseInt(section3.querySelector("#stage3S" + newjvalue).firstChild.textContent);
 
@@ -1962,7 +1967,8 @@
 							$("#section3 #" + siid).prop('number', sivalue); 
 							$("#section3 #" + siid).animateNumber( { number: sivalue }, 'linear');
 							$("#section3 #" + sjid).prop('number', sjvalue); 
-							$("#section3 #" + sjid).animateNumber( { number: sjvalue }, 'linear');
+							$("#section3 #" + sjid).animateNumber( { number: sjvalue }, 'linear',
+								function(){stage3hl = true;} );
 						}
 					}
 
@@ -2063,9 +2069,9 @@
 								case 3: stage3step3j1(); break;
 								case 4: stage3step4j2(); break;
 								case 5: stage3step5j3(); break;
-								case 6: stage3step6i4(); break;
-								case 8: stage3step8sisj(); break;
-								case 9: stage3step9i6(); break;
+								case 6: if(stage3hl){ stage3hl = false; stage3step6i4(); }; break;
+								case 8: if(stage3hl){ stage3hl = false; stage3step8sisj(); }; break;
+								case 9: if(stage3hl){ stage3hl = false; stage3step9i6(); }; break;
 								case 10: stage3step10sisj(); break;
 								case 11: stage3step11xy(); break;
 								case 12: stage3step12n(); break;
@@ -2078,7 +2084,32 @@
 							stage3checkanimend(playitem, playanim);  
 						}
 						else {
-							stage2lineanimrunning(false, playitem);	
+							stage2lineanimrunning(false, playitem);
+
+							function vectorredpause(ivalue, animname){
+								var siindex = parseInt(section3.querySelector("#" + ivalue).textContent);
+								var elementSi = document.getElementById( "stage3S"+siindex ).firstChild;
+								if( elementSi.classList.contains(animname) ){
+									stage2lineanimrunning(false, elementSi);	
+								}
+							};
+
+							if(stage3stepcount == 3){
+								vectorredpause("ivalue2", "vectorredfast"); }
+							else if(stage3stepcount == 6){
+								vectorredpause("ivalue4", "vectorred");
+								vectorredpause("jvalue4", "vectorredfast");
+							}
+							else if(stage3stepcount == 8){
+								vectorredpause("ivalue5", "vectorred");
+								vectorredpause("jvalue5", "vectorredfast");
+							}
+							else if(stage3stepcount == 9){
+								vectorredpause("ivalue6", "vectorred");
+								vectorredpause("jvalue6", "vectorredfast");
+							}
+							else if(stage3stepcount == 12){
+								vectorredpause("nvalue2", "vectorredfast"); }
 						}
 					}
 
