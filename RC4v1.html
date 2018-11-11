@@ -1162,12 +1162,6 @@
 					    temp.parentNode.removeChild(temp);
 					}
 
-					function stage2swapstep2(animobject, el1, el2){
-						animobject.addEventListener('finish', function(){
-							swapElements(el1, el2);
-						});
-					}
-
 					function stage2swapstep1(){
 						if(!swapstart){
 							var siid = document.getElementById("ivalue1").textContent;
@@ -1358,7 +1352,7 @@
 						var playitem = stage2items[stepcounter];
 						if(autoplay) {							
 							if ( stepcounter <= 4) { var playanim = stage2anims[stepcounter];}
-							else if ( stepcounter == 9) { var playanim = "stage2highlight5s";}
+							else if ( stepcounter == 9) { var playanim = "stage2highlight6s";}
 							else {	var playanim = stage2anims[1];	}
 							stage2addanim(true, playitem, playanim);   // add paused anim to CLEAN el
 							stage2lineanimrunning(true, playitem);     // set anim running
@@ -1524,7 +1518,7 @@
 						<div class="vbox" id="stage3S0"><div class="velement">0</div><div>S<span class="sub">0</span></div></div>
 						<div class="vbox" id="stage3S1"><div class="velement">1</div><div>S<span class="sub">1</span></div></div>
 						<div class="vbox" id="stage3S2"><div class="velement">2</div><div>S<span class="sub">2</span></div></div>
-						<div class="hscroll">
+						<div class="hscroll" id="hscrollS">
 							<ul>
 								<li><div class="vbox" id="stage3S3"><div class="velement">3</div><div>S<span class="sub">3</span></div></div></li>
 								<li><div class="vbox" id="stage3S4"><div class="velement">4</div><div>S<span class="sub">4</span></div></div></li>
@@ -1846,16 +1840,17 @@
 					var stage3step12 = document.getElementsByClassName("stage3step12")[0];
 					var stage3step13 = document.getElementsByClassName("stage3step13")[0];
 					var stage3items = [stage3counter, stage3step1, stage3step2, stage3step3, stage3step4, stage3step5, stage3step6, stage3step7, stage3step8, stage3step9, stage3step10, stage3step11, stage3step12, stage3step13];
-					var stage3anims = ["stage2counteranim", "stage2highlight1s", "stage2highlight1s", "stage2highlight3s", "stage2highlight2s"];
+					var stage3anims = ["stage2counteranim", "stage2highlight1s", "stage2highlight1s", "stage2highlight2s", "stage2highlight2s"];
 					var toggle = document.getElementById("stage3toggle");
 					var forward = document.getElementById("stage3forth");
-					
+					var stage3autoplay = false;
 					var stage3roundcount = parseInt(stage3counter.textContent); 
 					var stage3stepcount = 0;  // step 1 to 4, back and forth
 					var itracker = 0;
 					var temp1 = 0;   // used in stage2step10i(),  tracks temporary variable i
 					var swapstate = false;  // checks if step9swap starts
 					var section3 = document.getElementById("section3");
+
 
 					function stage3counterpostfix(){
 						var count = stage3counter.textContent.toString();
@@ -1882,6 +1877,31 @@
 						$("#section3 #ivalue2").animateNumber( { number: temp }, 'linear' );
 					}
 
+					function animonce(element, playanim){
+						stage2addanim(true, element, playanim);
+						stage2lineanimrunning(true, element);
+						element.addEventListener(
+							"webkitAnimationEnd", 
+							function(){
+								if (element.classList.contains(playanim)){ element.classList.remove(playanim);}
+							} );	
+						};
+
+					function stage3hscrollto(sindex, duration, callbacktype, callbackname){  // animclassname or false
+						var defaultSoffset = $("#stage3S7").offset().left;
+						var elementoffset = $("#section3 #stage3S" + sindex).offset().left ;
+						var element = section3.querySelector("#stage3S" + sindex ).firstChild ;
+						if( callbacktype == 0 ){
+							$("#section3 #hscrollS").animate({ scrollLeft:(elementoffset - defaultSoffset) }, duration);
+						}
+						else if ( callbacktype == 1 ) {
+							$("#section3 #hscrollS").animate({ scrollLeft:(elementoffset - defaultSoffset) }, duration, animonce(element, callbackname));
+						}
+						else if ( callbacktype == 2 ) {
+							$("#section3 #hscrollS").animate({ scrollLeft:(elementoffset - defaultSoffset) }, duration, function(){callbackname();});
+						}
+					}
+
 					function stage3step3j1(){ 
 						var jvalue1 = parseInt(section3.querySelector("#jvalue1").textContent);
 						var jvalue3 = parseInt(section3.querySelector("#jvalue3").textContent);
@@ -1893,6 +1913,7 @@
 							var ivalue2 = parseInt(section3.querySelector("#ivalue2").textContent);
 							if(stage3roundcount > 0 ){ $("#section3 #ivalue3").prop('number', ivalue2-1);  } 
 							$("#section3 #ivalue3").animateNumber( { number: ivalue2 }, 'linear' );
+							stage3hscrollto(ivalue2, 400, 1, "vectorredfast");
 						}
 					}
 
@@ -1926,17 +1947,23 @@
 						$("#section3 #ivalue4").prop('number', ivalue4); 
 						$("#section3 #ivalue4").animateNumber( { number: newivalue4 }, 'linear');
 						$("#section3 #jvalue4").prop('number', jvalue4); 
-						$("#section3 #jvalue4").animateNumber( { number: newjvalue4 }, 'linear', stage3step6sisj(newivalue4, newjvalue4, "sivalue2", "sjvalue1"));
+						$("#section3 #jvalue4").animateNumber( { number: newjvalue4 }, 'linear', stage3hlsisj(newivalue4, newjvalue4, "sivalue2", "sjvalue1"));
 					}
 
-					function stage3step6sisj(newivalue, newjvalue, siid, sjid){
+					function stage3hlsisj(newivalue, newjvalue, siid, sjid){
 						var sivalue = parseInt(section3.querySelector("#stage3S" + newivalue).firstChild.textContent);
 						var sjvalue = parseInt(section3.querySelector("#stage3S" + newjvalue).firstChild.textContent);
 
-						$("#section3 #" + siid).prop('number', sivalue); 
-						$("#section3 #" + siid).animateNumber( { number: sivalue }, 'linear');
-						$("#section3 #" + sjid).prop('number', sjvalue); 
-						$("#section3 #" + sjid).animateNumber( { number: sjvalue }, 'linear');
+						stage3hscrollto(newivalue, 400, 1, "vectorred");
+						stage3hscrollto(newivalue, 700, 2, stage3step6sichange);
+
+						function stage3step6sichange(){
+							stage3hscrollto(newjvalue, 400, 1, "vectorredfast");
+							$("#section3 #" + siid).prop('number', sivalue); 
+							$("#section3 #" + siid).animateNumber( { number: sivalue }, 'linear');
+							$("#section3 #" + sjid).prop('number', sjvalue); 
+							$("#section3 #" + sjid).animateNumber( { number: sjvalue }, 'linear');
+						}
 					}
 
 					function stage3step8sisj(){
@@ -1945,7 +1972,7 @@
 						$("#section3 #ivalue5").prop('number', newivalue5); 
 						$("#section3 #ivalue5").animateNumber( { number: newivalue5 }, 'linear');
 						$("#section3 #jvalue5").prop('number', newjvalue5); 
-						$("#section3 #jvalue5").animateNumber( { number: newjvalue5 }, 'linear', stage3step6sisj(newjvalue5, newivalue5, "sivalue3", "sjvalue2"));
+						$("#section3 #jvalue5").animateNumber( { number: newjvalue5 }, 'linear', stage3hlsisj(newjvalue5, newivalue5, "sivalue3", "sjvalue2"));
 					}
 
 					function stage3step9i6(){
@@ -1954,7 +1981,7 @@
 						$("#section3 #ivalue6").prop('number', ivalue6); 
 						$("#section3 #ivalue6").animateNumber( { number: ivalue6 }, 'linear');
 						$("#section3 #jvalue6").prop('number', jvalue6); 
-						$("#section3 #jvalue6").animateNumber( { number: jvalue6 }, 'linear');
+						$("#section3 #jvalue6").animateNumber( { number: jvalue6 }, 'linear', stage3hlsisj(ivalue6, jvalue6, "sivalue4", "sjvalue3"));
 					}
 
 					function stage3step10sisj(){
@@ -1978,7 +2005,8 @@
 					function stage3step12n(){
 						var nvalue1 = parseInt(section3.querySelector("#nvalue1").textContent);
 						$("#section3 #nvalue2").prop('number', nvalue1); 
-						$("#section3 #nvalue2").animateNumber( { number: nvalue1 }, 'linear');
+						$("#section3 #nvalue2").animateNumber( { number: nvalue1 }, 'linear',
+							function(){stage3hscrollto(nvalue1, 400, 1, "vectorredfast")});
 					}
 
 					function stage3step13sn(){
@@ -2020,9 +2048,10 @@
 							stage3counter.innerHTML = stage3roundcount;
 						}
 						var playitem = stage3items[stage3stepcount];
-						if(autoplay) {							
-							if ( stage3stepcount <= 2) { var playanim = stage3anims[stage3stepcount];}
-							//else if ( stage3stepcount == 9) { var playanim = "stage2highlight5s";}
+						if(stage3autoplay) {							
+							if ( stage3stepcount <= 3) { var playanim = stage3anims[stage3stepcount];}
+							else if (stage3stepcount == 6 || stage3stepcount == 8 || stage3stepcount == 9 ) { var playanim = "stage2highlight4s";}
+							else if (stage3stepcount == 12){ var playanim = "stage2highlight2s"; }
 							else {	var playanim = stage3anims[1];	}
 							stage3addanim(true, playitem, playanim);   
 							stage2lineanimrunning(true, playitem);    
@@ -2056,15 +2085,15 @@
 
 					function toggleanimation() {	// respond to user pause/play the animation
 
-						if (!autoplay){ 							
+						if (!stage3autoplay){ 							
 							toggle.innerHTML = "PAUSE"; 
-							autoplay = true;
+							stage3autoplay = true;
 							stage3animation();
 							}
 							
-						else if (autoplay){
+						else if (stage3autoplay){
 							toggle.innerHTML = "PLAY";
-							autoplay = false;
+							stage3autoplay = false;
 							stage3animation();	
 							}
 					}

@@ -305,9 +305,14 @@ th {
 	font-weight: normal;
 }
 
-
-.stage2highlight5s {
+.stage2highlight6s {
 	animation: highlight 6s 1;
+	animation-play-state: paused;
+}
+
+
+.stage2highlight4s {
+	animation: highlight 4s 1;
 	animation-play-state: paused;
 }
 
@@ -351,6 +356,11 @@ th {
 
 }
 
+
+.vectorredfast {
+		animation: vectorred 1.5s 1;
+		animation-play-state: paused;
+}
 
 .vectorred {
 		animation: vectorred 2s 1;
