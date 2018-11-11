@@ -1445,14 +1445,56 @@
 							tempi1 += 1;
 							tempj1 = tempj2 ;
 						};
-						stage3updateS();
-						
+						stage3updateS();						
+					}
+
+					function stage2reset(){
+						var stage2S = "stage2S" ;
+						var sivalue = 0;
+						for( i=0; i<256; i++){
+							document.getElementById(stage2S + i).firstChild.innerHTML = i;
+						}
+						stage2counter.innerHTML = 0;
+						togglebutton.innerHTML = "PLAY";
+						autoplay = false;
+						roundcounter = parseInt(stage2counter.textContent); 
+						stepcounter = 0;  
+						tempvari = 0;   
+						swapstart = false; 
+
+						document.getElementById("ivalue1").innerHTML = 0;
+						document.getElementById("ivalue2").innerHTML = "i";
+						document.getElementById("ivalue3").innerHTML = "i";
+						document.getElementById("ivalue4").innerHTML = "i";
+						document.getElementById("ivalue5").innerHTML = "i";
+
+						document.getElementById("jvalue1").innerHTML = 0;
+						document.getElementById("jvalue2").innerHTML = "j";	
+						document.getElementById("jvalue3").innerHTML = 0;
+						document.getElementById("jvalue4").innerHTML = 0;
+						document.getElementById("jvalue5").innerHTML = "j";
+						document.getElementById("jvalue6").innerHTML = "j";
+
+						document.getElementById("stage2vectorsi").innerHTML = 0;
+						document.getElementById("stage2vectorti").innerHTML = document.getElementById("stage2T0").firstChild.textContent; ;
+						document.getElementById("step6Sj").innerHTML = "";
+						document.getElementById("step6Si").innerHTML = "";
+
+					}
+
+					function forwardbuttonvaluechange(){
+						if( roundcounter >= 256){
+							stage2reset(); 
+							forwardbutton.innerHTML = "FORWARD"; }
+						else { 	
+							stage2forward();					
+							forwardbutton.innerHTML = "RESET"; }
 					}
 
 
 					togglebutton.addEventListener("click", function(){togglebuttonvaluechange()}, false);
 
-					forwardbutton.addEventListener("click", function(){stage2forward()}, false);
+					forwardbutton.addEventListener("click", function(){forwardbuttonvaluechange()}, false);
 
 					
 				</script>
@@ -1950,7 +1992,6 @@
 							prefix0 = prefix0 + "0" ;
 						}
 						document.getElementById("snvaluebinary").innerHTML = prefix0 + bkey;
-
 					}
 
 					function stage3addanim(add, itemx, animx){
