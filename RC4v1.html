@@ -1799,14 +1799,14 @@
 					<p class="stage3step5">j = <a id="jvalue3">j</a> </p>
 
 					<h3> Step 2:</h3>
-					<p class="stage3step6">
-						S[<a id="ivalue4">i</a>] = <a id="sivalue2"></a>, 
-						S[<a id="jvalue4">j</a>]= <a id="sjvalue1"></a> 
+					<p id="stage3step67">
+						<span class="stage3step6">S[<a id="ivalue4">i</a>] = <a id="sivalue2"></a>, </span> 
+						<span class="stage3step7">S[<a id="jvalue4">j</a>]= <a id="sjvalue1"></a></span> 
 					</p>
-					<p class="stage3step7"> Swap S[i], S[j] </p>
-					<p class="stage3step8">
+					<p class="stage3step8"> Swap S[i], S[j] </p>
+					<p class="stage3step9" >
 						S[<a id="ivalue5">i</a>] = <a id="sivalue3"></a>, 
-						S[<a id="jvalue5">j</a>]= <a id="sjvalue2"></a> 
+						<span class="stage3step10"> S[<a id="jvalue5">j</a>]= <a id="sjvalue2"></a></span> 
 					</p>
 
 				</div>
@@ -1814,11 +1814,11 @@
 				<div class="griditem5">
 					<h3> Step 3:</h3>
 
-					<p class="stage3step9">n = (S[<a id="ivalue6">i</a>] + S[<a id="jvalue6">j</a>]) mod 256 </p>
-					<p class="stage3step10">n = (<a id="sivalue4">x</a> + <a id="sjvalue3">y</a>) mod 256 </p>
-					<p class="stage3step11">n = <a id="nvalue1"></a> </p>
-					<p class="stage3step12">byte-key = S[n] = S[<a id="nvalue2">n</a>] </p>
-					<p class="stage3step13">byte-key = <a id="snvalue1">0</a> = <a id="snvaluebinary">0</a>	</p>
+					<p class="stage3step11">n = (S[<a id="ivalue6">i</a>] + S[<a id="jvalue6">j</a>]) mod 256 </p>
+					<p class="stage3step12">n = (<a id="sivalue4">x</a> + <a id="sjvalue3">y</a>) mod 256 </p>
+					<p class="stage3step13">n = <a id="nvalue1"></a> </p>
+					<p class="stage3step14">byte-key = S[n] = S[<a id="nvalue2">n</a>] </p>
+					<p class="stage3step15">byte-key = <a id="snvalue1">0</a> = <a id="snvaluebinary">0</a>	</p>
 				</div>
 
 				<div class="bottomspace"></div>
@@ -1840,7 +1840,7 @@
 					var stage3step12 = document.getElementsByClassName("stage3step12")[0];
 					var stage3step13 = document.getElementsByClassName("stage3step13")[0];
 					var stage3items = [stage3counter, stage3step1, stage3step2, stage3step3, stage3step4, stage3step5, stage3step6, stage3step7, stage3step8, stage3step9, stage3step10, stage3step11, stage3step12, stage3step13];
-					var stage3anims = ["stage2counteranim", "stage2highlight1s", "stage2highlight1s", "stage2highlight2s", "stage2highlight2s"];
+					var stage3anims = ["stage2counteranim", "stage2highlight1s", "stage2highlight1s", "stage2highlight2s", "stage2highlight2s", "placeholder2s"];
 
 					var section3 = document.getElementById("section3");
 					var toggle = document.getElementById("stage3toggle");
@@ -1852,7 +1852,8 @@
 					var temp1 = 0;   // used in stage2step10i(),  tracks temporary variable i
 					var swapstate = false;  // checks if step9swap starts
 					var section3 = document.getElementById("section3");
-					var stage3hl = true;
+
+					var stage3step67 = document.getElementById("stage3step67");
 					
 
 
@@ -1944,14 +1945,28 @@
 					}
 
 					function stage3step6i4(){
+						stage3step67.style.color = "blue";
+						stage3step67.style.fontWeight = "bold";
 						var ivalue4 = parseInt(section3.querySelector("#ivalue4").textContent);
-						var jvalue4 = parseInt(section3.querySelector("#jvalue4").textContent);
 						var newivalue4 = parseInt(section3.querySelector("#ivalue2").textContent);
-						var newjvalue4 = parseInt(section3.querySelector("#jvalue3").textContent);
 						$("#section3 #ivalue4").prop('number', ivalue4); 
-						$("#section3 #ivalue4").animateNumber( { number: newivalue4 }, 'linear');
+						$("#section3 #ivalue4").animateNumber( { number: newivalue4 }, 'linear', function(){stage3hscrollto(newivalue4, 400, 1, "vectorredfast");});
+						$("#section3 #sivalue2").prop('number', newivalue4); 
+						$("#section3 #sivalue2").animateNumber( { number: newivalue4 }, 'linear');
+					}
+
+					function stage3step7j4(){
+						var jvalue4 = parseInt(section3.querySelector("#jvalue4").textContent);
+						var newjvalue4 = parseInt(section3.querySelector("#jvalue3").textContent);
 						$("#section3 #jvalue4").prop('number', jvalue4); 
-						$("#section3 #jvalue4").animateNumber( { number: newjvalue4 }, 'linear', stage3hlsisj(newivalue4, newjvalue4, "sivalue2", "sjvalue1"));
+						$("#section3 #jvalue4").animateNumber( { number: newjvalue4 }, 'linear',function(){stage3hscrollto(newjvalue4, 400, 1, "vectorredfast");});
+						$("#section3 #sjvalue1").prop('number', newjvalue4); 
+						$("#section3 #sjvalue1").animateNumber( { number: newjvalue4 }, 'linear');
+
+						stage3step7.addEventListener("webkitAnimationEnd", function(){
+								stage3step67.style.color = "black";
+								stage3step67.style.fontWeight = "normal";
+						}, true);
 					}
 
 					function stage3hlsisj(newivalue, newjvalue, siid, sjid){
@@ -1967,8 +1982,7 @@
 							$("#section3 #" + siid).prop('number', sivalue); 
 							$("#section3 #" + siid).animateNumber( { number: sivalue }, 'linear');
 							$("#section3 #" + sjid).prop('number', sjvalue); 
-							$("#section3 #" + sjid).animateNumber( { number: sjvalue }, 'linear',
-								function(){stage3hl = true;} );
+							$("#section3 #" + sjid).animateNumber( { number: sjvalue }, 'linear');
 						}
 					}
 
@@ -2043,7 +2057,10 @@
 						stage3animation(); 
 					}
 
-					function stage3checkanimend(itemx, animx){ itemx.addEventListener("webkitAnimationEnd", function(){stage3addanim(false, itemx, animx); }, true); }
+					function stage3checkanimend(itemx, animx){ itemx.addEventListener("webkitAnimationEnd", function(){
+						stage3addanim(false, itemx, animx); 
+						stage2lineanimrunning(false, itemx);
+					}, true); }
 
 
 					function stage3animation(){    // loop, pause/run the stage2 animation
@@ -2056,8 +2073,7 @@
 						var playitem = stage3items[stage3stepcount];
 						if(stage3autoplay) {							
 							if ( stage3stepcount <= 3) { var playanim = stage3anims[stage3stepcount];}
-							else if (stage3stepcount == 6 || stage3stepcount == 8 || stage3stepcount == 9 ) { var playanim = "stage2highlight4s";}
-							else if (stage3stepcount == 12){ var playanim = "stage2highlight2s"; }
+							else if (stage3stepcount == 6 || stage3stepcount == 7 ) { var playanim = "placeholder2s";}
 							else {	var playanim = stage3anims[1];	}
 							stage3addanim(true, playitem, playanim);   
 							stage2lineanimrunning(true, playitem);    
@@ -2069,13 +2085,14 @@
 								case 3: stage3step3j1(); break;
 								case 4: stage3step4j2(); break;
 								case 5: stage3step5j3(); break;
-								case 6: if(stage3hl){ stage3hl = false; stage3step6i4(); }; break;
-								case 8: if(stage3hl){ stage3hl = false; stage3step8sisj(); }; break;
-								case 9: if(stage3hl){ stage3hl = false; stage3step9i6(); }; break;
-								case 10: stage3step10sisj(); break;
-								case 11: stage3step11xy(); break;
-								case 12: stage3step12n(); break;
-								case 13: stage3step13sn(); break;
+								case 6: stage3step6i4(); break;
+								case 7: stage3step7j4(); break;
+								//case 8: stage3step8sisj(); break;
+								//case 9: if(stage3hl){ stage3hl = false; stage3step9i6(); }; break;
+								//case 10: stage3step10sisj(); break;
+								//case 11: stage3step11xy(); break;
+								//case 12: stage3step12n(); break;
+								//case 13: stage3step13sn(); break;
 								default: break;
 							}
 							
@@ -2097,16 +2114,10 @@
 							if(stage3stepcount == 3){
 								vectorredpause("ivalue2", "vectorredfast"); }
 							else if(stage3stepcount == 6){
-								vectorredpause("ivalue4", "vectorred");
+								vectorredpause("ivalue4", "vectorredfast");
+							}
+							else if(stage3stepcount == 7){
 								vectorredpause("jvalue4", "vectorredfast");
-							}
-							else if(stage3stepcount == 8){
-								vectorredpause("ivalue5", "vectorred");
-								vectorredpause("jvalue5", "vectorredfast");
-							}
-							else if(stage3stepcount == 9){
-								vectorredpause("ivalue6", "vectorred");
-								vectorredpause("jvalue6", "vectorredfast");
 							}
 							else if(stage3stepcount == 12){
 								vectorredpause("nvalue2", "vectorredfast"); }
