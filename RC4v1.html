@@ -1813,9 +1813,12 @@
 						<span class="stage3step7">S[<a id="jvalue4">j</a>]= <a id="sjvalue1"></a></span> 
 					</p>
 					<p id="stage3step8to11"> Swap S[i], S[j] </p>
+					<div id="stage3step7scrolltosi"></div>
 					<div class="stage3step8"></div>
+					<div id="stage3step8scrolltosj"></div>
 					<div class="stage3step9"></div>
 					<div class="stage3step10"></div>
+					<div id="stage3step10scrolltosi"></div>
 					<div class="stage3step11"></div>
 					<p id="stage3step1213">
 						<span class="stage3step12">S[<a id="ivalue5">i</a>] = <a id="sivalue3"></a>, 
@@ -1862,7 +1865,11 @@
 					var stage3step18 = document.getElementsByClassName("stage3step18")[0];
 					var stage3step19 = document.getElementsByClassName("stage3step19")[0];
 
-					var stage3items = [stage3counter, stage3step1, stage3step2, stage3step3, stage3step4, stage3step5, stage3step6, stage3step7, stage3step8, stage3step9, stage3step10, stage3step11, stage3step12, stage3step13, stage3step14, stage3step15, stage3step16, stage3step17, stage3step18, stage3step19];
+					var stage3step7scrolltosi = document.getElementById("stage3step7scrolltosi");
+					var stage3step8scrolltosj = document.getElementById("stage3step8scrolltosj");
+					var stage3step10scrolltosi = document.getElementById("stage3step10scrolltosi");
+
+					var stage3items = [stage3counter, stage3step1, stage3step2, stage3step3, stage3step4, stage3step5, stage3step6, stage3step7, stage3step7scrolltosi, stage3step8, stage3step8scrolltosj, stage3step9, stage3step10, stage3step10scrolltosi, stage3step11, stage3step12, stage3step13, stage3step14, stage3step15, stage3step16, stage3step17, stage3step18, stage3step19];
 					var stage3anims = ["stage2counteranim", "stage2highlight1s", "stage2highlight1s", "stage2highlight2s", "stage2highlight2s", "placeholder2s"];
 
 					var section3 = document.getElementById("section3");
@@ -1879,6 +1886,7 @@
 					var stage3step8to11 = document.getElementById("stage3step8to11");
 					var stage3step1213 = document.getElementById("stage3step1213");
 					var stage3step1415 = document.getElementById("stage3step1415");
+
 
 
 
@@ -2107,15 +2115,6 @@
 						stage3addanim(false, itemx, animx); 
 						stage2lineanimrunning(false, itemx);
 					}, true); }
-
-					function vectorredpause(ivalue, animname){
-						var siindex = parseInt(section3.querySelector("#" + ivalue).textContent);
-						var elementSi = document.getElementById( "stage3S"+siindex ).firstChild;
-						if( elementSi.classList.contains(animname) ){
-							stage2lineanimrunning(false, elementSi);	
-							}
-						}
-
  
 					var swapslot1 = section3.querySelector("#swapslot1") ;
 					var swapslot2 = section3.querySelector("#swapslot2") ;
@@ -2126,6 +2125,7 @@
 					var sileft = $("#stage3S0").first().offset().left;            
 					var sjleft = $("#stage3S1").first().offset().left; 
 					var stage3S7offset = $("#stage3S7").first().offset().left;
+					var S248offset = $("#stage3S248").first().offset().left;
 					var tempdistance = 0; 
 					var stage3step8started = false;
 					var step8anim = stage3step9slot2();
@@ -2135,8 +2135,12 @@
 					var step10anim = stage3step9slot2();
 					var stage3step11started = false;
 					var step11anim = stage3step9slot2();
-					       
 
+					function stage3scrolltosi(){
+						var sielindex = parseInt(section3.querySelector("#ivalue2").textContent);
+						stage3hscrollto(sielindex, 900, 0, "");
+					}
+					       
 					function stage3step8slot1(){
 						stage3step8to11.style.color = "blue";
 						stage3step8to11.style.fontWeight = "bold";
@@ -2151,21 +2155,29 @@
 						sjleft = $("#" + sjid).first().offset().left;  
 						var swapslot1left = $("#section3 #swapslot1").offset().left;
 						
-						if ( jvalue3 <= 7 ) {
-							tempdistance = sileft - sjleft;
-							}
 						if ( ivalue2 <= 7 ) {
 							$("#section3 #swapslot1").offset({ left:sileft + 5 });
 							tempdistance = stage3S7offset - sileft ;
-							//alert("ivalue2 is called, stage3S7offset = " + stage3S7offset + "; sileft = " + sileft + "; siid = " + siid );
+							if ( jvalue3 <= 7 ) {
+								tempdistance = sjleft - sileft ;
+							}
+							else if ( jvalue3 >= 249) {
+								tempdistance = S248offset - sjleft + 49;
+								}
 						}
-						if ( ivalue2 >= 249 ) {
+
+						else if ( ivalue2 >= 249 ) {
 							$("#section3 #swapslot1").offset({ left:sileft + 5 });
 							tempdistance = stage3S7offset - sileft ;
+							if ( jvalue3 <= 7 ) {
+								tempdistance = sjleft - sileft ;
 							}
-						if ( jvalue3 >= 249) {
-							tempdistance = S248offset - sjleft + 49;
-						}
+							else if ( jvalue3 >= 249) {
+								tempdistance = S248offset - sjleft + 49;
+								}
+							}
+
+						//alert("ivalue2 is called, stage3S7offset = " + stage3S7offset + "; sileft = " + sileft + "; sjleft = " + sjleft );						
 
 						swapslot1.innerHTML = sivalue;
 						var swapslot1anim1 = swapslot1.animate( [
@@ -2180,20 +2192,19 @@
 								}, {
 									transform:"translateY(-50px) translateX("  +  tempdistance  + "px)"
 								}], {
-									duration: 1000,
+									duration: 900,
 									direction: "normal",
 									fill: "forwards",
 									easing:"linear"
 								}
 							);
-						swapslot1anim1.pause();
-						swapslot1anim1.addEventListener("finish", function(){
-							$("#section3 .hscrollS").first().animate(
-									{ scrollLeft:( sjleft - stage3S7offset) }, 
-									500);
-						});				
-
+						swapslot1anim1.pause();		
 						return swapslot1anim1;						
+					}
+
+					function stage3scrolltosj(){
+						var jvalue3 = parseInt(section3.querySelector("#jvalue3").textContent);
+						stage3hscrollto(jvalue3, 900, 0, "");
 					}
 
 					function stage3step9slot2(){
@@ -2216,7 +2227,7 @@
 								}, {
 									transform:"translateY(50px) translateX(50px)"
 								}],{
-									duration: 1000,
+									duration: 800,
 									direction:"normal",
 									fill:"forwards",
 									easing:"linear"
@@ -2235,7 +2246,7 @@
 							},{
 								transform: "translateY(0px) translateX("  +  tempdistance   + "px)"
 							} ], {
-								duration: 1000,
+								duration: 800,
 								fill:"forwards"
 							});
 						swapslot1anim2.pause();
@@ -2265,7 +2276,7 @@
 							},{
 								transform: "translateY(0px) translateX("+ temp2 +"px)"
 							}],{
-								duration: 1000,
+								duration: 900,
 								fill:"forwards"
 							}
 						);
@@ -2275,7 +2286,7 @@
 								elementsi.innerHTML = sjvalue;
 								elementsi.style.opacity = "1";
 								swapslot2.style.opacity = "0";	
-								var endanim = swapslot1.animate([{
+								var endanim1 = swapslot1.animate([{
 										transform: " translateX("  +  tempdistance   + "px)"
 									}, {
 										transform: " translateX(0px)"
@@ -2283,7 +2294,16 @@
 										duration: 100,
 										fill:"forwards"
 									});
-								endanim.addEventListener('finish', function(){
+								var endanim2 = swapslot2.animate([{
+										transform: " translateX("  +  temp2   + "px)"
+									}, {
+										transform: " translateX(0px)"
+									}],{
+										duration: 100,
+										fill:"forwards"
+									});
+
+								endanim1.addEventListener('finish', function(){
 									stage3step8to11.style.color = "black";
 									stage3step8to11.style.fontWeight = "normal";
 								})			
@@ -2294,7 +2314,7 @@
 					}
 
 					function stage3animation(){    // loop, pause/run the stage2 animation
-						if ( stage3stepcount >= 20 ){ 
+						if ( stage3stepcount >= 23 ){ 
 							stage3stepcount = 0;  
 							itracker += 1;
 							stage3roundcount += 1;
@@ -2303,7 +2323,10 @@
 						var playitem = stage3items[stage3stepcount];
 						if(stage3autoplay) {							
 							if ( stage3stepcount <= 3) { var playanim = stage3anims[stage3stepcount];}
-							else if (stage3stepcount >= 6 && stage3stepcount <= 15 ) { var playanim = "placeholder2s";}
+							else if ( stage3stepcount >= 6 && stage3stepcount <= 7 ) { var playanim = "placeholder2s";} 
+							else if ( stage3stepcount >= 8 && stage3stepcount <= 14 ) { var playanim = "placeholder1s";} 
+							else if ( stage3stepcount >= 15 && stage3stepcount <= 18 ) { var playanim = "placeholder2s";} 
+							else if ( stage3stepcount >= 21 ) { var playanim = "stage2highlight2s";}
 							else {	var playanim = stage3anims[1];	}
 							stage3addanim(true, playitem, playanim);   
 							stage2lineanimrunning(true, playitem);    
@@ -2316,8 +2339,10 @@
 								case 4: stage3step4j2(); break;
 								case 5: stage3step5j3(); break;
 								case 6: stage3step6i4(); break;
-								case 7: stage3step7j4(); break;
-								case 8: if ( !stage3step8started ){
+								case 7: stage3step7j4(); 
+										break;
+								case 8: stage3scrolltosi(); break;
+								case 9: if ( !stage3step8started ){
 											step8anim = stage3step8slot1(); 
 											elementsi.style.opacity = "0";
 											swapslot1.style.opacity = "1";
@@ -2326,7 +2351,8 @@
 										} 
 										else { step8anim.play(); }
 										break;
-								case 9:  stage3step8started = false; 
+								case 10: stage3scrolltosj(); break;
+								case 11:  stage3step8started = false; 
 										if ( !stage3step9started ){
 											step9anim = stage3step9slot2();
 											elementsj.style.opacity = "0";
@@ -2336,7 +2362,7 @@
 										} 
 										else { step9anim.play(); }
 										break;
-								case 10: stage3step9started = false; 
+								case 12: stage3step9started = false; 
 										if ( !stage3step10started ){
 											step10anim = stage3step10slot1();
 											step10anim.play();
@@ -2344,7 +2370,8 @@
 										} 
 										else { step10anim.play(); }
 										break;
-								case 11:  stage3step10started = false; 
+								case 13:  stage3scrolltosi(); break;
+								case 14:  stage3step10started = false; 
 										if ( !stage3step11started ){
 											step11anim = stage3step11slot2();
 											step11anim.play();
@@ -2352,15 +2379,15 @@
 										} 
 										else { step11anim.play(); }
 										break;
-								case 12: stage3step11started = false; stage3step12i5();
+								case 15: stage3step11started = false; stage3step12i5();
 											break;
-								case 13: stage3step13j5(); break;
-								case 14: stage3step14i6(); break;
-								case 15: stage3step15j6(); break;
-								case 16: stage3step16sisj(); break;
-								case 17: stage3step17xy(); break;
-								case 18: stage3step18n(); break;
-								case 19: stage3step19sn(); break;
+								case 16: stage3step13j5(); break;
+								case 17: stage3step14i6(); break;
+								case 18: stage3step15j6(); break;
+								case 19: stage3step16sisj(); break;
+								case 20: stage3step17xy(); break;
+								case 21: stage3step18n(); break;
+								case 22: stage3step19sn(); break;
 								default: break;
 							}
 							
@@ -2370,6 +2397,14 @@
 						}
 						else {
 							stage2lineanimrunning(false, playitem);
+
+							function vectorredpause(ivalue, animname){
+								var siindex = parseInt(section3.querySelector("#" + ivalue).textContent);
+								var elementSi = document.getElementById( "stage3S"+siindex ).firstChild;
+								if( elementSi.classList.contains(animname) ){
+									stage2lineanimrunning(false, elementSi);	
+									}
+							}
 
 							if(stage3stepcount == 3){
 								vectorredpause("ivalue2", "vectorredfast"); }

@@ -147,7 +147,8 @@ li {
 	display: inline-block;
 	overflow-x: scroll;
 	overflow-y: hidden;
-	width: 450px;
+	max-width: 450px;
+	min-width: 255px;
 	position: relative;
 	float: left;
 	right:-10%;
@@ -390,6 +391,12 @@ th {
 	animation: voidanim 2s 1;
 	animation-play-state: paused;
 }
+
+.placeholder1s {
+	animation: voidanim 1.5s 1;
+	animation-play-state: paused;
+}
+
 
 @keyframes voidanim {
 	0% {
