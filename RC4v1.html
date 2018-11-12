@@ -98,7 +98,7 @@
 
 		<div id="sectionM">		
 			<h1>RC4</h1>
-			<p>RC4 is a stream cipher designed in 1987 by Ron Rivest for RSA Security. It is a variable key size stream cipher with byte-oriented operations. The algorithm is based on the use of a random permutation. Analysis shows that the period of the cipher is overwhelmingly likely to be greater tha 10 1000. Eight to sixteen machine operations are required per output byte, and the cipher can be expected to run very quickly in software.</p>
+			<p>RC4 is a stream cipher designed in 1987 by Ron Rivest for RSA Security. It is a variable key size stream cipher with byte-oriented operations. The algorithm is based on the use of a random permutation. Analysis shows that the period of the cipher is overwhelmingly likely to be greater tha 10<a class="super">1000</a>. Eight to sixteen machine operations are required per output byte, and the cipher can be expected to run very quickly in software.</p>
 			<p>RC4 algorithm: a variable-length key of from 1 to 256 bytes is used to initialize a 256-byte state vector S, with elements S[0], S[1], ..., S[255]. At all times, S contains a permutation of all 8-bit numbers from 0 tthrough 255. For encrytion and decryption, a byte k is generated from S by selecting one of the 255 entries in a systematc fashion. As each value of k is generated, the entries in S are once again permuted. </p>
 			<h2>General Flow of RC4:</h2>
 			<div>			
@@ -1203,21 +1203,31 @@
 							var tempdistance = 0; 
 							recordswap(siid, sjid);
 
-							if ( sjid <= 7 ) {
-								tempdistance = defaultSoffset - sjleft;
-							}
 							if ( siid <= 7 ) {
 								$("#swapslot1").offset({ left:sileft + 5 });
 								tempdistance = defaultSoffset - sileft ;
+
+								if ( sjid <= 7 ) {
+									tempdistance = sjleft - sileft ;
+								}
+								else if ( sjid >= 249) {
+									tempdistance = S248offset - sjleft + 49;
+								}
 							}
-							if ( siid >= 249 ) {
+
+							else if ( siid >= 249 ) {
 								$("#swapslot1").offset({ left:sileft + 5 });
 								tempdistance = defaultSoffset - sileft ;
-							}
-							if ( sjid >= 249) {
-								tempdistance = S248offset - sjleft + 49;
-							}
-							 
+
+								if ( sjid <= 7 ) {
+									tempdistance = sjleft - sileft ;
+								}
+								else if ( sjid >= 249) {
+									tempdistance = S248offset - sjleft + 49;
+									}
+								}
+
+
 							swapslot1.innerHTML = stage2step9sivalue;
 							stage2step9si.style.opacity = "0";
 							swapslot1.style.opacity = "1";
@@ -1916,7 +1926,7 @@
 					<p class="stage3step16">n = (<a id="sivalue4">x</a> + <a id="sjvalue3">y</a>) mod 256 </p>
 					<p class="stage3step17">n = <a id="nvalue1"></a> </p>
 					<p class="stage3step18">byte-key = S[n] = S[<a id="nvalue2">n</a>] </p>
-					<p class="stage3step19">byte-key = <a id="snvalue1">0</a> = <a id="snvaluebinary">0</a>	</p>
+					<p class="stage3step19">byte-key = <a id="snvalue1">0</a> = (<a id="snvaluebinary">0</a>)<a class="sub">2</a>	</p>
 				</div>
 
 				<div class="bottomspace"></div>
@@ -1954,12 +1964,11 @@
 					var section3 = document.getElementById("section3");
 					var toggle = document.getElementById("stage3toggle");
 					var forward = document.getElementById("stage3forth");
+					var backward = document.getElementById("stage3back");
 					var stage3autoplay = false;
 					var stage3roundcount = parseInt(stage3counter.textContent); 
 					var stage3stepcount = 0;  // step 1 to 4, back and forth
 					var itracker = 0;
-					var temp1 = 0;   // used in stage2step10i(),  tracks temporary variable i
-					var swapstate = false;  // checks if step9swap starts
 
 					var stage3step67 = document.getElementById("stage3step67");
 					var stage3step8to11 = document.getElementById("stage3step8to11");
@@ -1992,12 +2001,11 @@
 					function stage3recordswap(siindex, sjindex){
 						var lastsi = stage3recordsi[stage3recordsi.length - 1];
 						var lastsj = stage3recordsj[stage3recordsj.length - 1];
-						var test1 
 						if( lastsi == siindex && lastsj ==  sjindex) { return; }
 						stage3recordsi.push(siindex);
 						stage3recordsj.push(sjindex);
-						document.getElementById("test1").innerHTML = stage3recordsi;
-						document.getElementById("test2").innerHTML = stage3recordsj;
+						//document.getElementById("test1").innerHTML = stage3recordsi;
+						//document.getElementById("test2").innerHTML = stage3recordsj;
 					}
 
 					function stage3counterpostfix(){
@@ -2550,52 +2558,89 @@
 							}
 					}
 
-					function stage2forward(){
+					function stage3forward(){
+						stage3updateS();
+						var targetround = parseInt(stage3counter.textContent) ;
 						var tempi1 = 0;
+						var tempi2 = 0;
 						var tempj1 = 0;
-						stage2recordsi = [];
-						stage2recordsj = [];
-						var svector = [];
+						var tempj2 = 0;
+						stage3recordsi = [];
+						stage3recordsj = [];
+
 						for( i=0; i< 256; i++ ){
-							sivalue = parseInt(document.getElementById("stage2S"+tempi1).firstChild.textContent);
-							tivalue = parseInt(document.getElementById("stage2T"+tempi1).firstChild.textContent);
-							tempj2 = ( tempj1 + sivalue + tivalue ) % 256 ;
-							siel = document.getElementById("stage2S"+tempi1).firstChild;
-							sjel = document.getElementById("stage2S"+tempj2).firstChild;
-							swapElements(siel, sjel);
-							recordswap(tempi1, tempj2);	
-							if( i == 255){
-								autoplay = false;
-								stage2counter.innerHTML = 255;
-								roundcounter = 256;
-								stepcounter = 10;
-								document.getElementById("ivalue1").innerHTML = 255;
-								document.getElementById("ivalue2").innerHTML = 255;
-								document.getElementById("ivalue3").innerHTML = 255;
-								document.getElementById("ivalue4").innerHTML = 255;
-								document.getElementById("ivalue5").innerHTML = 255;
+							tempi2 = tempi1 + 1;
+							var sivalue = parseInt(document.getElementById("stage3S"+tempi2).firstChild.textContent);
+							tempj2 = ( tempj1 + sivalue ) % 256 ;
+							var siel = document.getElementById("stage3S"+tempi1).firstChild;
+							var sjel = document.getElementById("stage3S"+tempj2).firstChild;
+							var sielvalue = parseInt(siel.textContent);
+							var sjelvalue = parseInt(sjel.textContent);
 
-								document.getElementById("jvalue1").innerHTML = tempj1;
-								document.getElementById("jvalue2").innerHTML = tempj1;	
-								document.getElementById("jvalue3").innerHTML = tempj1;
-								document.getElementById("jvalue4").innerHTML = tempj2;
-								document.getElementById("jvalue5").innerHTML = tempj2;
-								document.getElementById("jvalue6").innerHTML = tempj2;
+							if( tempi2 != tempj2 ){ swapElements(siel, sjel); }
+							stage3recordswap(tempi2, tempj2);
 
-								document.getElementById("stage2vectorsi").innerHTML = sivalue;
-								document.getElementById("stage2vectorti").innerHTML = tivalue;
-								document.getElementById("step6Sj").innerHTML = sjel.textContent;
-								document.getElementById("step6Si").innerHTML = siel.textContent;
-							}						
-							
-							tempj1 = tempj2 ;
-							tempi1 += 1;
+							var nvalue = ( sielvalue + sjelvalue ) % 256 ;
+							var snelvalue = parseInt(section3.querySelector("#stage3S" + nvalue).firstChild.textContent);
+							var snelvaluebinary = snelvalue.toString(2);
+							var prefix0 = "";
+							for( j=0; j< (8 - snelvaluebinary.length) ; j++){
+								prefix0 = prefix0 + "0" ;
+							}
+							var snelvaluebinary8 = prefix0 + snelvaluebinary;
+
+							if( i ==  targetround){
+								stage3autoplay = false;
+								stage3counter.innerHTML = targetround + 1;
+								stage3counterpostfix();
+								stage3roundcount = targetround + 1; 
+								stage3stepcount = 23;
+								itracker = targetround ;
+
+								section3.querySelector("#ivalue1").innerHTML = tempi1;
+								section3.querySelector("#ivalue2").innerHTML = tempi2;
+								section3.querySelector("#ivalue3").innerHTML = tempi2;
+								section3.querySelector("#ivalue4").innerHTML = tempi2;
+								section3.querySelector("#ivalue5").innerHTML = tempi2;
+								section3.querySelector("#ivalue6").innerHTML = tempi2; 
+
+								section3.querySelector("#jvalue1").innerHTML = tempj1;
+								section3.querySelector("#jvalue2").innerHTML = tempj1;	
+								section3.querySelector("#jvalue3").innerHTML = tempj2;
+								section3.querySelector("#jvalue4").innerHTML = tempj2;
+								section3.querySelector("#jvalue5").innerHTML = tempj2;
+								section3.querySelector("#jvalue6").innerHTML = tempj2;
+
+								section3.querySelector("#sivalue1").innerHTML = sielvalue;
+								section3.querySelector("#sivalue2").innerHTML = sielvalue;
+								section3.querySelector("#sjvalue1").innerHTML = sjelvalue;
+								section3.querySelector("#sivalue3").innerHTML = sjelvalue;
+								section3.querySelector("#sjvalue2").innerHTML = sielvalue;
+								section3.querySelector("#sivalue4").innerHTML = sjelvalue;
+								section3.querySelector("#sjvalue3").innerHTML = sielvalue;
+
+								section3.querySelector("#nvalue1").innerHTML = nvalue;
+								section3.querySelector("#nvalue2").innerHTML = nvalue;
+								section3.querySelector("#snvalue1").innerHTML = snelvalue;
+								section3.querySelector("#snvaluebinary").innerHTML = snelvaluebinary8;
+								break;
+							}													
+							tempj1 = tempj2;
+							tempi1 = tempi2;
 						};
-						stage3updateS();						
+					
 					}						
 					
+					function stage3backward(){
+						var targetstage3counter = parseInt(stage3counter.textContent) - 2;
+						if ( targetstage3counter <0 ) { return; }
+						stage3counter.innerHTML = targetstage3counter ;
+						stage3forward();
+					}
 
 					toggle.addEventListener("click", function(){toggleanimation()}, false);
+					forward.addEventListener("click", function(){stage3forward()}, false);
+					backward.addEventListener("click", function(){stage3backward()}, false);
 
 
 					var stage1box = document.getElementsByClassName("flowbox")[0];

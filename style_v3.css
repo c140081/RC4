@@ -430,11 +430,11 @@ stage3vectorspace {
 	display: grid;
 	margin: 1% auto 1% 10%;
 	grid-row-gap: 20px;
-	grid-template-columns: 30% 30% 30%;
+	grid-template-columns: 18% 12% 30% 30% ;
 	grid-template-rows: 250px auto;
 	grid-template-areas:
-	'forbuttons forvectorS forvectorS'
-	'col1 col2 col3';
+	'forbuttons forvectorS forvectorS forvectorS'
+	'col1 col1 col2 col3';
 }
 
 .griditem1, .griditem2, .griditem3, .griditem4, .griditem5 { border: 1px solid black; }
