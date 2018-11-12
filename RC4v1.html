@@ -1165,8 +1165,9 @@
 					function stage2swapstep1(){
 						if(!swapstart){
 							var siid = document.getElementById("ivalue1").textContent;
+							var sjid = document.getElementById("jvalue1").textContent;
 							stage2step9siid = "stage2S" + siid;  // id: stage2Si
-							stage2step9sjid = "stage2S" + document.getElementById("jvalue1").textContent;  // id: stage2Sj
+							stage2step9sjid = "stage2S" + sjid;  // id: stage2Sj
 							stage2step9si = document.getElementById(stage2step9siid).firstChild;           // object S[i]
 							stage2step9sj = document.getElementById(stage2step9sjid).firstChild;	       // object: S[j]
 							stage2step9sivalue = parseInt(stage2step9si.textContent);                      // S[i] numeric value
@@ -1178,7 +1179,12 @@
 							var swapslot1left = $("#swapslot1").offset().left;                         // swapslot1 leftOffset
 							var swapslot2left = $("#swapslot2").offset().left;                         // swapslot2 leftOffset
 							var defaultSoffset = $("#stage2S7").first().offset().left;
+							var S248offset = $("#stage2S248").first().offset().left;
 							var tempdistance = 0; 
+
+							if ( sjid <= 7 ) {
+								tempdistance = defaultSoffset - sjleft;
+							}
 							if ( siid <= 7 ) {
 								$("#swapslot1").offset({ left:sileft + 5 });
 								tempdistance = defaultSoffset - sileft ;
@@ -1186,6 +1192,9 @@
 							if ( siid >= 249 ) {
 								$("#swapslot1").offset({ left:sileft + 5 });
 								tempdistance = defaultSoffset - sileft ;
+							}
+							if ( sjid >= 249) {
+								tempdistance = S248offset - sjleft + 49;
 							}
 							 
 							swapslot1.innerHTML = stage2step9sivalue;
@@ -1790,13 +1799,13 @@
 					<p>Generation of <a class="stage3counter">1</a><a id="numpostfix">st</a> pseudorandom bit:</p>
 					<h3> Step 1:</h3>
 					<p class="stage3step1">i = (<a id="ivalue1">i</a> + 1) mod 256 </p>
-					<p class="stage3step2">i = <a id="ivalue2"> </a> </p>
+					<p class="stage3step2">i = <a id="ivalue2">0</a> </p>
 				</div>
 
 				<div class="griditem4">
 					<p class="stage3step3">j = (<a id="jvalue1">j</a> + S[<a id="ivalue3">i</a>]) mod 256  </p>
 					<p class="stage3step4">j = (<a id="jvalue2">0</a> + <a id="sivalue1">1</a>) mod 256  </p>
-					<p class="stage3step5">j = <a id="jvalue3">j</a> </p>
+					<p class="stage3step5">j = <a id="jvalue3">0</a> </p>
 
 					<h3> Step 2:</h3>
 					<p id="stage3step67">
@@ -1804,6 +1813,10 @@
 						<span class="stage3step7">S[<a id="jvalue4">j</a>]= <a id="sjvalue1"></a></span> 
 					</p>
 					<p class="stage3step8"> Swap S[i], S[j] </p>
+					<div class="stage3step9"></div>
+					<div class="stage3step10"></div>
+					<div class="stage3step11"></div>
+					<div class="stage3step12"></div>
 					<p class="stage3step9" >
 						S[<a id="ivalue5">i</a>] = <a id="sivalue3"></a>, 
 						<span class="stage3step10"> S[<a id="jvalue5">j</a>]= <a id="sjvalue2"></a></span> 
@@ -1851,7 +1864,6 @@
 					var itracker = 0;
 					var temp1 = 0;   // used in stage2step10i(),  tracks temporary variable i
 					var swapstate = false;  // checks if step9swap starts
-					var section3 = document.getElementById("section3");
 
 					var stage3step67 = document.getElementById("stage3step67");
 					
@@ -1969,6 +1981,8 @@
 						}, true);
 					}
 
+					
+
 					function stage3hlsisj(newivalue, newjvalue, siid, sjid){
 						var siel = section3.querySelector("#stage3S" + newivalue).firstChild ; 
 						var sivalue = parseInt(section3.querySelector("#stage3S" + newivalue).firstChild.textContent);
@@ -2062,6 +2076,107 @@
 						stage2lineanimrunning(false, itemx);
 					}, true); }
 
+ 
+					var swapslot1 = section3.querySelector("#swapslot1") ;
+					var swapslot2 = section3.querySelector("#swapslot2") ;
+					var	elementsi = section3.querySelector("#stage3S0").firstChild;     
+					var	elementsj = section3.querySelector("#stage3S1").firstChild;	
+					var stage3step8started = false;
+					var step8anim = stage3step8slot1();
+					var stage3step9started = false;
+					var step9anim = stage3step9slot2();
+
+					function stage3step8slot1(){
+						var ivalue2 = parseInt(section3.querySelector("#ivalue2").textContent);
+						var siid = "stage3S" + ivalue2;  
+						var jvalue3 = parseInt(section3.querySelector("#jvalue3").textContent);
+						var	sjid = "stage3S" + jvalue3;
+						elementsi = section3.querySelector("#" + siid).firstChild;     
+						elementsj = section3.querySelector("#" + sjid).firstChild;	      
+						var	sivalue = parseInt(elementsi.textContent);                
+						var sileft = $("#" + siid).first().offset().left;            
+						var sjleft = $("#" + sjid).first().offset().left;  
+						var swapslot1left = $("#section3 #swapslot1").offset().left;
+						var defaultSoffset = $("#stage3S7").first().offset().left;
+						var tempdistance = 0; 
+
+						if ( jvalue3 <= 7 ) {
+								tempdistance = defaultSoffset - sjleft;
+							}
+							if ( ivalue2 <= 7 ) {
+								$("#section3 #swapslot1").offset({ left:sileft + 5 });
+								tempdistance = defaultSoffset - sileft ;
+							}
+							if ( ivalue2 >= 249 ) {
+								$("#section3 #swapslot1").offset({ left:sileft + 5 });
+								tempdistance = defaultSoffset - sileft ;
+							}
+							if ( jvalue3 >= 249) {
+								tempdistance = S248offset - sjleft + 49;
+							}
+
+						swapslot1.innerHTML = sivalue;
+						//elementsi.style.opacity = "0";
+						//swapslot1.style.opacity = "1";
+
+						var swapslot1anim1 = swapslot1.animate( [
+								{
+									transform:"translateY(0px) translateX(0px)"
+								},
+								{
+									transform:"translateY(0px) translateX(0px)"
+								},
+								{
+									transform:"translateY(-50px) translateX(0px)"
+								}, {
+									transform:"translateY(-50px) translateX("  +  tempdistance  + "px)"
+								}], {
+									duration: 1000,
+									direction: "normal",
+									fill: "forwards",
+									easing:"linear"
+								}
+							);
+						swapslot1anim1.pause();
+						swapslot1anim1.addEventListener("finish", function(){
+							$("#section3 .hscrollS").first().animate(
+									{ scrollLeft:( sjleft - defaultSoffset) }, 
+									500);
+						});				
+
+						return swapslot1anim1;						
+					}
+
+					function stage3step9slot2(){
+						var jvalue3 = parseInt(section3.querySelector("#jvalue3").textContent);
+						var	sjid = "stage3S" + jvalue3;    
+						elementsj = section3.querySelector("#" + sjid).firstChild;	               
+						var sjvalue = parseInt(elementsj.textContent);           
+						var sjleft = $("#" + sjid).first().offset().left;
+						var swapslot2left = $("#section3 #swapslot2").offset().left;
+						var defaultSoffset = $("#stage3S7").first().offset().left;
+
+						$("#section3 #swapslot2").offset({left: sjleft + 5 });
+						swapslot2.innerHTML = sjvalue;
+						var swapslot2anim1 = swapslot2.animate(
+								[{
+									transform:"translateY(0px) translateX(0px)"
+								}, {
+									transform:"translateY(0px) translateX(0px)"
+								}, {
+									transform:"translateY(50px) translateX(0px)"
+								}, {
+									transform:"translateY(50px) translateX(50px)"
+								}],{
+									duration: 1000,
+									direction:"normal",
+									fill:"forwards",
+									easing:"linear"
+								});						
+						swapslot2anim1.pause();
+
+						return swapslot2anim1;
+					}
 
 					function stage3animation(){    // loop, pause/run the stage2 animation
 						if ( stage3stepcount >= 14 ){ 
@@ -2073,7 +2188,7 @@
 						var playitem = stage3items[stage3stepcount];
 						if(stage3autoplay) {							
 							if ( stage3stepcount <= 3) { var playanim = stage3anims[stage3stepcount];}
-							else if (stage3stepcount == 6 || stage3stepcount == 7 ) { var playanim = "placeholder2s";}
+							else if (stage3stepcount >= 6 && stage3stepcount <= 12 ) { var playanim = "placeholder2s";}
 							else {	var playanim = stage3anims[1];	}
 							stage3addanim(true, playitem, playanim);   
 							stage2lineanimrunning(true, playitem);    
@@ -2087,8 +2202,23 @@
 								case 5: stage3step5j3(); break;
 								case 6: stage3step6i4(); break;
 								case 7: stage3step7j4(); break;
-								//case 8: stage3step8sisj(); break;
-								//case 9: if(stage3hl){ stage3hl = false; stage3step9i6(); }; break;
+								case 8: if ( !stage3step8started ){
+											step8anim = stage3step8slot1(); 
+											elementsi.style.opacity = "0";
+											swapslot1.style.opacity = "1";
+											step8anim.play(); 
+											stage3step8started = true;
+										} else { step8anim.play(); }
+										break;
+								case 9:  stage3step8started = true; 
+										if ( !stage3step9started ){
+											step9anim = stage3step9slot2();
+											elementsj.style.opacity = "0";
+											swapslot2.style.opacity = "1";
+											step9anim.play();
+										}
+
+										break;
 								//case 10: stage3step10sisj(); break;
 								//case 11: stage3step11xy(); break;
 								//case 12: stage3step12n(); break;
@@ -2118,6 +2248,9 @@
 							}
 							else if(stage3stepcount == 7){
 								vectorredpause("jvalue4", "vectorredfast");
+							}
+							else if(stage3stepcount == 8){
+								 step8anim.pause();
 							}
 							else if(stage3stepcount == 12){
 								vectorredpause("nvalue2", "vectorredfast"); }
