@@ -1986,6 +1986,20 @@
 					var stage3step11started = false;
 					var step11anim = stage3step9slot2();
 
+					var stage3recordsi = [];
+					var stage3recordsj = [];
+
+					function stage3recordswap(siindex, sjindex){
+						var lastsi = stage3recordsi[stage3recordsi.length - 1];
+						var lastsj = stage3recordsj[stage3recordsj.length - 1];
+						var test1 
+						if( lastsi == siindex && lastsj ==  sjindex) { return; }
+						stage3recordsi.push(siindex);
+						stage3recordsj.push(sjindex);
+						document.getElementById("test1").innerHTML = stage3recordsi;
+						document.getElementById("test2").innerHTML = stage3recordsj;
+					}
+
 					function stage3counterpostfix(){
 						var count = stage3counter.textContent.toString();
 						var lastdigit = parseInt(count[count.length - 1]);
@@ -2492,31 +2506,31 @@
 							else if(stage3stepcount == 7){
 								vectorredpause("jvalue4", "vectorredfast");
 							}
-							else if(stage3stepcount == 8){
+							else if(stage3stepcount == 9){
 								 step8anim.pause();
 							}
-							else if(stage3stepcount == 9){
+							else if(stage3stepcount == 11){
 								 step9anim.pause();
 							}
-							else if(stage3stepcount == 10){
+							else if(stage3stepcount == 12){
 								 step10anim.pause();
 							}
-							else if(stage3stepcount == 11){
+							else if(stage3stepcount == 14){
 								 step11anim.pause();
 							}
-							else if(stage3stepcount == 12){
+							else if(stage3stepcount == 15){
 								vectorredpause("ivalue5", "vectorredfast");
 							}
-							else if(stage3stepcount == 13){
+							else if(stage3stepcount == 16){
 								vectorredpause("jvalue5", "vectorredfast");
 							}
-							else if(stage3stepcount == 14){
+							else if(stage3stepcount == 17){
 								vectorredpause("ivalue6", "vectorredfast");
 							}
-							else if(stage3stepcount == 15){
+							else if(stage3stepcount == 18){
 								vectorredpause("jvalue6", "vectorredfast");
 							}
-							else if(stage3stepcount == 19){
+							else if(stage3stepcount == 21){
 								vectorredpause("nvalue2", "vectorredfast"); }
 						}
 					}
@@ -2535,6 +2549,51 @@
 							stage3animation();	
 							}
 					}
+
+					function stage2forward(){
+						var tempi1 = 0;
+						var tempj1 = 0;
+						stage2recordsi = [];
+						stage2recordsj = [];
+						var svector = [];
+						for( i=0; i< 256; i++ ){
+							sivalue = parseInt(document.getElementById("stage2S"+tempi1).firstChild.textContent);
+							tivalue = parseInt(document.getElementById("stage2T"+tempi1).firstChild.textContent);
+							tempj2 = ( tempj1 + sivalue + tivalue ) % 256 ;
+							siel = document.getElementById("stage2S"+tempi1).firstChild;
+							sjel = document.getElementById("stage2S"+tempj2).firstChild;
+							swapElements(siel, sjel);
+							recordswap(tempi1, tempj2);	
+							if( i == 255){
+								autoplay = false;
+								stage2counter.innerHTML = 255;
+								roundcounter = 256;
+								stepcounter = 10;
+								document.getElementById("ivalue1").innerHTML = 255;
+								document.getElementById("ivalue2").innerHTML = 255;
+								document.getElementById("ivalue3").innerHTML = 255;
+								document.getElementById("ivalue4").innerHTML = 255;
+								document.getElementById("ivalue5").innerHTML = 255;
+
+								document.getElementById("jvalue1").innerHTML = tempj1;
+								document.getElementById("jvalue2").innerHTML = tempj1;	
+								document.getElementById("jvalue3").innerHTML = tempj1;
+								document.getElementById("jvalue4").innerHTML = tempj2;
+								document.getElementById("jvalue5").innerHTML = tempj2;
+								document.getElementById("jvalue6").innerHTML = tempj2;
+
+								document.getElementById("stage2vectorsi").innerHTML = sivalue;
+								document.getElementById("stage2vectorti").innerHTML = tivalue;
+								document.getElementById("step6Sj").innerHTML = sjel.textContent;
+								document.getElementById("step6Si").innerHTML = siel.textContent;
+							}						
+							
+							tempj1 = tempj2 ;
+							tempi1 += 1;
+						};
+						stage3updateS();						
+					}						
+					
 
 					toggle.addEventListener("click", function(){toggleanimation()}, false);
 
