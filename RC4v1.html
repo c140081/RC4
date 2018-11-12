@@ -999,6 +999,13 @@
 					</script>
 
 					<div class="clear"> </div>	
+					<p id="test1"></p>
+					<p id="test2"></p>
+					<p id="test3"></p>
+					<p id="test4"></p>
+					
+					
+
 
 				</div>
 
@@ -1016,6 +1023,7 @@
 					var stage2step10 = document.getElementsByClassName("stage2step10")[0];
 					var stage2items = [stage2counter, stage2step1, stage2step2, stage2step3, stage2step4, stage2step5, stage2step6, stage2step7, stage2step8, stage2step9, stage2step10];
 					var stage2anims = ["stage2counteranim", "stage2highlight1s", "stage2highlight1s", "stage2highlight3s", "stage2highlight2s"];
+					var backbutton = document.getElementById("backbutton");
 					var togglebutton = document.getElementById("togglebutton");
 					var forwardbutton = document.getElementById("forthbutton");
 					var autoplay = false;
@@ -1023,9 +1031,21 @@
 					var stepcounter = 0;  // step 1 to 4, back and forth
 					var tempvari = 0;   // used in stage2step10i(),  tracks temporary variable i
 					var swapstart = false;  // checks if step9swap starts
+					var stage2recordsi = [];
+					var stage2recordsj = [];
 
 					document.getElementById("stage2vectorti").innerHTML = document.getElementById("stage2T0").firstChild.textContent;
 
+					function recordswap(siindex, sjindex){
+						var lastsi = stage2recordsi[stage2recordsi.length - 1];
+						var lastsj = stage2recordsj[stage2recordsj.length - 1];
+						var test1 
+						if( lastsi == siindex && lastsj ==  sjindex) { return; }
+						stage2recordsi.push(siindex);
+						stage2recordsj.push(sjindex);
+						//document.getElementById("test1").innerHTML = stage2recordsi;
+						//document.getElementById("test2").innerHTML = stage2recordsj;
+					}
 
 					function scrollanim(scrollclassname, elementindex, playanim){
 						var element = document.getElementById(elementindex).firstChild;				
@@ -1181,6 +1201,7 @@
 							var defaultSoffset = $("#stage2S7").first().offset().left;
 							var S248offset = $("#stage2S248").first().offset().left;
 							var tempdistance = 0; 
+							recordswap(siid, sjid);
 
 							if ( sjid <= 7 ) {
 								tempdistance = defaultSoffset - sjleft;
@@ -1307,9 +1328,7 @@
 												}],{
 													duration: 100,
 													fill:"forwards"
-												});
-												//$("#swapslot1").offset({left: defaultSoffset });
-												
+												});												
 										} );
 									}
 								)
@@ -1414,6 +1433,8 @@
 					function stage2forward(){
 						var tempi1 = 0;
 						var tempj1 = 0;
+						stage2recordsi = [];
+						stage2recordsj = [];
 						var svector = [];
 						for( i=0; i< 256; i++ ){
 							sivalue = parseInt(document.getElementById("stage2S"+tempi1).firstChild.textContent);
@@ -1422,9 +1443,10 @@
 							siel = document.getElementById("stage2S"+tempi1).firstChild;
 							sjel = document.getElementById("stage2S"+tempj2).firstChild;
 							swapElements(siel, sjel);
+							recordswap(tempi1, tempj2);	
 							if( i == 255){
 								autoplay = false;
-								stage2counter.innerHTML = 256;
+								stage2counter.innerHTML = 255;
 								roundcounter = 256;
 								stepcounter = 10;
 								document.getElementById("ivalue1").innerHTML = 255;
@@ -1444,9 +1466,10 @@
 								document.getElementById("stage2vectorti").innerHTML = tivalue;
 								document.getElementById("step6Sj").innerHTML = sjel.textContent;
 								document.getElementById("step6Si").innerHTML = siel.textContent;
-							}							
-							tempi1 += 1;
+							}						
+							
 							tempj1 = tempj2 ;
+							tempi1 += 1;
 						};
 						stage3updateS();						
 					}
@@ -1464,6 +1487,8 @@
 						stepcounter = 0;  
 						tempvari = 0;   
 						swapstart = false; 
+						stage2recordsi = [];
+						stage2recordsj = [];
 
 						document.getElementById("ivalue1").innerHTML = 0;
 						document.getElementById("ivalue2").innerHTML = "i";
@@ -1494,10 +1519,64 @@
 							forwardbutton.innerHTML = "RESET"; }
 					}
 
+					function stage2backward(){
+						if ( roundcounter == 0 ){ 
+							alert("This is the start of initial permutation of S."); return; }
+						if ( roundcounter == 1 ){
+							stage2reset(); return;
+						}
+						var sib4swap = stage2recordsi.pop() ; 
+						var sjb4swap = stage2recordsj.pop() ;
+						var stage2recordsjlen =  stage2recordsj.length ; 
+						var last = stage2recordsjlen - 1;
+						var secondlast = stage2recordsjlen - 2;						
+						if ( secondlast < 0 ){ sj3swapback = 0;}
+						else {var sj3swapback =  stage2recordsj[secondlast];}
+						
+						var si2swapback =  stage2recordsi[last];
+						var sj2swapback =  stage2recordsj[last];
+						
+						var siel = document.getElementById("stage2S"+sib4swap).firstChild;
+						var sjel = document.getElementById("stage2S"+sjb4swap).firstChild;
+						var siel2swapback = document.getElementById("stage2S"+si2swapback).firstChild; 
+						var sjel2swapback = document.getElementById("stage2S"+sj2swapback).firstChild; 
+
+						var tielvalue = document.getElementById("stage2T"+si2swapback).firstChild.textContent;
+						swapElements(siel, sjel);
+						autoplay = false;
+						roundcounter = roundcounter - 1;
+						stage2counter.innerHTML = roundcounter;
+						stepcounter = 0;
+						document.getElementById("ivalue1").innerHTML = sib4swap;
+						document.getElementById("ivalue2").innerHTML = sib4swap - 1;
+						document.getElementById("ivalue3").innerHTML = sib4swap - 1;
+						document.getElementById("ivalue4").innerHTML = sib4swap - 1;
+						document.getElementById("ivalue5").innerHTML = sib4swap - 1;
+
+						document.getElementById("jvalue1").innerHTML = sj2swapback;
+						document.getElementById("jvalue2").innerHTML = sj3swapback;	
+						document.getElementById("jvalue3").innerHTML = sj3swapback;
+						document.getElementById("jvalue4").innerHTML = sj2swapback;
+						document.getElementById("jvalue5").innerHTML = sj2swapback;
+						document.getElementById("jvalue6").innerHTML = sj2swapback;
+
+						document.getElementById("stage2vectorsi").innerHTML = sjel2swapback.textContent;
+						document.getElementById("stage2vectorti").innerHTML = tielvalue;
+						document.getElementById("step6Sj").innerHTML = siel2swapback.textContent;
+						document.getElementById("step6Si").innerHTML = sjel2swapback.textContent;
+
+						//document.getElementById("test1").innerHTML = secondlast;
+						//document.getElementById("test2").innerHTML = sj3swapback;
+						//document.getElementById("test3").innerHTML = sj2swapback;
+						//document.getElementById("test4").innerHTML = stage2recordsj;
+					}
+
 
 					togglebutton.addEventListener("click", function(){togglebuttonvaluechange()}, false);
 
 					forwardbutton.addEventListener("click", function(){forwardbuttonvaluechange()}, false);
+
+					backbutton.addEventListener("click", function(){stage2backward()}, false);
 
 					
 				</script>
@@ -1887,8 +1966,25 @@
 					var stage3step1213 = document.getElementById("stage3step1213");
 					var stage3step1415 = document.getElementById("stage3step1415");
 
-
-
+					var swapslot1 = section3.querySelector("#swapslot1") ;
+					var swapslot2 = section3.querySelector("#swapslot2") ;
+					var	elementsi = section3.querySelector("#stage3S0").firstChild;     
+					var	elementsj = section3.querySelector("#stage3S1").firstChild;	
+					var	sivalue = parseInt(elementsi.textContent);  
+					var	sjvalue = parseInt(elementsj.textContent);  
+					var sileft = $("#stage3S0").first().offset().left;            
+					var sjleft = $("#stage3S1").first().offset().left; 
+					var stage3S7offset = $("#stage3S7").first().offset().left;
+					var S248offset = $("#stage3S248").first().offset().left;
+					var tempdistance = 0; 
+					var stage3step8started = false;
+					var step8anim = stage3step9slot2();
+					var stage3step9started = false;
+					var step9anim = stage3step9slot2();
+					var stage3step10started = false;
+					var step10anim = stage3step9slot2();
+					var stage3step11started = false;
+					var step11anim = stage3step9slot2();
 
 					function stage3counterpostfix(){
 						var count = stage3counter.textContent.toString();
@@ -2116,25 +2212,7 @@
 						stage2lineanimrunning(false, itemx);
 					}, true); }
  
-					var swapslot1 = section3.querySelector("#swapslot1") ;
-					var swapslot2 = section3.querySelector("#swapslot2") ;
-					var	elementsi = section3.querySelector("#stage3S0").firstChild;     
-					var	elementsj = section3.querySelector("#stage3S1").firstChild;	
-					var	sivalue = parseInt(elementsi.textContent);  
-					var	sjvalue = parseInt(elementsj.textContent);  
-					var sileft = $("#stage3S0").first().offset().left;            
-					var sjleft = $("#stage3S1").first().offset().left; 
-					var stage3S7offset = $("#stage3S7").first().offset().left;
-					var S248offset = $("#stage3S248").first().offset().left;
-					var tempdistance = 0; 
-					var stage3step8started = false;
-					var step8anim = stage3step9slot2();
-					var stage3step9started = false;
-					var step9anim = stage3step9slot2();
-					var stage3step10started = false;
-					var step10anim = stage3step9slot2();
-					var stage3step11started = false;
-					var step11anim = stage3step9slot2();
+
 
 					function stage3scrolltosi(){
 						var sielindex = parseInt(section3.querySelector("#ivalue2").textContent);
@@ -2443,7 +2521,6 @@
 						}
 					}
 
-
 					function toggleanimation() {	// respond to user pause/play the animation
 
 						if (!stage3autoplay){ 							
@@ -2478,6 +2555,9 @@
 					stage1box.addEventListener("click", function(){gotosectionx(1)} );
 					stage2box.addEventListener("click", function(){gotosectionx(2)} );
 					stage3box.addEventListener("click", function(){gotosectionx(3)} );
+
+
+
 				</script>
 				
 
