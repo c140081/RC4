@@ -50,16 +50,22 @@ p {
 	width: 15%;
 	height: 120px;
 	margin:10px;
+	padding: 5px;
 	border-style: groove;
 	border-width: 5px;
-	border-color: lightblue;
-	background-color: lavender;
+	border-color: #3B5998; 
+	background-color: skyblue;
 	text-decoration: none;   /* to remove underline of links*/
+	font-size: 20px;
+	color: #3B5998;
 }
 
 .flowbox:hover {
+	background-color: #e6f2ff;
+	color: black;
 	border-width: 8px;
-	font-size: 20px;
+	font-size: 21px;
+	cursor: pointer;
 }
 
 .arrowbox {               /* boxed used to contain arrow*/
@@ -70,11 +76,12 @@ p {
 	width: 10%;
 	height: 120px;
 	margin:10px;
-	padding-top:40px;     /* centralize the arrow */
+	/*padding-top:40px;     /* centralize the arrow */
+	padding: 10px;
 }
 
 img {
-	height: 50%;
+	height: 80%;
 	width: 80%;
 	display: inline-block;
 	vertical-align: middle;
@@ -109,8 +116,8 @@ li {
 .velement {
 	border-style: solid;
 	border-width: 5px;
-	border-color: forestgreen;
-	background-color: yellowgreen;
+	border-color: #3B5998;
+	background-color: skyblue;
 	width: 40px;
 	height: 40px;
 	line-height: 30px;
@@ -131,16 +138,16 @@ li {
 
 #swapslot1 {
 	left: -28%;
-	opacity: 0.5;
-	background-color: skyblue;
-	border-color: blue;
+	opacity: 0;
+	background-color: #e6f2ff;
+	border-color: #3B5998;
 }
 
 #swapslot2 {
 	left: -25%;
-	opacity: 0.5;
-	background-color: skyblue;
-	border-color: blue;
+	opacity: 0;
+	background-color: #e6f2ff;
+	border-color: #3B5998;
 }
 
 .hscroll {
@@ -291,8 +298,8 @@ th {
 
 @keyframes blacktored {
 	0%{ color: black;	}
-	5%{ color: red; }
-	95%{ color: red; }
+	5%{ color: #BD081C; }
+	95%{ color: #BD081C; }
 	100%{ color: black; }
 }
 
@@ -340,12 +347,12 @@ th {
 		animation-timing-function: linear;
 		}
 	5% {
-		color: blue;
+		color: #0073e6;
 		font-weight: bold;
 		animation-timing-function: linear;
 	}
 	95% {
-		color: blue;
+		color: #0073e6;
 		font-weight: bold;
 		animation-timing-function: linear;
 	}
@@ -370,20 +377,20 @@ th {
 
 @keyframes vectorred {
 	0% {
-		border-color: forestgreen;
-		background-color: yellowgreen;
+		border-color: #3B5998;
+		background-color: skyblue;
 	}
 	5% {
-		background-color: red;
-		border-color: brown
+		background-color: white;
+		border-color: #990099;
 	}
 	95% {
-		background-color: red;
-		border-color: brown
+		background-color: white;
+		border-color: #990099;
 	}
 	100% {
-		border-color: forestgreen;
-		background-color: yellowgreen;
+		border-color: #3B5998;
+		background-color: skyblue;
 	}
 }
 

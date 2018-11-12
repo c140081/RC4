@@ -102,11 +102,11 @@
 			<p>RC4 algorithm: a variable-length key of from 1 to 256 bytes is used to initialize a 256-byte state vector S, with elements S[0], S[1], ..., S[255]. At all times, S contains a permutation of all 8-bit numbers from 0 tthrough 255. For encrytion and decryption, a byte k is generated from S by selecting one of the 255 entries in a systematc fashion. As each value of k is generated, the entries in S are once again permuted. </p>
 			<h2>General Flow of RC4:</h2>
 			<div>			
-				<a href="site25-stage1.html" class="flowbox">Initialization of state vector S, temporary vetor T, and key K</a>
-				<div class="arrowbox"><img src="arrow1.png"></div>
-				<a href="site31-stage2.html?keyvalue=2" class="flowbox">Initial permutation of state vector S</a>
-				<div class="arrowbox"><img src="arrow1.png"></div>
-				<a href="site41-stage3.html" class="flowbox">Pseudorandom byte stream generation</a>
+				<div class="flowbox">Initialization of state vector S, temporary vetor T, and key K</div>
+				<div class="arrowbox"><img src="arrowblue2.png"></div>
+				<div class="flowbox">Initial permutation of state vector S</div>
+				<div class="arrowbox"><img src="arrowblue2.png"></div>
+				<div class="flowbox">Pseudorandom byte stream generation</div>
 			</div>
 		</div>
 
@@ -1978,7 +1978,7 @@
 					}
 
 					function stage3step6i4(){
-						stage3step67.style.color = "blue";
+						stage3step67.style.color = "#0073e6";
 						stage3step67.style.fontWeight = "bold";
 						var ivalue4 = parseInt(section3.querySelector("#ivalue4").textContent);
 						var newivalue4 = parseInt(section3.querySelector("#ivalue2").textContent);
@@ -2005,7 +2005,7 @@
 					}
 
 					function stage3step12i5(){
-						stage3step1213.style.color = "blue";
+						stage3step1213.style.color = "#0073e6";
 						stage3step1213.style.fontWeight = "bold";
 						var ivalue5 = parseInt(section3.querySelector("#ivalue5").textContent);
 						var newivalue5 = parseInt(section3.querySelector("#ivalue2").textContent);
@@ -2032,7 +2032,7 @@
 					}
 
 					function stage3step14i6(){
-						stage3step1415.style.color = "blue";
+						stage3step1415.style.color = "#0073e6";
 						stage3step1415.style.fontWeight = "bold";
 						var ivalue6 = parseInt(section3.querySelector("#ivalue6").textContent);
 						var newivalue6 = parseInt(section3.querySelector("#ivalue2").textContent);
@@ -2142,7 +2142,7 @@
 					}
 					       
 					function stage3step8slot1(){
-						stage3step8to11.style.color = "blue";
+						stage3step8to11.style.color = "#0073e6";
 						stage3step8to11.style.fontWeight = "bold";
 						var ivalue2 = parseInt(section3.querySelector("#ivalue2").textContent);
 						var siid = "stage3S" + ivalue2;  
@@ -2462,7 +2462,22 @@
 					toggle.addEventListener("click", function(){toggleanimation()}, false);
 
 
-
+					var stage1box = document.getElementsByClassName("flowbox")[0];
+					var stage2box = document.getElementsByClassName("flowbox")[1];
+					var stage3box = document.getElementsByClassName("flowbox")[2];
+					var section1 = document.getElementById("section1");
+					var section2 = document.getElementById("section2");
+					var section3 = document.getElementById("section3");
+					function gotosectionx(stagenum){
+						switch( stagenum ){
+							case 1: section1.scrollIntoView(false); break;
+							case 2: section2.scrollIntoView(false); break;
+							case 3: section3.scrollIntoView(false); break;
+						}
+					}
+					stage1box.addEventListener("click", function(){gotosectionx(1)} );
+					stage2box.addEventListener("click", function(){gotosectionx(2)} );
+					stage3box.addEventListener("click", function(){gotosectionx(3)} );
 				</script>
 				
 
