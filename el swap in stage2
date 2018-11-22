@@ -8,7 +8,7 @@
 6. swapslot2 move to sj pos
 7. swapslot2 copy sj
 8. swapslot2 opacity 1, sj opacity 0
-9. swapslot2 move down
+9. swapslot2 move top
 
 10. swapslot1 move into sj
 11. sj copy swapslot1

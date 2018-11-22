@@ -8,7 +8,7 @@
 
 h1 {
 	margin-top:50px; 
-	margin-bottom: 50px; 
+	margin-bottom: 30px; 
 }
 
 h2 {
@@ -48,10 +48,10 @@ p {
 	right:-10%;
 	display: inline-block;
 	width: 15%;
-	height: 120px;
+	min-height: 130px;
 	margin:10px;
 	padding: 5px;
-	border-style: groove;
+	border-style: outset;
 	border-width: 5px;
 	border-color: #3B5998; 
 	background-color: skyblue;
@@ -64,7 +64,6 @@ p {
 	background-color: #e6f2ff;
 	color: black;
 	border-width: 8px;
-	font-size: 21px;
 	cursor: pointer;
 }
 
@@ -94,23 +93,18 @@ img {
 	opacity: 0;
 }
 
-
-ul {
-	display: table;
+.gridcontainer0 {
+	margin: 2% 5% 2%;
+	display: grid;
+	grid-template-columns: 55% 40%;
+	grid-template-areas:
+	'column1 column2';	
 }
 
-li {
-	display: table-cell;
-}
-
-.zindex1 {
-	z-index: 1;
-	position: relative;
-}
-
-.zindex2 {
-	z-index: 2;
-	position: absolute;
+.gridcol1 {grid-area: column1; }
+.gridcol2 {
+	grid-area: column2;
+	padding: 25px; 
 }
 
 .velement {
@@ -136,6 +130,143 @@ li {
 	display: inline-block;
 }
 
+.hscroll {
+	display: inline-block;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	max-width: 450px;
+	min-width: 255px;
+	position: relative;
+	float: left;
+	right:-10%;
+}
+
+ul {
+	display: table;
+}
+
+li {
+	display: table-cell;
+}
+
+input {
+	height: 30px;
+	width: 160px;
+	margin-top: 0;
+	margin-left: 10%;
+	display: inline-block;
+	position: relative;
+	float: left;
+}
+
+button {
+	height: 30px;
+	width: 160px;
+	margin-left: 1%;
+	margin-top: 30px;
+	display: inline-block;
+	position: relative;
+	float: center;
+	background-color: white; 
+    color: black; 
+    border-radius: 4px;
+    border: 2px solid #008CBA;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+button:hover {
+	cursor: pointer;
+    background-color: #008CBA;
+    color: white;
+}
+
+button.confirm {
+	margin-top: 0;
+	float: left;
+}
+
+button.question {
+	display: block;
+	float: left;
+	margin-left: 10%;
+	width: 30px;
+	height: 30px;
+	font-size: 20px;
+	font-weight: bold;
+	background-color: #008CBA;
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.descriptionbox {
+	margin-top: 62px;
+	display: block;
+	max-width: 80%;
+	padding: 8px;
+	opacity: 0;
+	color: #555555;
+	border: none;
+	border-radius: 4px;
+	background-color: #e7e7e7;
+	font-size: 18px;
+}
+
+#backbutton, #togglebutton, #stepforthbutton, #forthbutton {
+	max-width: 100px;
+	width: 90px;
+	height: 40px;
+	margin: 3px 2px 3px;
+	vertical-align: top;
+}
+
+div.bpfc {
+	display: block;
+	border: 1px solid white;
+	margin: 5% 8% 8%;
+	padding: 15px;
+}
+
+.counterbox {
+	width: 70%;
+	height: 40%;
+	border: 1px dotted #008CBA;
+	margin: 8% 15% 1%;
+}
+
+tr {
+	background-color: white;   /* change counter background color*/
+}
+
+th {
+	width: 35%;
+	font-size: 30px;
+}
+
+.gridcontainer1 {
+	margin: 1% auto 1% 10%;
+	display: grid;
+	grid-row-gap: 20px;
+	grid-template-columns: 30% 30% 30%;
+	grid-template-areas:
+	'column1 column2 column3'
+	'rowforvector rowforvector QandA';	
+}
+
+.gridelement1, .gridelement2, .gridelement3, .gridelement4, .gridelement5 { border: 1px solid black; }
+
+.gridelement1 {grid-area: column1; }
+.gridelement2 {grid-area: column2; }
+.gridelement3 {grid-area: column3; }
+.gridelement4 {
+	grid-area: rowforvector; 
+	border-right-style: none;
+}
+.gridelement5 {
+	grid-area: QandA; 
+	border-left-style: none;
+}
+
 #swapslot1 {
 	left: -28%;
 	opacity: 0;
@@ -150,92 +281,14 @@ li {
 	border-color: #3B5998;
 }
 
-.hscroll {
-	display: inline-block;
-	overflow-x: scroll;
-	overflow-y: hidden;
-	max-width: 450px;
-	min-width: 255px;
+.zindex1 {
+	z-index: 1;
 	position: relative;
-	float: left;
-	right:-10%;
 }
 
-input {
-	height: 30px;
-	width: 160px;
-	margin-top: 0;
-	margin-left: 10%;
-	display: inline-block;
-	position: relative;
-	float: left;
-}
-
-button {
-	margin-left: 1%;
-	height: 30px;
-	width: 160px;
-	margin-top: 30px;
-	display: inline-block;
-	position: relative;
-	float: center;
-}
-
-button#initiate {
-	width: 340px;
-	margin: 1% 10% 1%;
-	display: block;	
-}
-
-button.confirm {
-	margin-top: 0;
-	float: left;
-}
-
-#backbutton, #togglebutton, #forthbutton {
-	max-width: 100px;
-	width: 90px;
-	height: 40px;
-	margin: 3% 2% 3%;
-}
-
-div.bpf1 {
-	display: block;
-	margin: 5% 8% 8%;
-	border: 1px solid black;
-}
-
-.counterbox {
-	width: 84%;
-	height: 40%;
-	border: 1px solid black;
-	margin: 8% 8% 1%;
-}
-
-tr {
-	background-color: white;   /* change counter background color*/
-}
-
-th {
-	width: 40%;
-	font-size: 30px;
-}
-
-.gridelement1, .gridelement2, .gridelement3, .gridelement4 { border: 1px solid black; }
-
-.gridelement1 {grid-area: column1; }
-.gridelement2 {grid-area: column2; }
-.gridelement3 {grid-area: column3; }
-.gridelement4 {grid-area: rowforvector; }
-
-.gridcontainer1 {
-	margin: 1% auto 1% 10%;
-	display: grid;
-	grid-row-gap: 20px;
-	grid-template-columns: 30% 30% 30%;
-	grid-template-areas:
-	'column1 column2 column3'
-	'rowforvector rowforvector rowforvector';	
+.zindex2 {
+	z-index: 2;
+	position: absolute;
 }
 
 .super{
@@ -258,11 +311,6 @@ th {
 	margin-top:-1px;
 	width:100%;
 }  
-
-.bottomspace {
-	display: block;
-	margin-bottom: 150px;
-}
 
 .stage2counter {
 	margin-bottom: 0px;
@@ -429,31 +477,59 @@ stage3vectorspace {
 .gridcontainer2 {
 	display: grid;
 	margin: 1% auto 1% 10%;
-	grid-row-gap: 20px;
+	grid-row-gap: 10px;
 	grid-template-columns: 18% 12% 30% 30% ;
 	grid-template-rows: 250px auto;
 	grid-template-areas:
 	'forbuttons forvectorS forvectorS forvectorS'
-	'col1 col1 col2 col3';
+	'QA QA QA QA'
+	'col1 col1 col2 col3'
+	'randomkeyarray randomkeyarray randomkeyarray randomkeyarray';
 }
 
 .griditem1, .griditem2, .griditem3, .griditem4, .griditem5 { border: 1px solid black; }
 
+.griditem7 {grid-area: QA; }
 .griditem1 {grid-area: forbuttons; }
 .griditem2 {grid-area: forvectorS; }
 .griditem3 {grid-area: col1; }
 .griditem4 {grid-area: col2; }
 .griditem5 {grid-area: col3; }
+.griditem6 {grid-area: randomkeyarray; }
 
 
-
-div.bpf2 {
+div.bpf {
 	display: block;
 	border: 1px solid black;
 	padding:10%;
 }	
 
+.griditem6 > h3 {
+	color: #3B5998;
+	margin-left: 2%;
+}
 
+.griditem7 {
+	border: none;
+	border-radius: 4px;
+	background-color: #e7e7e7;
+	color: #555555;
+	padding: 10px;
+	display: none;
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+.griditem7 > p {
+	font-size: 20px;
+}
+
+.stage3questionmark{
+	float: right;
+	margin-top: 0%;
+	padding: 0px 30px 20px;
+	left: 20%;
+	vertical-align: top;
+}
 
 
 

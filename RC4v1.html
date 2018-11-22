@@ -98,15 +98,17 @@
 
 		<div id="sectionM">		
 			<h1>RC4</h1>
-			<p>RC4 is a stream cipher designed in 1987 by Ron Rivest for RSA Security. It is a variable key size stream cipher with byte-oriented operations. The algorithm is based on the use of a random permutation. Analysis shows that the period of the cipher is overwhelmingly likely to be greater tha 10<a class="super">1000</a>. Eight to sixteen machine operations are required per output byte, and the cipher can be expected to run very quickly in software.</p>
-			<p>RC4 algorithm: a variable-length key of from 1 to 256 bytes is used to initialize a 256-byte state vector S, with elements S[0], S[1], ..., S[255]. At all times, S contains a permutation of all 8-bit numbers from 0 tthrough 255. For encrytion and decryption, a byte k is generated from S by selecting one of the 255 entries in a systematc fashion. As each value of k is generated, the entries in S are once again permuted. </p>
+			<p>RC4 is a stream cipher designed for RSA Security and named after its designer Ron Rivest. Its algorithm uses a key of adjustable length (range of length is from 1 to 256 bytes), and produces pseudo-random bytes through a random permutation. The period of this cipher has been estimated to be above 10<a class="super">1000</a>.  RC4 is remarkably simple and runs very quickly in software. Due to its simplicity and high speed, it has become widely-used in many applications, such as Wi-Fi Protected Access (WPA) and Kerberos. </p>
+			<p>There are three stages in RC4: Initiation of S, Initial Permutation of S and Stream Generation. The first stage initializes a state vector S, with elements S[0], S[1], ..., S[255]; and initializes a temporary vector T with the variable-length key. The second stage permutes vector S according to vector T. The third stage generates a byte k by selecting one element from the 255 elements of S. Afterwards S is permutated once so that the next round of k-selection uses a different S.</p>
+
+			
 			<h2>General Flow of RC4:</h2>
 			<div>			
-				<div class="flowbox">Initialization of state vector S, temporary vetor T, and key K</div>
+				<div class="flowbox">Stage 1<br>Initialization of state vector S, temporary vector T, and key K</div>
 				<div class="arrowbox"><img src="arrowblue2.png"></div>
-				<div class="flowbox">Initial permutation of state vector S</div>
+				<div class="flowbox">Stage 2<br>Initial permutation of state vector S</div>
 				<div class="arrowbox"><img src="arrowblue2.png"></div>
-				<div class="flowbox">Pseudorandom byte stream generation</div>
+				<div class="flowbox">Stage 3<br>Pseudorandom byte stream generation</div>
 			</div>
 		</div>
 
@@ -116,561 +118,583 @@
 		<div id="section1">
 
 			<h1>Initialization of state vector S, temporary vetor T, and key K</h1>
-			<p>State vector S:</p>
-			<div>
-				<div class="vbox"><div class="velement">0</div><div>S<span class="sub">0</span></div></div>
-				<div class="vbox"><div class="velement">1</div><div>S<span class="sub">1</span></div></div>
-				<div class="vbox"><div class="velement">2</div><div>S<span class="sub">2</span></div></div>
-				<div class="hscroll">
-					<ul>
-						<li><div class="vbox"><div class="velement">3</div><div>S<span class="sub">3</span></div></div></li>
-						<li><div class="vbox"><div class="velement">4</div><div>S<span class="sub">4</span></div></div></li>
-						<li><div class="vbox"><div class="velement">5</div><div>S<span class="sub">5</span></div></div></li>
-						<li><div class="vbox"><div class="velement">6</div><div>S<span class="sub">6</span></div></div></li>
-						<li><div class="vbox"><div class="velement">7</div><div>S<span class="sub">7</span></div></div></li>
-						<li><div class="vbox"><div class="velement">8</div><div>S<span class="sub">8</span></div></div></li>
-						<li><div class="vbox"><div class="velement">9</div><div>S<span class="sub">9</span></div></div></li>
-						<li><div class="vbox"><div class="velement">10</div><div>S<span class="sub">10</span></div></div></li>
-						<li><div class="vbox"><div class="velement">11</div><div>S<span class="sub">11</span></div></div></li>
-						<li><div class="vbox"><div class="velement">12</div><div>S<span class="sub">12</span></div></div></li>
-						<li><div class="vbox"><div class="velement">13</div><div>S<span class="sub">13</span></div></div></li>
-						<li><div class="vbox"><div class="velement">14</div><div>S<span class="sub">14</span></div></div></li>
-						<li><div class="vbox"><div class="velement">15</div><div>S<span class="sub">15</span></div></div></li>
-						<li><div class="vbox"><div class="velement">16</div><div>S<span class="sub">16</span></div></div></li>
-						<li><div class="vbox"><div class="velement">17</div><div>S<span class="sub">17</span></div></div></li>
-						<li><div class="vbox"><div class="velement">18</div><div>S<span class="sub">18</span></div></div></li>
-						<li><div class="vbox"><div class="velement">19</div><div>S<span class="sub">19</span></div></div></li>
-						<li><div class="vbox"><div class="velement">20</div><div>S<span class="sub">20</span></div></div></li>
-						<li><div class="vbox"><div class="velement">21</div><div>S<span class="sub">21</span></div></div></li>
-						<li><div class="vbox"><div class="velement">22</div><div>S<span class="sub">22</span></div></div></li>
-						<li><div class="vbox"><div class="velement">23</div><div>S<span class="sub">23</span></div></div></li>
-						<li><div class="vbox"><div class="velement">24</div><div>S<span class="sub">24</span></div></div></li>
-						<li><div class="vbox"><div class="velement">25</div><div>S<span class="sub">25</span></div></div></li>
-						<li><div class="vbox"><div class="velement">26</div><div>S<span class="sub">26</span></div></div></li>
-						<li><div class="vbox"><div class="velement">27</div><div>S<span class="sub">27</span></div></div></li>
-						<li><div class="vbox"><div class="velement">28</div><div>S<span class="sub">28</span></div></div></li>
-						<li><div class="vbox"><div class="velement">29</div><div>S<span class="sub">29</span></div></div></li>
-						<li><div class="vbox"><div class="velement">30</div><div>S<span class="sub">30</span></div></div></li>
-						<li><div class="vbox"><div class="velement">31</div><div>S<span class="sub">31</span></div></div></li>
-						<li><div class="vbox"><div class="velement">32</div><div>S<span class="sub">32</span></div></div></li>
-						<li><div class="vbox"><div class="velement">33</div><div>S<span class="sub">33</span></div></div></li>
-						<li><div class="vbox"><div class="velement">34</div><div>S<span class="sub">34</span></div></div></li>
-						<li><div class="vbox"><div class="velement">35</div><div>S<span class="sub">35</span></div></div></li>
-						<li><div class="vbox"><div class="velement">36</div><div>S<span class="sub">36</span></div></div></li>
-						<li><div class="vbox"><div class="velement">37</div><div>S<span class="sub">37</span></div></div></li>
-						<li><div class="vbox"><div class="velement">38</div><div>S<span class="sub">38</span></div></div></li>
-						<li><div class="vbox"><div class="velement">39</div><div>S<span class="sub">39</span></div></div></li>
-						<li><div class="vbox"><div class="velement">40</div><div>S<span class="sub">40</span></div></div></li>
-						<li><div class="vbox"><div class="velement">41</div><div>S<span class="sub">41</span></div></div></li>
-						<li><div class="vbox"><div class="velement">42</div><div>S<span class="sub">42</span></div></div></li>
-						<li><div class="vbox"><div class="velement">43</div><div>S<span class="sub">43</span></div></div></li>
-						<li><div class="vbox"><div class="velement">44</div><div>S<span class="sub">44</span></div></div></li>
-						<li><div class="vbox"><div class="velement">45</div><div>S<span class="sub">45</span></div></div></li>
-						<li><div class="vbox"><div class="velement">46</div><div>S<span class="sub">46</span></div></div></li>
-						<li><div class="vbox"><div class="velement">47</div><div>S<span class="sub">47</span></div></div></li>
-						<li><div class="vbox"><div class="velement">48</div><div>S<span class="sub">48</span></div></div></li>
-						<li><div class="vbox"><div class="velement">49</div><div>S<span class="sub">49</span></div></div></li>
-						<li><div class="vbox"><div class="velement">50</div><div>S<span class="sub">50</span></div></div></li>
-						<li><div class="vbox"><div class="velement">51</div><div>S<span class="sub">51</span></div></div></li>
-						<li><div class="vbox"><div class="velement">52</div><div>S<span class="sub">52</span></div></div></li>
-						<li><div class="vbox"><div class="velement">53</div><div>S<span class="sub">53</span></div></div></li>
-						<li><div class="vbox"><div class="velement">54</div><div>S<span class="sub">54</span></div></div></li>
-						<li><div class="vbox"><div class="velement">55</div><div>S<span class="sub">55</span></div></div></li>
-						<li><div class="vbox"><div class="velement">56</div><div>S<span class="sub">56</span></div></div></li>
-						<li><div class="vbox"><div class="velement">57</div><div>S<span class="sub">57</span></div></div></li>
-						<li><div class="vbox"><div class="velement">58</div><div>S<span class="sub">58</span></div></div></li>
-						<li><div class="vbox"><div class="velement">59</div><div>S<span class="sub">59</span></div></div></li>
-						<li><div class="vbox"><div class="velement">60</div><div>S<span class="sub">60</span></div></div></li>
-						<li><div class="vbox"><div class="velement">61</div><div>S<span class="sub">61</span></div></div></li>
-						<li><div class="vbox"><div class="velement">62</div><div>S<span class="sub">62</span></div></div></li>
-						<li><div class="vbox"><div class="velement">63</div><div>S<span class="sub">63</span></div></div></li>
-						<li><div class="vbox"><div class="velement">64</div><div>S<span class="sub">64</span></div></div></li>
-						<li><div class="vbox"><div class="velement">65</div><div>S<span class="sub">65</span></div></div></li>
-						<li><div class="vbox"><div class="velement">66</div><div>S<span class="sub">66</span></div></div></li>
-						<li><div class="vbox"><div class="velement">67</div><div>S<span class="sub">67</span></div></div></li>
-						<li><div class="vbox"><div class="velement">68</div><div>S<span class="sub">68</span></div></div></li>
-						<li><div class="vbox"><div class="velement">69</div><div>S<span class="sub">69</span></div></div></li>
-						<li><div class="vbox"><div class="velement">70</div><div>S<span class="sub">70</span></div></div></li>
-						<li><div class="vbox"><div class="velement">71</div><div>S<span class="sub">71</span></div></div></li>
-						<li><div class="vbox"><div class="velement">72</div><div>S<span class="sub">72</span></div></div></li>
-						<li><div class="vbox"><div class="velement">73</div><div>S<span class="sub">73</span></div></div></li>
-						<li><div class="vbox"><div class="velement">74</div><div>S<span class="sub">74</span></div></div></li>
-						<li><div class="vbox"><div class="velement">75</div><div>S<span class="sub">75</span></div></div></li>
-						<li><div class="vbox"><div class="velement">76</div><div>S<span class="sub">76</span></div></div></li>
-						<li><div class="vbox"><div class="velement">77</div><div>S<span class="sub">77</span></div></div></li>
-						<li><div class="vbox"><div class="velement">78</div><div>S<span class="sub">78</span></div></div></li>
-						<li><div class="vbox"><div class="velement">79</div><div>S<span class="sub">79</span></div></div></li>
-						<li><div class="vbox"><div class="velement">80</div><div>S<span class="sub">80</span></div></div></li>
-						<li><div class="vbox"><div class="velement">81</div><div>S<span class="sub">81</span></div></div></li>
-						<li><div class="vbox"><div class="velement">82</div><div>S<span class="sub">82</span></div></div></li>
-						<li><div class="vbox"><div class="velement">83</div><div>S<span class="sub">83</span></div></div></li>
-						<li><div class="vbox"><div class="velement">84</div><div>S<span class="sub">84</span></div></div></li>
-						<li><div class="vbox"><div class="velement">85</div><div>S<span class="sub">85</span></div></div></li>
-						<li><div class="vbox"><div class="velement">86</div><div>S<span class="sub">86</span></div></div></li>
-						<li><div class="vbox"><div class="velement">87</div><div>S<span class="sub">87</span></div></div></li>
-						<li><div class="vbox"><div class="velement">88</div><div>S<span class="sub">88</span></div></div></li>
-						<li><div class="vbox"><div class="velement">89</div><div>S<span class="sub">89</span></div></div></li>
-						<li><div class="vbox"><div class="velement">90</div><div>S<span class="sub">90</span></div></div></li>
-						<li><div class="vbox"><div class="velement">91</div><div>S<span class="sub">91</span></div></div></li>
-						<li><div class="vbox"><div class="velement">92</div><div>S<span class="sub">92</span></div></div></li>
-						<li><div class="vbox"><div class="velement">93</div><div>S<span class="sub">93</span></div></div></li>
-						<li><div class="vbox"><div class="velement">94</div><div>S<span class="sub">94</span></div></div></li>
-						<li><div class="vbox"><div class="velement">95</div><div>S<span class="sub">95</span></div></div></li>
-						<li><div class="vbox"><div class="velement">96</div><div>S<span class="sub">96</span></div></div></li>
-						<li><div class="vbox"><div class="velement">97</div><div>S<span class="sub">97</span></div></div></li>
-						<li><div class="vbox"><div class="velement">98</div><div>S<span class="sub">98</span></div></div></li>
-						<li><div class="vbox"><div class="velement">99</div><div>S<span class="sub">99</span></div></div></li>
-						<li><div class="vbox"><div class="velement">100</div><div>S<span class="sub">100</span></div></div></li>
-						<li><div class="vbox"><div class="velement">101</div><div>S<span class="sub">101</span></div></div></li>
-						<li><div class="vbox"><div class="velement">102</div><div>S<span class="sub">102</span></div></div></li>
-						<li><div class="vbox"><div class="velement">103</div><div>S<span class="sub">103</span></div></div></li>
-						<li><div class="vbox"><div class="velement">104</div><div>S<span class="sub">104</span></div></div></li>
-						<li><div class="vbox"><div class="velement">105</div><div>S<span class="sub">105</span></div></div></li>
-						<li><div class="vbox"><div class="velement">106</div><div>S<span class="sub">106</span></div></div></li>
-						<li><div class="vbox"><div class="velement">107</div><div>S<span class="sub">107</span></div></div></li>
-						<li><div class="vbox"><div class="velement">108</div><div>S<span class="sub">108</span></div></div></li>
-						<li><div class="vbox"><div class="velement">109</div><div>S<span class="sub">109</span></div></div></li>
-						<li><div class="vbox"><div class="velement">110</div><div>S<span class="sub">110</span></div></div></li>
-						<li><div class="vbox"><div class="velement">111</div><div>S<span class="sub">111</span></div></div></li>
-						<li><div class="vbox"><div class="velement">112</div><div>S<span class="sub">112</span></div></div></li>
-						<li><div class="vbox"><div class="velement">113</div><div>S<span class="sub">113</span></div></div></li>
-						<li><div class="vbox"><div class="velement">114</div><div>S<span class="sub">114</span></div></div></li>
-						<li><div class="vbox"><div class="velement">115</div><div>S<span class="sub">115</span></div></div></li>
-						<li><div class="vbox"><div class="velement">116</div><div>S<span class="sub">116</span></div></div></li>
-						<li><div class="vbox"><div class="velement">117</div><div>S<span class="sub">117</span></div></div></li>
-						<li><div class="vbox"><div class="velement">118</div><div>S<span class="sub">118</span></div></div></li>
-						<li><div class="vbox"><div class="velement">119</div><div>S<span class="sub">119</span></div></div></li>
-						<li><div class="vbox"><div class="velement">120</div><div>S<span class="sub">120</span></div></div></li>
-						<li><div class="vbox"><div class="velement">121</div><div>S<span class="sub">121</span></div></div></li>
-						<li><div class="vbox"><div class="velement">122</div><div>S<span class="sub">122</span></div></div></li>
-						<li><div class="vbox"><div class="velement">123</div><div>S<span class="sub">123</span></div></div></li>
-						<li><div class="vbox"><div class="velement">124</div><div>S<span class="sub">124</span></div></div></li>
-						<li><div class="vbox"><div class="velement">125</div><div>S<span class="sub">125</span></div></div></li>
-						<li><div class="vbox"><div class="velement">126</div><div>S<span class="sub">126</span></div></div></li>
-						<li><div class="vbox"><div class="velement">127</div><div>S<span class="sub">127</span></div></div></li>
-						<li><div class="vbox"><div class="velement">128</div><div>S<span class="sub">128</span></div></div></li>
-						<li><div class="vbox"><div class="velement">129</div><div>S<span class="sub">129</span></div></div></li>
-						<li><div class="vbox"><div class="velement">130</div><div>S<span class="sub">130</span></div></div></li>
-						<li><div class="vbox"><div class="velement">131</div><div>S<span class="sub">131</span></div></div></li>
-						<li><div class="vbox"><div class="velement">132</div><div>S<span class="sub">132</span></div></div></li>
-						<li><div class="vbox"><div class="velement">133</div><div>S<span class="sub">133</span></div></div></li>
-						<li><div class="vbox"><div class="velement">134</div><div>S<span class="sub">134</span></div></div></li>
-						<li><div class="vbox"><div class="velement">135</div><div>S<span class="sub">135</span></div></div></li>
-						<li><div class="vbox"><div class="velement">136</div><div>S<span class="sub">136</span></div></div></li>
-						<li><div class="vbox"><div class="velement">137</div><div>S<span class="sub">137</span></div></div></li>
-						<li><div class="vbox"><div class="velement">138</div><div>S<span class="sub">138</span></div></div></li>
-						<li><div class="vbox"><div class="velement">139</div><div>S<span class="sub">139</span></div></div></li>
-						<li><div class="vbox"><div class="velement">140</div><div>S<span class="sub">140</span></div></div></li>
-						<li><div class="vbox"><div class="velement">141</div><div>S<span class="sub">141</span></div></div></li>
-						<li><div class="vbox"><div class="velement">142</div><div>S<span class="sub">142</span></div></div></li>
-						<li><div class="vbox"><div class="velement">143</div><div>S<span class="sub">143</span></div></div></li>
-						<li><div class="vbox"><div class="velement">144</div><div>S<span class="sub">144</span></div></div></li>
-						<li><div class="vbox"><div class="velement">145</div><div>S<span class="sub">145</span></div></div></li>
-						<li><div class="vbox"><div class="velement">146</div><div>S<span class="sub">146</span></div></div></li>
-						<li><div class="vbox"><div class="velement">147</div><div>S<span class="sub">147</span></div></div></li>
-						<li><div class="vbox"><div class="velement">148</div><div>S<span class="sub">148</span></div></div></li>
-						<li><div class="vbox"><div class="velement">149</div><div>S<span class="sub">149</span></div></div></li>
-						<li><div class="vbox"><div class="velement">150</div><div>S<span class="sub">150</span></div></div></li>
-						<li><div class="vbox"><div class="velement">151</div><div>S<span class="sub">151</span></div></div></li>
-						<li><div class="vbox"><div class="velement">152</div><div>S<span class="sub">152</span></div></div></li>
-						<li><div class="vbox"><div class="velement">153</div><div>S<span class="sub">153</span></div></div></li>
-						<li><div class="vbox"><div class="velement">154</div><div>S<span class="sub">154</span></div></div></li>
-						<li><div class="vbox"><div class="velement">155</div><div>S<span class="sub">155</span></div></div></li>
-						<li><div class="vbox"><div class="velement">156</div><div>S<span class="sub">156</span></div></div></li>
-						<li><div class="vbox"><div class="velement">157</div><div>S<span class="sub">157</span></div></div></li>
-						<li><div class="vbox"><div class="velement">158</div><div>S<span class="sub">158</span></div></div></li>
-						<li><div class="vbox"><div class="velement">159</div><div>S<span class="sub">159</span></div></div></li>
-						<li><div class="vbox"><div class="velement">160</div><div>S<span class="sub">160</span></div></div></li>
-						<li><div class="vbox"><div class="velement">161</div><div>S<span class="sub">161</span></div></div></li>
-						<li><div class="vbox"><div class="velement">162</div><div>S<span class="sub">162</span></div></div></li>
-						<li><div class="vbox"><div class="velement">163</div><div>S<span class="sub">163</span></div></div></li>
-						<li><div class="vbox"><div class="velement">164</div><div>S<span class="sub">164</span></div></div></li>
-						<li><div class="vbox"><div class="velement">165</div><div>S<span class="sub">165</span></div></div></li>
-						<li><div class="vbox"><div class="velement">166</div><div>S<span class="sub">166</span></div></div></li>
-						<li><div class="vbox"><div class="velement">167</div><div>S<span class="sub">167</span></div></div></li>
-						<li><div class="vbox"><div class="velement">168</div><div>S<span class="sub">168</span></div></div></li>
-						<li><div class="vbox"><div class="velement">169</div><div>S<span class="sub">169</span></div></div></li>
-						<li><div class="vbox"><div class="velement">170</div><div>S<span class="sub">170</span></div></div></li>
-						<li><div class="vbox"><div class="velement">171</div><div>S<span class="sub">171</span></div></div></li>
-						<li><div class="vbox"><div class="velement">172</div><div>S<span class="sub">172</span></div></div></li>
-						<li><div class="vbox"><div class="velement">173</div><div>S<span class="sub">173</span></div></div></li>
-						<li><div class="vbox"><div class="velement">174</div><div>S<span class="sub">174</span></div></div></li>
-						<li><div class="vbox"><div class="velement">175</div><div>S<span class="sub">175</span></div></div></li>
-						<li><div class="vbox"><div class="velement">176</div><div>S<span class="sub">176</span></div></div></li>
-						<li><div class="vbox"><div class="velement">177</div><div>S<span class="sub">177</span></div></div></li>
-						<li><div class="vbox"><div class="velement">178</div><div>S<span class="sub">178</span></div></div></li>
-						<li><div class="vbox"><div class="velement">179</div><div>S<span class="sub">179</span></div></div></li>
-						<li><div class="vbox"><div class="velement">180</div><div>S<span class="sub">180</span></div></div></li>
-						<li><div class="vbox"><div class="velement">181</div><div>S<span class="sub">181</span></div></div></li>
-						<li><div class="vbox"><div class="velement">182</div><div>S<span class="sub">182</span></div></div></li>
-						<li><div class="vbox"><div class="velement">183</div><div>S<span class="sub">183</span></div></div></li>
-						<li><div class="vbox"><div class="velement">184</div><div>S<span class="sub">184</span></div></div></li>
-						<li><div class="vbox"><div class="velement">185</div><div>S<span class="sub">185</span></div></div></li>
-						<li><div class="vbox"><div class="velement">186</div><div>S<span class="sub">186</span></div></div></li>
-						<li><div class="vbox"><div class="velement">187</div><div>S<span class="sub">187</span></div></div></li>
-						<li><div class="vbox"><div class="velement">188</div><div>S<span class="sub">188</span></div></div></li>
-						<li><div class="vbox"><div class="velement">189</div><div>S<span class="sub">189</span></div></div></li>
-						<li><div class="vbox"><div class="velement">190</div><div>S<span class="sub">190</span></div></div></li>
-						<li><div class="vbox"><div class="velement">191</div><div>S<span class="sub">191</span></div></div></li>
-						<li><div class="vbox"><div class="velement">192</div><div>S<span class="sub">192</span></div></div></li>
-						<li><div class="vbox"><div class="velement">193</div><div>S<span class="sub">193</span></div></div></li>
-						<li><div class="vbox"><div class="velement">194</div><div>S<span class="sub">194</span></div></div></li>
-						<li><div class="vbox"><div class="velement">195</div><div>S<span class="sub">195</span></div></div></li>
-						<li><div class="vbox"><div class="velement">196</div><div>S<span class="sub">196</span></div></div></li>
-						<li><div class="vbox"><div class="velement">197</div><div>S<span class="sub">197</span></div></div></li>
-						<li><div class="vbox"><div class="velement">198</div><div>S<span class="sub">198</span></div></div></li>
-						<li><div class="vbox"><div class="velement">199</div><div>S<span class="sub">199</span></div></div></li>
-						<li><div class="vbox"><div class="velement">200</div><div>S<span class="sub">200</span></div></div></li>
-						<li><div class="vbox"><div class="velement">201</div><div>S<span class="sub">201</span></div></div></li>
-						<li><div class="vbox"><div class="velement">202</div><div>S<span class="sub">202</span></div></div></li>
-						<li><div class="vbox"><div class="velement">203</div><div>S<span class="sub">203</span></div></div></li>
-						<li><div class="vbox"><div class="velement">204</div><div>S<span class="sub">204</span></div></div></li>
-						<li><div class="vbox"><div class="velement">205</div><div>S<span class="sub">205</span></div></div></li>
-						<li><div class="vbox"><div class="velement">206</div><div>S<span class="sub">206</span></div></div></li>
-						<li><div class="vbox"><div class="velement">207</div><div>S<span class="sub">207</span></div></div></li>
-						<li><div class="vbox"><div class="velement">208</div><div>S<span class="sub">208</span></div></div></li>
-						<li><div class="vbox"><div class="velement">209</div><div>S<span class="sub">209</span></div></div></li>
-						<li><div class="vbox"><div class="velement">210</div><div>S<span class="sub">210</span></div></div></li>
-						<li><div class="vbox"><div class="velement">211</div><div>S<span class="sub">211</span></div></div></li>
-						<li><div class="vbox"><div class="velement">212</div><div>S<span class="sub">212</span></div></div></li>
-						<li><div class="vbox"><div class="velement">213</div><div>S<span class="sub">213</span></div></div></li>
-						<li><div class="vbox"><div class="velement">214</div><div>S<span class="sub">214</span></div></div></li>
-						<li><div class="vbox"><div class="velement">215</div><div>S<span class="sub">215</span></div></div></li>
-						<li><div class="vbox"><div class="velement">216</div><div>S<span class="sub">216</span></div></div></li>
-						<li><div class="vbox"><div class="velement">217</div><div>S<span class="sub">217</span></div></div></li>
-						<li><div class="vbox"><div class="velement">218</div><div>S<span class="sub">218</span></div></div></li>
-						<li><div class="vbox"><div class="velement">219</div><div>S<span class="sub">219</span></div></div></li>
-						<li><div class="vbox"><div class="velement">220</div><div>S<span class="sub">220</span></div></div></li>
-						<li><div class="vbox"><div class="velement">221</div><div>S<span class="sub">221</span></div></div></li>
-						<li><div class="vbox"><div class="velement">222</div><div>S<span class="sub">222</span></div></div></li>
-						<li><div class="vbox"><div class="velement">223</div><div>S<span class="sub">223</span></div></div></li>
-						<li><div class="vbox"><div class="velement">224</div><div>S<span class="sub">224</span></div></div></li>
-						<li><div class="vbox"><div class="velement">225</div><div>S<span class="sub">225</span></div></div></li>
-						<li><div class="vbox"><div class="velement">226</div><div>S<span class="sub">226</span></div></div></li>
-						<li><div class="vbox"><div class="velement">227</div><div>S<span class="sub">227</span></div></div></li>
-						<li><div class="vbox"><div class="velement">228</div><div>S<span class="sub">228</span></div></div></li>
-						<li><div class="vbox"><div class="velement">229</div><div>S<span class="sub">229</span></div></div></li>
-						<li><div class="vbox"><div class="velement">230</div><div>S<span class="sub">230</span></div></div></li>
-						<li><div class="vbox"><div class="velement">231</div><div>S<span class="sub">231</span></div></div></li>
-						<li><div class="vbox"><div class="velement">232</div><div>S<span class="sub">232</span></div></div></li>
-						<li><div class="vbox"><div class="velement">233</div><div>S<span class="sub">233</span></div></div></li>
-						<li><div class="vbox"><div class="velement">234</div><div>S<span class="sub">234</span></div></div></li>
-						<li><div class="vbox"><div class="velement">235</div><div>S<span class="sub">235</span></div></div></li>
-						<li><div class="vbox"><div class="velement">236</div><div>S<span class="sub">236</span></div></div></li>
-						<li><div class="vbox"><div class="velement">237</div><div>S<span class="sub">237</span></div></div></li>
-						<li><div class="vbox"><div class="velement">238</div><div>S<span class="sub">238</span></div></div></li>
-						<li><div class="vbox"><div class="velement">239</div><div>S<span class="sub">239</span></div></div></li>
-						<li><div class="vbox"><div class="velement">240</div><div>S<span class="sub">240</span></div></div></li>
-						<li><div class="vbox"><div class="velement">241</div><div>S<span class="sub">241</span></div></div></li>
-						<li><div class="vbox"><div class="velement">242</div><div>S<span class="sub">242</span></div></div></li>
-						<li><div class="vbox"><div class="velement">243</div><div>S<span class="sub">243</span></div></div></li>
-						<li><div class="vbox"><div class="velement">244</div><div>S<span class="sub">244</span></div></div></li>
-						<li><div class="vbox"><div class="velement">245</div><div>S<span class="sub">245</span></div></div></li>
-						<li><div class="vbox"><div class="velement">246</div><div>S<span class="sub">246</span></div></div></li>
-						<li><div class="vbox"><div class="velement">247</div><div>S<span class="sub">247</span></div></div></li>
-						<li><div class="vbox"><div class="velement">248</div><div>S<span class="sub">248</span></div></div></li>
-						<li><div class="vbox"><div class="velement">249</div><div>S<span class="sub">249</span></div></div></li>
-						<li><div class="vbox"><div class="velement">250</div><div>S<span class="sub">250</span></div></div></li>
-						<li><div class="vbox"><div class="velement">251</div><div>S<span class="sub">251</span></div></div></li>
-						<li><div class="vbox"><div class="velement">252</div><div>S<span class="sub">252</span></div></div></li>
-					</ul> 
+
+			<div class="gridcontainer0">
+				<div class="gridcol1">
+					<p>State vector S:</p>
+					<div>
+						<div class="vbox"><div class="velement">0</div><div>S<span class="sub">0</span></div></div>
+						<div class="vbox"><div class="velement">1</div><div>S<span class="sub">1</span></div></div>
+						<div class="vbox"><div class="velement">2</div><div>S<span class="sub">2</span></div></div>
+						<div class="hscroll">
+							<ul>
+								<li><div class="vbox"><div class="velement">3</div><div>S<span class="sub">3</span></div></div></li>
+								<li><div class="vbox"><div class="velement">4</div><div>S<span class="sub">4</span></div></div></li>
+								<li><div class="vbox"><div class="velement">5</div><div>S<span class="sub">5</span></div></div></li>
+								<li><div class="vbox"><div class="velement">6</div><div>S<span class="sub">6</span></div></div></li>
+								<li><div class="vbox"><div class="velement">7</div><div>S<span class="sub">7</span></div></div></li>
+								<li><div class="vbox"><div class="velement">8</div><div>S<span class="sub">8</span></div></div></li>
+								<li><div class="vbox"><div class="velement">9</div><div>S<span class="sub">9</span></div></div></li>
+								<li><div class="vbox"><div class="velement">10</div><div>S<span class="sub">10</span></div></div></li>
+								<li><div class="vbox"><div class="velement">11</div><div>S<span class="sub">11</span></div></div></li>
+								<li><div class="vbox"><div class="velement">12</div><div>S<span class="sub">12</span></div></div></li>
+								<li><div class="vbox"><div class="velement">13</div><div>S<span class="sub">13</span></div></div></li>
+								<li><div class="vbox"><div class="velement">14</div><div>S<span class="sub">14</span></div></div></li>
+								<li><div class="vbox"><div class="velement">15</div><div>S<span class="sub">15</span></div></div></li>
+								<li><div class="vbox"><div class="velement">16</div><div>S<span class="sub">16</span></div></div></li>
+								<li><div class="vbox"><div class="velement">17</div><div>S<span class="sub">17</span></div></div></li>
+								<li><div class="vbox"><div class="velement">18</div><div>S<span class="sub">18</span></div></div></li>
+								<li><div class="vbox"><div class="velement">19</div><div>S<span class="sub">19</span></div></div></li>
+								<li><div class="vbox"><div class="velement">20</div><div>S<span class="sub">20</span></div></div></li>
+								<li><div class="vbox"><div class="velement">21</div><div>S<span class="sub">21</span></div></div></li>
+								<li><div class="vbox"><div class="velement">22</div><div>S<span class="sub">22</span></div></div></li>
+								<li><div class="vbox"><div class="velement">23</div><div>S<span class="sub">23</span></div></div></li>
+								<li><div class="vbox"><div class="velement">24</div><div>S<span class="sub">24</span></div></div></li>
+								<li><div class="vbox"><div class="velement">25</div><div>S<span class="sub">25</span></div></div></li>
+								<li><div class="vbox"><div class="velement">26</div><div>S<span class="sub">26</span></div></div></li>
+								<li><div class="vbox"><div class="velement">27</div><div>S<span class="sub">27</span></div></div></li>
+								<li><div class="vbox"><div class="velement">28</div><div>S<span class="sub">28</span></div></div></li>
+								<li><div class="vbox"><div class="velement">29</div><div>S<span class="sub">29</span></div></div></li>
+								<li><div class="vbox"><div class="velement">30</div><div>S<span class="sub">30</span></div></div></li>
+								<li><div class="vbox"><div class="velement">31</div><div>S<span class="sub">31</span></div></div></li>
+								<li><div class="vbox"><div class="velement">32</div><div>S<span class="sub">32</span></div></div></li>
+								<li><div class="vbox"><div class="velement">33</div><div>S<span class="sub">33</span></div></div></li>
+								<li><div class="vbox"><div class="velement">34</div><div>S<span class="sub">34</span></div></div></li>
+								<li><div class="vbox"><div class="velement">35</div><div>S<span class="sub">35</span></div></div></li>
+								<li><div class="vbox"><div class="velement">36</div><div>S<span class="sub">36</span></div></div></li>
+								<li><div class="vbox"><div class="velement">37</div><div>S<span class="sub">37</span></div></div></li>
+								<li><div class="vbox"><div class="velement">38</div><div>S<span class="sub">38</span></div></div></li>
+								<li><div class="vbox"><div class="velement">39</div><div>S<span class="sub">39</span></div></div></li>
+								<li><div class="vbox"><div class="velement">40</div><div>S<span class="sub">40</span></div></div></li>
+								<li><div class="vbox"><div class="velement">41</div><div>S<span class="sub">41</span></div></div></li>
+								<li><div class="vbox"><div class="velement">42</div><div>S<span class="sub">42</span></div></div></li>
+								<li><div class="vbox"><div class="velement">43</div><div>S<span class="sub">43</span></div></div></li>
+								<li><div class="vbox"><div class="velement">44</div><div>S<span class="sub">44</span></div></div></li>
+								<li><div class="vbox"><div class="velement">45</div><div>S<span class="sub">45</span></div></div></li>
+								<li><div class="vbox"><div class="velement">46</div><div>S<span class="sub">46</span></div></div></li>
+								<li><div class="vbox"><div class="velement">47</div><div>S<span class="sub">47</span></div></div></li>
+								<li><div class="vbox"><div class="velement">48</div><div>S<span class="sub">48</span></div></div></li>
+								<li><div class="vbox"><div class="velement">49</div><div>S<span class="sub">49</span></div></div></li>
+								<li><div class="vbox"><div class="velement">50</div><div>S<span class="sub">50</span></div></div></li>
+								<li><div class="vbox"><div class="velement">51</div><div>S<span class="sub">51</span></div></div></li>
+								<li><div class="vbox"><div class="velement">52</div><div>S<span class="sub">52</span></div></div></li>
+								<li><div class="vbox"><div class="velement">53</div><div>S<span class="sub">53</span></div></div></li>
+								<li><div class="vbox"><div class="velement">54</div><div>S<span class="sub">54</span></div></div></li>
+								<li><div class="vbox"><div class="velement">55</div><div>S<span class="sub">55</span></div></div></li>
+								<li><div class="vbox"><div class="velement">56</div><div>S<span class="sub">56</span></div></div></li>
+								<li><div class="vbox"><div class="velement">57</div><div>S<span class="sub">57</span></div></div></li>
+								<li><div class="vbox"><div class="velement">58</div><div>S<span class="sub">58</span></div></div></li>
+								<li><div class="vbox"><div class="velement">59</div><div>S<span class="sub">59</span></div></div></li>
+								<li><div class="vbox"><div class="velement">60</div><div>S<span class="sub">60</span></div></div></li>
+								<li><div class="vbox"><div class="velement">61</div><div>S<span class="sub">61</span></div></div></li>
+								<li><div class="vbox"><div class="velement">62</div><div>S<span class="sub">62</span></div></div></li>
+								<li><div class="vbox"><div class="velement">63</div><div>S<span class="sub">63</span></div></div></li>
+								<li><div class="vbox"><div class="velement">64</div><div>S<span class="sub">64</span></div></div></li>
+								<li><div class="vbox"><div class="velement">65</div><div>S<span class="sub">65</span></div></div></li>
+								<li><div class="vbox"><div class="velement">66</div><div>S<span class="sub">66</span></div></div></li>
+								<li><div class="vbox"><div class="velement">67</div><div>S<span class="sub">67</span></div></div></li>
+								<li><div class="vbox"><div class="velement">68</div><div>S<span class="sub">68</span></div></div></li>
+								<li><div class="vbox"><div class="velement">69</div><div>S<span class="sub">69</span></div></div></li>
+								<li><div class="vbox"><div class="velement">70</div><div>S<span class="sub">70</span></div></div></li>
+								<li><div class="vbox"><div class="velement">71</div><div>S<span class="sub">71</span></div></div></li>
+								<li><div class="vbox"><div class="velement">72</div><div>S<span class="sub">72</span></div></div></li>
+								<li><div class="vbox"><div class="velement">73</div><div>S<span class="sub">73</span></div></div></li>
+								<li><div class="vbox"><div class="velement">74</div><div>S<span class="sub">74</span></div></div></li>
+								<li><div class="vbox"><div class="velement">75</div><div>S<span class="sub">75</span></div></div></li>
+								<li><div class="vbox"><div class="velement">76</div><div>S<span class="sub">76</span></div></div></li>
+								<li><div class="vbox"><div class="velement">77</div><div>S<span class="sub">77</span></div></div></li>
+								<li><div class="vbox"><div class="velement">78</div><div>S<span class="sub">78</span></div></div></li>
+								<li><div class="vbox"><div class="velement">79</div><div>S<span class="sub">79</span></div></div></li>
+								<li><div class="vbox"><div class="velement">80</div><div>S<span class="sub">80</span></div></div></li>
+								<li><div class="vbox"><div class="velement">81</div><div>S<span class="sub">81</span></div></div></li>
+								<li><div class="vbox"><div class="velement">82</div><div>S<span class="sub">82</span></div></div></li>
+								<li><div class="vbox"><div class="velement">83</div><div>S<span class="sub">83</span></div></div></li>
+								<li><div class="vbox"><div class="velement">84</div><div>S<span class="sub">84</span></div></div></li>
+								<li><div class="vbox"><div class="velement">85</div><div>S<span class="sub">85</span></div></div></li>
+								<li><div class="vbox"><div class="velement">86</div><div>S<span class="sub">86</span></div></div></li>
+								<li><div class="vbox"><div class="velement">87</div><div>S<span class="sub">87</span></div></div></li>
+								<li><div class="vbox"><div class="velement">88</div><div>S<span class="sub">88</span></div></div></li>
+								<li><div class="vbox"><div class="velement">89</div><div>S<span class="sub">89</span></div></div></li>
+								<li><div class="vbox"><div class="velement">90</div><div>S<span class="sub">90</span></div></div></li>
+								<li><div class="vbox"><div class="velement">91</div><div>S<span class="sub">91</span></div></div></li>
+								<li><div class="vbox"><div class="velement">92</div><div>S<span class="sub">92</span></div></div></li>
+								<li><div class="vbox"><div class="velement">93</div><div>S<span class="sub">93</span></div></div></li>
+								<li><div class="vbox"><div class="velement">94</div><div>S<span class="sub">94</span></div></div></li>
+								<li><div class="vbox"><div class="velement">95</div><div>S<span class="sub">95</span></div></div></li>
+								<li><div class="vbox"><div class="velement">96</div><div>S<span class="sub">96</span></div></div></li>
+								<li><div class="vbox"><div class="velement">97</div><div>S<span class="sub">97</span></div></div></li>
+								<li><div class="vbox"><div class="velement">98</div><div>S<span class="sub">98</span></div></div></li>
+								<li><div class="vbox"><div class="velement">99</div><div>S<span class="sub">99</span></div></div></li>
+								<li><div class="vbox"><div class="velement">100</div><div>S<span class="sub">100</span></div></div></li>
+								<li><div class="vbox"><div class="velement">101</div><div>S<span class="sub">101</span></div></div></li>
+								<li><div class="vbox"><div class="velement">102</div><div>S<span class="sub">102</span></div></div></li>
+								<li><div class="vbox"><div class="velement">103</div><div>S<span class="sub">103</span></div></div></li>
+								<li><div class="vbox"><div class="velement">104</div><div>S<span class="sub">104</span></div></div></li>
+								<li><div class="vbox"><div class="velement">105</div><div>S<span class="sub">105</span></div></div></li>
+								<li><div class="vbox"><div class="velement">106</div><div>S<span class="sub">106</span></div></div></li>
+								<li><div class="vbox"><div class="velement">107</div><div>S<span class="sub">107</span></div></div></li>
+								<li><div class="vbox"><div class="velement">108</div><div>S<span class="sub">108</span></div></div></li>
+								<li><div class="vbox"><div class="velement">109</div><div>S<span class="sub">109</span></div></div></li>
+								<li><div class="vbox"><div class="velement">110</div><div>S<span class="sub">110</span></div></div></li>
+								<li><div class="vbox"><div class="velement">111</div><div>S<span class="sub">111</span></div></div></li>
+								<li><div class="vbox"><div class="velement">112</div><div>S<span class="sub">112</span></div></div></li>
+								<li><div class="vbox"><div class="velement">113</div><div>S<span class="sub">113</span></div></div></li>
+								<li><div class="vbox"><div class="velement">114</div><div>S<span class="sub">114</span></div></div></li>
+								<li><div class="vbox"><div class="velement">115</div><div>S<span class="sub">115</span></div></div></li>
+								<li><div class="vbox"><div class="velement">116</div><div>S<span class="sub">116</span></div></div></li>
+								<li><div class="vbox"><div class="velement">117</div><div>S<span class="sub">117</span></div></div></li>
+								<li><div class="vbox"><div class="velement">118</div><div>S<span class="sub">118</span></div></div></li>
+								<li><div class="vbox"><div class="velement">119</div><div>S<span class="sub">119</span></div></div></li>
+								<li><div class="vbox"><div class="velement">120</div><div>S<span class="sub">120</span></div></div></li>
+								<li><div class="vbox"><div class="velement">121</div><div>S<span class="sub">121</span></div></div></li>
+								<li><div class="vbox"><div class="velement">122</div><div>S<span class="sub">122</span></div></div></li>
+								<li><div class="vbox"><div class="velement">123</div><div>S<span class="sub">123</span></div></div></li>
+								<li><div class="vbox"><div class="velement">124</div><div>S<span class="sub">124</span></div></div></li>
+								<li><div class="vbox"><div class="velement">125</div><div>S<span class="sub">125</span></div></div></li>
+								<li><div class="vbox"><div class="velement">126</div><div>S<span class="sub">126</span></div></div></li>
+								<li><div class="vbox"><div class="velement">127</div><div>S<span class="sub">127</span></div></div></li>
+								<li><div class="vbox"><div class="velement">128</div><div>S<span class="sub">128</span></div></div></li>
+								<li><div class="vbox"><div class="velement">129</div><div>S<span class="sub">129</span></div></div></li>
+								<li><div class="vbox"><div class="velement">130</div><div>S<span class="sub">130</span></div></div></li>
+								<li><div class="vbox"><div class="velement">131</div><div>S<span class="sub">131</span></div></div></li>
+								<li><div class="vbox"><div class="velement">132</div><div>S<span class="sub">132</span></div></div></li>
+								<li><div class="vbox"><div class="velement">133</div><div>S<span class="sub">133</span></div></div></li>
+								<li><div class="vbox"><div class="velement">134</div><div>S<span class="sub">134</span></div></div></li>
+								<li><div class="vbox"><div class="velement">135</div><div>S<span class="sub">135</span></div></div></li>
+								<li><div class="vbox"><div class="velement">136</div><div>S<span class="sub">136</span></div></div></li>
+								<li><div class="vbox"><div class="velement">137</div><div>S<span class="sub">137</span></div></div></li>
+								<li><div class="vbox"><div class="velement">138</div><div>S<span class="sub">138</span></div></div></li>
+								<li><div class="vbox"><div class="velement">139</div><div>S<span class="sub">139</span></div></div></li>
+								<li><div class="vbox"><div class="velement">140</div><div>S<span class="sub">140</span></div></div></li>
+								<li><div class="vbox"><div class="velement">141</div><div>S<span class="sub">141</span></div></div></li>
+								<li><div class="vbox"><div class="velement">142</div><div>S<span class="sub">142</span></div></div></li>
+								<li><div class="vbox"><div class="velement">143</div><div>S<span class="sub">143</span></div></div></li>
+								<li><div class="vbox"><div class="velement">144</div><div>S<span class="sub">144</span></div></div></li>
+								<li><div class="vbox"><div class="velement">145</div><div>S<span class="sub">145</span></div></div></li>
+								<li><div class="vbox"><div class="velement">146</div><div>S<span class="sub">146</span></div></div></li>
+								<li><div class="vbox"><div class="velement">147</div><div>S<span class="sub">147</span></div></div></li>
+								<li><div class="vbox"><div class="velement">148</div><div>S<span class="sub">148</span></div></div></li>
+								<li><div class="vbox"><div class="velement">149</div><div>S<span class="sub">149</span></div></div></li>
+								<li><div class="vbox"><div class="velement">150</div><div>S<span class="sub">150</span></div></div></li>
+								<li><div class="vbox"><div class="velement">151</div><div>S<span class="sub">151</span></div></div></li>
+								<li><div class="vbox"><div class="velement">152</div><div>S<span class="sub">152</span></div></div></li>
+								<li><div class="vbox"><div class="velement">153</div><div>S<span class="sub">153</span></div></div></li>
+								<li><div class="vbox"><div class="velement">154</div><div>S<span class="sub">154</span></div></div></li>
+								<li><div class="vbox"><div class="velement">155</div><div>S<span class="sub">155</span></div></div></li>
+								<li><div class="vbox"><div class="velement">156</div><div>S<span class="sub">156</span></div></div></li>
+								<li><div class="vbox"><div class="velement">157</div><div>S<span class="sub">157</span></div></div></li>
+								<li><div class="vbox"><div class="velement">158</div><div>S<span class="sub">158</span></div></div></li>
+								<li><div class="vbox"><div class="velement">159</div><div>S<span class="sub">159</span></div></div></li>
+								<li><div class="vbox"><div class="velement">160</div><div>S<span class="sub">160</span></div></div></li>
+								<li><div class="vbox"><div class="velement">161</div><div>S<span class="sub">161</span></div></div></li>
+								<li><div class="vbox"><div class="velement">162</div><div>S<span class="sub">162</span></div></div></li>
+								<li><div class="vbox"><div class="velement">163</div><div>S<span class="sub">163</span></div></div></li>
+								<li><div class="vbox"><div class="velement">164</div><div>S<span class="sub">164</span></div></div></li>
+								<li><div class="vbox"><div class="velement">165</div><div>S<span class="sub">165</span></div></div></li>
+								<li><div class="vbox"><div class="velement">166</div><div>S<span class="sub">166</span></div></div></li>
+								<li><div class="vbox"><div class="velement">167</div><div>S<span class="sub">167</span></div></div></li>
+								<li><div class="vbox"><div class="velement">168</div><div>S<span class="sub">168</span></div></div></li>
+								<li><div class="vbox"><div class="velement">169</div><div>S<span class="sub">169</span></div></div></li>
+								<li><div class="vbox"><div class="velement">170</div><div>S<span class="sub">170</span></div></div></li>
+								<li><div class="vbox"><div class="velement">171</div><div>S<span class="sub">171</span></div></div></li>
+								<li><div class="vbox"><div class="velement">172</div><div>S<span class="sub">172</span></div></div></li>
+								<li><div class="vbox"><div class="velement">173</div><div>S<span class="sub">173</span></div></div></li>
+								<li><div class="vbox"><div class="velement">174</div><div>S<span class="sub">174</span></div></div></li>
+								<li><div class="vbox"><div class="velement">175</div><div>S<span class="sub">175</span></div></div></li>
+								<li><div class="vbox"><div class="velement">176</div><div>S<span class="sub">176</span></div></div></li>
+								<li><div class="vbox"><div class="velement">177</div><div>S<span class="sub">177</span></div></div></li>
+								<li><div class="vbox"><div class="velement">178</div><div>S<span class="sub">178</span></div></div></li>
+								<li><div class="vbox"><div class="velement">179</div><div>S<span class="sub">179</span></div></div></li>
+								<li><div class="vbox"><div class="velement">180</div><div>S<span class="sub">180</span></div></div></li>
+								<li><div class="vbox"><div class="velement">181</div><div>S<span class="sub">181</span></div></div></li>
+								<li><div class="vbox"><div class="velement">182</div><div>S<span class="sub">182</span></div></div></li>
+								<li><div class="vbox"><div class="velement">183</div><div>S<span class="sub">183</span></div></div></li>
+								<li><div class="vbox"><div class="velement">184</div><div>S<span class="sub">184</span></div></div></li>
+								<li><div class="vbox"><div class="velement">185</div><div>S<span class="sub">185</span></div></div></li>
+								<li><div class="vbox"><div class="velement">186</div><div>S<span class="sub">186</span></div></div></li>
+								<li><div class="vbox"><div class="velement">187</div><div>S<span class="sub">187</span></div></div></li>
+								<li><div class="vbox"><div class="velement">188</div><div>S<span class="sub">188</span></div></div></li>
+								<li><div class="vbox"><div class="velement">189</div><div>S<span class="sub">189</span></div></div></li>
+								<li><div class="vbox"><div class="velement">190</div><div>S<span class="sub">190</span></div></div></li>
+								<li><div class="vbox"><div class="velement">191</div><div>S<span class="sub">191</span></div></div></li>
+								<li><div class="vbox"><div class="velement">192</div><div>S<span class="sub">192</span></div></div></li>
+								<li><div class="vbox"><div class="velement">193</div><div>S<span class="sub">193</span></div></div></li>
+								<li><div class="vbox"><div class="velement">194</div><div>S<span class="sub">194</span></div></div></li>
+								<li><div class="vbox"><div class="velement">195</div><div>S<span class="sub">195</span></div></div></li>
+								<li><div class="vbox"><div class="velement">196</div><div>S<span class="sub">196</span></div></div></li>
+								<li><div class="vbox"><div class="velement">197</div><div>S<span class="sub">197</span></div></div></li>
+								<li><div class="vbox"><div class="velement">198</div><div>S<span class="sub">198</span></div></div></li>
+								<li><div class="vbox"><div class="velement">199</div><div>S<span class="sub">199</span></div></div></li>
+								<li><div class="vbox"><div class="velement">200</div><div>S<span class="sub">200</span></div></div></li>
+								<li><div class="vbox"><div class="velement">201</div><div>S<span class="sub">201</span></div></div></li>
+								<li><div class="vbox"><div class="velement">202</div><div>S<span class="sub">202</span></div></div></li>
+								<li><div class="vbox"><div class="velement">203</div><div>S<span class="sub">203</span></div></div></li>
+								<li><div class="vbox"><div class="velement">204</div><div>S<span class="sub">204</span></div></div></li>
+								<li><div class="vbox"><div class="velement">205</div><div>S<span class="sub">205</span></div></div></li>
+								<li><div class="vbox"><div class="velement">206</div><div>S<span class="sub">206</span></div></div></li>
+								<li><div class="vbox"><div class="velement">207</div><div>S<span class="sub">207</span></div></div></li>
+								<li><div class="vbox"><div class="velement">208</div><div>S<span class="sub">208</span></div></div></li>
+								<li><div class="vbox"><div class="velement">209</div><div>S<span class="sub">209</span></div></div></li>
+								<li><div class="vbox"><div class="velement">210</div><div>S<span class="sub">210</span></div></div></li>
+								<li><div class="vbox"><div class="velement">211</div><div>S<span class="sub">211</span></div></div></li>
+								<li><div class="vbox"><div class="velement">212</div><div>S<span class="sub">212</span></div></div></li>
+								<li><div class="vbox"><div class="velement">213</div><div>S<span class="sub">213</span></div></div></li>
+								<li><div class="vbox"><div class="velement">214</div><div>S<span class="sub">214</span></div></div></li>
+								<li><div class="vbox"><div class="velement">215</div><div>S<span class="sub">215</span></div></div></li>
+								<li><div class="vbox"><div class="velement">216</div><div>S<span class="sub">216</span></div></div></li>
+								<li><div class="vbox"><div class="velement">217</div><div>S<span class="sub">217</span></div></div></li>
+								<li><div class="vbox"><div class="velement">218</div><div>S<span class="sub">218</span></div></div></li>
+								<li><div class="vbox"><div class="velement">219</div><div>S<span class="sub">219</span></div></div></li>
+								<li><div class="vbox"><div class="velement">220</div><div>S<span class="sub">220</span></div></div></li>
+								<li><div class="vbox"><div class="velement">221</div><div>S<span class="sub">221</span></div></div></li>
+								<li><div class="vbox"><div class="velement">222</div><div>S<span class="sub">222</span></div></div></li>
+								<li><div class="vbox"><div class="velement">223</div><div>S<span class="sub">223</span></div></div></li>
+								<li><div class="vbox"><div class="velement">224</div><div>S<span class="sub">224</span></div></div></li>
+								<li><div class="vbox"><div class="velement">225</div><div>S<span class="sub">225</span></div></div></li>
+								<li><div class="vbox"><div class="velement">226</div><div>S<span class="sub">226</span></div></div></li>
+								<li><div class="vbox"><div class="velement">227</div><div>S<span class="sub">227</span></div></div></li>
+								<li><div class="vbox"><div class="velement">228</div><div>S<span class="sub">228</span></div></div></li>
+								<li><div class="vbox"><div class="velement">229</div><div>S<span class="sub">229</span></div></div></li>
+								<li><div class="vbox"><div class="velement">230</div><div>S<span class="sub">230</span></div></div></li>
+								<li><div class="vbox"><div class="velement">231</div><div>S<span class="sub">231</span></div></div></li>
+								<li><div class="vbox"><div class="velement">232</div><div>S<span class="sub">232</span></div></div></li>
+								<li><div class="vbox"><div class="velement">233</div><div>S<span class="sub">233</span></div></div></li>
+								<li><div class="vbox"><div class="velement">234</div><div>S<span class="sub">234</span></div></div></li>
+								<li><div class="vbox"><div class="velement">235</div><div>S<span class="sub">235</span></div></div></li>
+								<li><div class="vbox"><div class="velement">236</div><div>S<span class="sub">236</span></div></div></li>
+								<li><div class="vbox"><div class="velement">237</div><div>S<span class="sub">237</span></div></div></li>
+								<li><div class="vbox"><div class="velement">238</div><div>S<span class="sub">238</span></div></div></li>
+								<li><div class="vbox"><div class="velement">239</div><div>S<span class="sub">239</span></div></div></li>
+								<li><div class="vbox"><div class="velement">240</div><div>S<span class="sub">240</span></div></div></li>
+								<li><div class="vbox"><div class="velement">241</div><div>S<span class="sub">241</span></div></div></li>
+								<li><div class="vbox"><div class="velement">242</div><div>S<span class="sub">242</span></div></div></li>
+								<li><div class="vbox"><div class="velement">243</div><div>S<span class="sub">243</span></div></div></li>
+								<li><div class="vbox"><div class="velement">244</div><div>S<span class="sub">244</span></div></div></li>
+								<li><div class="vbox"><div class="velement">245</div><div>S<span class="sub">245</span></div></div></li>
+								<li><div class="vbox"><div class="velement">246</div><div>S<span class="sub">246</span></div></div></li>
+								<li><div class="vbox"><div class="velement">247</div><div>S<span class="sub">247</span></div></div></li>
+								<li><div class="vbox"><div class="velement">248</div><div>S<span class="sub">248</span></div></div></li>
+								<li><div class="vbox"><div class="velement">249</div><div>S<span class="sub">249</span></div></div></li>
+								<li><div class="vbox"><div class="velement">250</div><div>S<span class="sub">250</span></div></div></li>
+								<li><div class="vbox"><div class="velement">251</div><div>S<span class="sub">251</span></div></div></li>
+								<li><div class="vbox"><div class="velement">252</div><div>S<span class="sub">252</span></div></div></li>
+							</ul> 
+						</div>
+						<div class="vbox"><div class="velement">253</div><div>S<span class="sub">253</span></div></div>
+						<div class="vbox"><div class="velement">254</div><div>S<span class="sub">254</span></div></div>
+						<div class="vbox"><div class="velement">255</div><div>S<span class="sub">255</span></div></div>
+					</div>
+					<div class="clear"> </div> 
+						
+					<p>Temporary vector T (<span class="italic">empty</span>):</p>
+					<div>
+						<div class="vbox"><div class="velement"> </div><div>T<span class="sub">0</span></div></div>
+						<div class="vbox"><div class="velement"> </div><div>T<span class="sub">1</span></div></div>
+						<div class="vbox"><div class="velement"> </div><div>T<span class="sub">2</span></div></div>
+						<div class="hscroll">
+							<ul>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">3</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">4</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">5</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">6</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">7</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">8</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">9</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">10</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">11</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">12</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">13</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">14</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">15</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">16</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">17</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">18</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">19</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">20</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">21</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">22</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">23</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">24</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">25</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">26</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">27</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">28</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">29</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">30</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">31</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">32</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">33</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">34</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">35</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">36</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">37</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">38</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">39</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">40</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">41</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">42</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">43</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">44</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">45</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">46</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">47</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">48</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">49</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">50</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">51</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">52</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">53</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">54</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">55</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">56</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">57</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">58</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">59</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">60</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">61</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">62</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">63</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">64</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">65</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">66</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">67</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">68</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">69</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">70</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">71</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">72</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">73</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">74</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">75</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">76</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">77</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">78</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">79</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">80</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">81</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">82</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">83</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">84</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">85</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">86</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">87</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">88</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">89</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">90</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">91</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">92</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">93</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">94</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">95</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">96</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">97</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">98</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">99</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">100</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">101</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">102</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">103</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">104</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">105</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">106</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">107</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">108</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">109</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">110</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">111</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">112</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">113</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">114</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">115</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">116</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">117</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">118</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">119</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">120</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">121</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">122</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">123</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">124</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">125</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">126</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">127</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">128</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">129</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">130</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">131</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">132</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">133</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">134</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">135</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">136</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">137</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">138</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">139</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">140</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">141</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">142</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">143</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">144</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">145</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">146</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">147</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">148</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">149</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">150</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">151</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">152</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">153</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">154</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">155</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">156</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">157</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">158</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">159</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">160</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">161</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">162</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">163</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">164</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">165</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">166</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">167</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">168</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">169</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">170</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">171</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">172</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">173</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">174</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">175</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">176</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">177</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">178</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">179</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">180</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">181</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">182</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">183</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">184</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">185</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">186</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">187</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">188</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">189</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">190</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">191</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">192</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">193</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">194</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">195</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">196</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">197</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">198</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">199</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">200</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">201</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">202</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">203</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">204</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">205</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">206</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">207</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">208</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">209</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">210</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">211</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">212</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">213</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">214</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">215</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">216</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">217</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">218</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">219</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">220</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">221</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">222</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">223</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">224</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">225</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">226</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">227</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">228</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">229</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">230</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">231</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">232</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">233</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">234</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">235</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">236</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">237</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">238</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">239</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">240</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">241</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">242</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">243</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">244</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">245</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">246</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">247</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">248</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">249</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">250</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">251</span></div></div></li>
+								<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">252</span></div></div></li>
+							</ul>
+						</div>
+						<div class="vbox"><div class="velement"> </div><div>T<span class="sub">253</span></div></div>
+						<div class="vbox"><div class="velement"> </div><div>T<span class="sub">254</span></div></div>
+						<div class="vbox"><div class="velement"> </div><div>T<span class="sub">255</span></div></div>			
+					</div>
+					<div class="clear"> </div>
+
+					<div><p>Enter key K:</p></div>
+					<input type="number" id="keyvalue" name="keyvalue" placeholder=8163>
+					<button type="button" id='confirm' class='confirm'>CONFIRM</button>
+
+					<div>
+						<div id='showkey'></div>	
+					</div>
+					<div class="clear"></div> <br/>
+
+					<p>Temporary vector T:</p>
+					<div id='tvalue' name='tvalue'></div>
+					<div class="clear"> </div>
+
+					<script type="text/javascript">
+						var confirm = document.getElementById("confirm");
+			    		confirm.addEventListener("click", checkkeyvalue,  false);    
+						fillt("tvalue", false);
+			    		confirm.addEventListener("click", function(){fillt("tvalue", false);},  false);
+					</script>
 				</div>
-				<div class="vbox"><div class="velement">253</div><div>S<span class="sub">253</span></div></div>
-				<div class="vbox"><div class="velement">254</div><div>S<span class="sub">254</span></div></div>
-				<div class="vbox"><div class="velement">255</div><div>S<span class="sub">255</span></div></div>
-			</div>
-			<div class="clear"> </div> 
-				
-			<p>Temporary vector T (<span class="italic">empty</span>):</p>
-			<div>
-				<div class="vbox"><div class="velement"> </div><div>T<span class="sub">0</span></div></div>
-				<div class="vbox"><div class="velement"> </div><div>T<span class="sub">1</span></div></div>
-				<div class="vbox"><div class="velement"> </div><div>T<span class="sub">2</span></div></div>
-				<div class="hscroll">
-					<ul>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">3</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">4</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">5</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">6</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">7</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">8</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">9</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">10</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">11</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">12</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">13</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">14</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">15</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">16</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">17</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">18</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">19</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">20</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">21</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">22</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">23</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">24</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">25</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">26</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">27</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">28</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">29</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">30</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">31</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">32</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">33</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">34</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">35</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">36</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">37</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">38</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">39</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">40</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">41</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">42</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">43</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">44</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">45</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">46</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">47</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">48</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">49</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">50</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">51</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">52</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">53</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">54</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">55</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">56</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">57</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">58</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">59</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">60</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">61</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">62</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">63</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">64</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">65</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">66</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">67</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">68</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">69</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">70</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">71</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">72</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">73</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">74</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">75</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">76</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">77</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">78</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">79</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">80</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">81</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">82</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">83</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">84</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">85</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">86</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">87</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">88</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">89</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">90</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">91</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">92</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">93</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">94</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">95</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">96</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">97</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">98</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">99</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">100</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">101</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">102</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">103</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">104</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">105</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">106</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">107</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">108</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">109</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">110</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">111</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">112</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">113</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">114</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">115</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">116</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">117</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">118</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">119</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">120</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">121</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">122</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">123</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">124</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">125</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">126</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">127</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">128</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">129</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">130</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">131</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">132</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">133</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">134</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">135</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">136</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">137</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">138</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">139</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">140</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">141</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">142</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">143</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">144</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">145</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">146</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">147</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">148</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">149</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">150</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">151</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">152</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">153</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">154</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">155</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">156</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">157</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">158</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">159</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">160</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">161</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">162</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">163</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">164</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">165</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">166</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">167</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">168</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">169</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">170</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">171</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">172</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">173</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">174</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">175</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">176</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">177</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">178</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">179</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">180</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">181</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">182</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">183</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">184</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">185</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">186</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">187</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">188</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">189</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">190</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">191</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">192</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">193</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">194</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">195</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">196</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">197</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">198</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">199</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">200</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">201</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">202</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">203</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">204</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">205</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">206</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">207</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">208</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">209</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">210</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">211</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">212</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">213</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">214</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">215</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">216</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">217</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">218</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">219</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">220</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">221</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">222</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">223</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">224</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">225</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">226</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">227</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">228</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">229</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">230</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">231</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">232</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">233</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">234</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">235</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">236</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">237</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">238</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">239</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">240</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">241</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">242</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">243</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">244</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">245</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">246</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">247</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">248</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">249</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">250</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">251</span></div></div></li>
-						<li><div class="vbox"><div class="velement"> </div><div>T<span class="sub">252</span></div></div></li>
-					</ul>
+
+				<div class="gridcol2">
+					<button type="button" class='question'>?</button>
+					<p class="descriptionbox">
+						In stage 1, the state vector S and temporary vector T are initialized:<br><br>
+							I. Elements of S are filled out with values from 0 to 255 in an ascending order.<br><br>
+							II. A key of variable length (in the range of 1 to 256 bytes) is required to initialize T.<br><br>
+							III. The key is determined by the user of RC4. Please type in a numberical key. Each digit occupies one byte in real-world implementation.<br><br>
+							IV. After typing in the key of your choice, please press the CONFIRM button to initialize T.
+					</p>
+					<script type="text/javascript">
+						var question = document.getElementsByClassName("question")[0];
+						var descriptionbox = document.getElementsByClassName("descriptionbox")[0];
+						function answer(){
+							if( descriptionbox.style.opacity == "1"){
+								descriptionbox.style.opacity = "0";
+							} 
+							else {descriptionbox.style.opacity = "1";}		
+						}
+			    		question.addEventListener("click", answer, false);    
+					</script>
+
 				</div>
-				<div class="vbox"><div class="velement"> </div><div>T<span class="sub">253</span></div></div>
-				<div class="vbox"><div class="velement"> </div><div>T<span class="sub">254</span></div></div>
-				<div class="vbox"><div class="velement"> </div><div>T<span class="sub">255</span></div></div>			
 			</div>
-			<div class="clear"> </div>
-
-			<div><p>Enter key K:</p></div>
-			<input type="number" id="keyvalue" name="keyvalue" placeholder=8163>
-			<button type="button" id='confirm' class='confirm'>CONFIRM</button>
-			<div class="clear"></div> <br/>
-
-			<script type="text/javascript">
-				var confirm = document.getElementById("confirm");
-	    		confirm.addEventListener("click", checkkeyvalue,  false);    
-			</script>
-
-			<div>
-				<div id='showkey'></div>	
-			</div>
-
-
-			<button type="button" id='initiate'>INITIATE T</button>
-			<p>Temporary vector T:</p>
-			<div id='tvalue' name='tvalue'></div>
-			<div class="clear"> </div>
-
-			<script type="text/javascript">
-				fillt("tvalue", false);
-				var initiate = document.getElementById("initiate");
-	    		initiate.addEventListener("click", function(){fillt("tvalue", false);},  false);    
-			</script>
 			
 		</div>
 
@@ -685,10 +709,11 @@
 						<th>Round</th>
 						<th class="stage2counter">0</th>	
 					</tr></table>				
-					<div class="bpf1">
+					<div class="bpfc">
 						<button type="button" id="backbutton">BACKWARD</button>
 						<button type="button" id="togglebutton">PLAY</button>
-						<button type="button" id="forthbutton">FORWARD</button>
+						<button type="button" id="stepforthbutton">FORWARD</button>
+						<button type="button" id="forthbutton">COMPLETE</button>
 					</div>
 				</div>
 
@@ -986,27 +1011,40 @@
 						<div class="velement zindex2" id="swapslot2"></div>
 					
 					<div class="clear"> </div>
-					
-					
 
 					<p>Temporary vector T (initiated): </p>	
 					<div id='tvalue2' name='tvalue2' class="zindex1"></div>
 					
 					<script type="text/javascript">
 						fillt("tvalue2", true);
-						var initiate = document.getElementById("initiate");
-			    		initiate.addEventListener("click", function(){fillt("tvalue2", true);},  false);    
+						var confirm = document.getElementById("confirm");
+			    		confirm.addEventListener("click", function(){fillt("tvalue2", true);},  false);    
 					</script>
 
 					<div class="clear"> </div>	
-					<p id="test1"></p>
+					<!--- <p id="test1"></p>
 					<p id="test2"></p>
 					<p id="test3"></p>
-					<p id="test4"></p>
-					
-					
+					<p id="test4"></p> --->
+				</div>
 
-
+				<div class="gridelement5">	
+					<button type="button" class='question'>?</button>
+					<p class="descriptionbox">
+						In Stage 2, every S element is swapped with another S element according to a scheme dictated by T (For more details, <a class="italic">PLAY</a> the animation). <br><br>
+						The operation starts from S[0] and ends at S[255]. There are <a class="italic">256</a> rounds in total. 
+					</p>
+					<script type="text/javascript">
+						var question1 = document.getElementsByClassName("question")[1];
+						var descriptionbox1 = document.getElementsByClassName("descriptionbox")[1];
+						function answer(){
+							if( descriptionbox1.style.opacity == "1"){
+								descriptionbox1.style.opacity = "0";
+							} 
+							else {descriptionbox1.style.opacity = "1";}		
+						}
+			    		question1.addEventListener("click", answer, false);    
+					</script>
 				</div>
 
 				<script>
@@ -1025,7 +1063,9 @@
 					var stage2anims = ["stage2counteranim", "stage2highlight1s", "stage2highlight1s", "stage2highlight3s", "stage2highlight2s"];
 					var backbutton = document.getElementById("backbutton");
 					var togglebutton = document.getElementById("togglebutton");
-					var forwardbutton = document.getElementById("forthbutton");
+					var forwardbutton = document.getElementById("stepforthbutton");
+					var completebutton = document.getElementById("forthbutton");
+
 					var autoplay = false;
 					var roundcounter = parseInt(stage2counter.textContent); 
 					var stepcounter = 0;  // step 1 to 4, back and forth
@@ -1440,7 +1480,7 @@
 							}
 					}
 
-					function stage2forward(){
+					function stage2complete(){
 						var tempi1 = 0;
 						var tempj1 = 0;
 						stage2recordsi = [];
@@ -1520,13 +1560,14 @@
 
 					}
 
-					function forwardbuttonvaluechange(){
+					function completionchange(){
 						if( roundcounter >= 256){
 							stage2reset(); 
-							forwardbutton.innerHTML = "FORWARD"; }
+							completebutton.innerHTML = "COMPLETE"; }
 						else { 	
-							stage2forward();					
-							forwardbutton.innerHTML = "RESET"; }
+							stage2reset(); 
+							stage2complete();					
+							completebutton.innerHTML = "RESET"; }
 					}
 
 					function stage2backward(){
@@ -1574,19 +1615,28 @@
 						document.getElementById("stage2vectorti").innerHTML = tielvalue;
 						document.getElementById("step6Sj").innerHTML = siel2swapback.textContent;
 						document.getElementById("step6Si").innerHTML = sjel2swapback.textContent;
+					}
 
-						//document.getElementById("test1").innerHTML = secondlast;
-						//document.getElementById("test2").innerHTML = sj3swapback;
-						//document.getElementById("test3").innerHTML = sj2swapback;
-						//document.getElementById("test4").innerHTML = stage2recordsj;
+					function stage2forward(){
+						var currcounter = parseInt(stage2counter.textContent);
+						if ( currcounter == 255 && parseInt(document.getElementById("ivalue5").textContent) == 255 ){
+							alert("This is the last round of initial permutation of S.");
+							return;
+						}
+						stage2reset();
+						stage2complete();
+						var amtbackstep = 255 - currcounter;
+						for (i=0; i<amtbackstep; i++){stage2backward();}
 					}
 
 
 					togglebutton.addEventListener("click", function(){togglebuttonvaluechange()}, false);
 
-					forwardbutton.addEventListener("click", function(){forwardbuttonvaluechange()}, false);
+					completebutton.addEventListener("click", function(){completionchange()}, false);
 
 					backbutton.addEventListener("click", function(){stage2backward()}, false);
+
+					forwardbutton.addEventListener("click", function(){stage2forward()}, false);
 
 					
 				</script>
@@ -1603,14 +1653,33 @@
 
 			<div class="gridcontainer2">
 
-				<div class="bpf2 riditem1">
+				<div class="griditem7">
+					<p>In Stream Generation, a pseudorandom byte is generated by selecting a S element from the 255 Selements according to the current configuration of S. Afterwards, S is permuted by swapping two S elements. This operation can generate an infinite number of pseudorandom bytes.</p>
+
+				</div>
+
+				<div class="bpf riditem1">
 					<button type="button" id="stage3back">BACKWARD</button>
 					<button type="button" id="stage3toggle">PLAY</button>
 					<button type="button" id="stage3forth">FORWARD</button>
 				</div>
 
 
-				<div class="griditem2"> 			
+				<div class="griditem2"> 
+					<div class="stage3questionmark">
+						<button type="button" class='question' onclick="stage3answer()">?</button>
+						<script>
+						function stage3answer() {
+		    				var griditem7 = document.getElementsByClassName("griditem7")[0];
+		    				if (griditem7.style.display === "block") {
+		        			griditem7.style.display = "none";
+		   					 } else {
+		        			griditem7.style.display = "block";
+		    				}
+						}
+						</script>
+					</div>	
+
 					<p >Vector S: </p>
 					<div class="zindex1">
 						<div class="vbox" id="stage3S0"><div class="velement">0</div><div>S<span class="sub">0</span></div></div>
@@ -1874,8 +1943,8 @@
 						<div class="vbox" id="stage3S254"><div class="velement">254</div><div>S<span class="sub">254</span></div></div>
 						<div class="vbox" id="stage3S255"><div class="velement">255</div><div>S<span class="sub">255</span></div></div>
 					</div>
-						<div class="velement zindex2" id="swapslot1"></div>
-						<div class="velement zindex2" id="swapslot2"></div>
+					<div class="velement zindex2" id="swapslot1"></div>
+					<div class="velement zindex2" id="swapslot2"></div>
 					
 					<div class="clear"> </div>
 				</div>
@@ -1885,8 +1954,8 @@
 					<p>Initial condition: <br> 
 					i, j = 0</p>
 
-					<p>Generation of <a class="stage3counter">1</a><a id="numpostfix">st</a> pseudorandom bit:</p>
-					<h3> Step 1:</h3>
+					<p>Generation of <a class="stage3counter">1</a><a id="numpostfix">st</a> pseudorandom byte:</p>
+					<h3>Step 1:</h3>
 					<p class="stage3step1">i = (<a id="ivalue1">i</a> + 1) mod 256 </p>
 					<p class="stage3step2">i = <a id="ivalue2">0</a> </p>
 				</div>
@@ -1896,7 +1965,7 @@
 					<p class="stage3step4">j = (<a id="jvalue2">0</a> + <a id="sivalue1">1</a>) mod 256  </p>
 					<p class="stage3step5">j = <a id="jvalue3">0</a> </p>
 
-					<h3> Step 2:</h3>
+					<h3>Step 2:</h3>
 					<p id="stage3step67">
 						<span class="stage3step6">S[<a id="ivalue4">i</a>] = <a id="sivalue2"></a>, </span> 
 						<span class="stage3step7">S[<a id="jvalue4">j</a>]= <a id="sjvalue1"></a></span> 
@@ -1917,7 +1986,7 @@
 				</div>
 
 				<div class="griditem5">
-					<h3> Step 3:</h3>
+					<h3>Step 3:</h3>
 
 					<p id="stage3step1415">n = (S[<a id="ivalue6">i</a>] + S[<a id="jvalue6">j</a>]) mod 256 </p>
 					<div class="stage3step14"></div>
@@ -1929,7 +1998,12 @@
 					<p class="stage3step19">byte-key = <a id="snvalue1">0</a> = (<a id="snvaluebinary">0</a>)<a class="sub">2</a>	</p>
 				</div>
 
-				<div class="bottomspace"></div>
+				<div class="griditem6">
+					<h3>Stream of Random Bytes Generated:</h3>
+					<p id="randomkeys">NIL</p>
+				</div>
+
+				<div class="blankspace"></div>
 
 				<script>		
 					var numpostfix = document.getElementById("numpostfix");
@@ -1969,6 +2043,7 @@
 					var stage3roundcount = parseInt(stage3counter.textContent); 
 					var stage3stepcount = 0;  // step 1 to 4, back and forth
 					var itracker = 0;
+					var randomkeys = document.getElementById("randomkeys");
 
 					var stage3step67 = document.getElementById("stage3step67");
 					var stage3step8to11 = document.getElementById("stage3step8to11");
@@ -2211,7 +2286,12 @@
 						for( i=0; i< (8 - bkey.length) ; i++){
 							prefix0 = prefix0 + "0" ;
 						}
-						document.getElementById("snvaluebinary").innerHTML = prefix0 + bkey;
+						var bkey = prefix0 + bkey;
+						document.getElementById("snvaluebinary").innerHTML = bkey;
+						var randomkeystr = randomkeys.textContent;
+						if(randomkeystr == "NIL" ){randomkeystr = "";}
+						var randomkeystr = randomkeystr + "  " + bkey;
+						randomkeys.innerHTML = randomkeystr;
 					}
 
 					function stage3addanim(add, itemx, animx){
@@ -2565,6 +2645,7 @@
 						var tempi2 = 0;
 						var tempj1 = 0;
 						var tempj2 = 0;
+						var temprandomkeys = "";
 						stage3recordsi = [];
 						stage3recordsj = [];
 
@@ -2572,7 +2653,7 @@
 							tempi2 = tempi1 + 1;
 							var sivalue = parseInt(document.getElementById("stage3S"+tempi2).firstChild.textContent);
 							tempj2 = ( tempj1 + sivalue ) % 256 ;
-							var siel = document.getElementById("stage3S"+tempi1).firstChild;
+							var siel = document.getElementById("stage3S"+tempi2).firstChild;
 							var sjel = document.getElementById("stage3S"+tempj2).firstChild;
 							var sielvalue = parseInt(siel.textContent);
 							var sjelvalue = parseInt(sjel.textContent);
@@ -2588,6 +2669,7 @@
 								prefix0 = prefix0 + "0" ;
 							}
 							var snelvaluebinary8 = prefix0 + snelvaluebinary;
+							temprandomkeys = temprandomkeys + " " + snelvaluebinary8;
 
 							if( i ==  targetround){
 								stage3autoplay = false;
@@ -2623,6 +2705,7 @@
 								section3.querySelector("#nvalue2").innerHTML = nvalue;
 								section3.querySelector("#snvalue1").innerHTML = snelvalue;
 								section3.querySelector("#snvaluebinary").innerHTML = snelvaluebinary8;
+								randomkeys.innerHTML = temprandomkeys;
 								break;
 							}													
 							tempj1 = tempj2;
@@ -2633,7 +2716,10 @@
 					
 					function stage3backward(){
 						var targetstage3counter = parseInt(stage3counter.textContent) - 2;
-						if ( targetstage3counter <0 ) { return; }
+						if ( targetstage3counter <0 ) { 
+							alert("This is the start of stream generation.");
+							return; }
+						randomkeys.innerHTML = "";
 						stage3counter.innerHTML = targetstage3counter ;
 						stage3forward();
 					}
@@ -2649,6 +2735,7 @@
 					var section1 = document.getElementById("section1");
 					var section2 = document.getElementById("section2");
 					var section3 = document.getElementById("section3");
+
 					function gotosectionx(stagenum){
 						switch( stagenum ){
 							case 1: section1.scrollIntoView(false); break;
