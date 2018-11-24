@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1, minimum-scale=0.5, user-scalable=no, target-densityDpi=device-dpi" />
 		<link rel='stylesheet' type='text/css' href='style_v3.css' />
 		<title>RC4</title>
 		<!---<script src="https://www.kirupa.com/js/prefixfree.min.js"></script> --->
@@ -675,10 +675,10 @@
 				<div class="gridcol2">
 					<button type="button" class='question'>?</button>
 					<p class="descriptionbox">
-						In stage 1, the state vector S and temporary vector T are initialized:<br><br>
-							I. Elements of S are filled out with values from 0 to 255 in an ascending order.<br><br>
-							II. A key of variable length (in the range of 1 to 256 bytes) is required to initialize T.<br><br>
-							III. The key is determined by the user of RC4. Please type in a numberical key. Each digit occupies one byte in real-world implementation.<br><br>
+						In stage 1, the state vector S and temporary vector T are initialized:<br>
+							I. Elements of S are filled out with values from 0 to 255 in an ascending order.<br>
+							II. A key of variable length (in the range of 1 to 256 bytes) is required to initialize T.<br>
+							III. The key is determined by the user of RC4. Please type in a numberical key. Each digit occupies one byte in real-world implementation.<br>
 							IV. After typing in the key of your choice, please press the CONFIRM button to initialize T.
 					</p>
 					<script type="text/javascript">
@@ -1244,26 +1244,26 @@
 							recordswap(siid, sjid);
 
 							if ( siid <= 7 ) {
-								$("#swapslot1").offset({ left:sileft + 5 });
+								$("#swapslot1").offset({ left:sileft + 3 });
 								tempdistance = defaultSoffset - sileft ;
 
 								if ( sjid <= 7 ) {
 									tempdistance = sjleft - sileft ;
 								}
 								else if ( sjid >= 249) {
-									tempdistance = S248offset - sjleft + 49;
+									tempdistance = S248offset - sjleft + 39;
 								}
 							}
 
 							else if ( siid >= 249 ) {
-								$("#swapslot1").offset({ left:sileft + 5 });
+								$("#swapslot1").offset({ left:sileft + 3 });
 								tempdistance = defaultSoffset - sileft ;
 
 								if ( sjid <= 7 ) {
 									tempdistance = sjleft - sileft ;
 								}
 								else if ( sjid >= 249) {
-									tempdistance = S248offset - sjleft + 49;
+									tempdistance = S248offset - sjleft + 39;
 									}
 								}
 
@@ -1298,7 +1298,7 @@
 								}, {
 									transform:"translateY(50px) translateX(0px)"
 								}, {
-									transform:"translateY(50px) translateX(50px)"
+									transform:"translateY(50px) translateX(40px)"
 								}],{
 									duration: 1000,
 									direction:"normal",
@@ -1314,7 +1314,7 @@
 									500, 
 									function(){
 										sjleft = $("#" + stage2step9sjid).first().offset().left;
-										$("#swapslot2").offset({left: sjleft + 5 });
+										$("#swapslot2").offset({left: sjleft + 3 });
 										swapslot2.innerHTML = stage2step9sjvalue;
 										stage2step9sj.style.opacity = "0";
 										swapslot2.style.opacity = "1";
@@ -1351,12 +1351,12 @@
 									function(){
 										sileft = $("#" + stage2step9siid).first().offset().left;
 										swapslot2left = $("#swapslot2").offset().left;
-										var temp2 = sileft - swapslot2left + 5 + 50 ; 
+										var temp2 = sileft - swapslot2left + 3 + 39 ; 
 										var swapslot2anim2 = swapslot2.animate(
 											[ {
-												transform: "translateY(50px) translateX(50px)"
+												transform: "translateY(50px) translateX(40px)"
 											},{
-												transform: "translateY(50px) translateX(50px)"
+												transform: "translateY(50px) translateX(40px)"
 											},{
 												transform: "translateY(50px) translateX("+ temp2 +"px)"
 											},{
@@ -1466,15 +1466,15 @@
 					}
 					
 					function togglebuttonvaluechange() {	// respond to user pause/play the animation
-						if( roundcounter >= 256){document.getElementById("togglebutton").innerHTML = "END"; }
+						if( roundcounter >= 256){togglebutton.innerHTML = "END"; }
 						else if (!autoplay && (roundcounter < 256)){ 							
-							document.getElementById("togglebutton").innerHTML = "PAUSE"; 
+							togglebutton.innerHTML = "PAUSE"; 
 							autoplay = true;
 							pauserunanim();
 							}
 							
 						else if (autoplay && (roundcounter < 256)){
-							document.getElementById("togglebutton").innerHTML = "PLAY";
+							togglebutton.innerHTML = "PLAY";
 							autoplay = false;
 							pauserunanim();	
 							}
@@ -1498,6 +1498,7 @@
 								autoplay = false;
 								stage2counter.innerHTML = 255;
 								roundcounter = 256;
+								tempvari = 256;
 								stepcounter = 10;
 								document.getElementById("ivalue1").innerHTML = 255;
 								document.getElementById("ivalue2").innerHTML = 255;
@@ -1597,6 +1598,7 @@
 						autoplay = false;
 						roundcounter = roundcounter - 1;
 						stage2counter.innerHTML = roundcounter;
+						tempvari = roundcounter;
 						stepcounter = 0;
 						document.getElementById("ivalue1").innerHTML = sib4swap;
 						document.getElementById("ivalue2").innerHTML = sib4swap - 1;
@@ -2342,18 +2344,18 @@
 								tempdistance = sjleft - sileft ;
 							}
 							else if ( jvalue3 >= 249) {
-								tempdistance = S248offset - sjleft + 49;
+								tempdistance = S248offset - sjleft + 39;
 								}
 						}
 
 						else if ( ivalue2 >= 249 ) {
-							$("#section3 #swapslot1").offset({ left:sileft + 5 });
+							$("#section3 #swapslot1").offset({ left:sileft + 3 });
 							tempdistance = stage3S7offset - sileft ;
 							if ( jvalue3 <= 7 ) {
 								tempdistance = sjleft - sileft ;
 							}
 							else if ( jvalue3 >= 249) {
-								tempdistance = S248offset - sjleft + 49;
+								tempdistance = S248offset - sjleft + 39;
 								}
 							}
 
@@ -2405,7 +2407,7 @@
 								}, {
 									transform:"translateY(50px) translateX(0px)"
 								}, {
-									transform:"translateY(50px) translateX(50px)"
+									transform:"translateY(50px) translateX(40px)"
 								}],{
 									duration: 800,
 									direction:"normal",
@@ -2445,12 +2447,12 @@
 
 					function stage3step11slot2(){
 						swapslot2left = $("#section3 #swapslot2").offset().left;
-						var temp2 = sileft - swapslot2left + 5 + 50 ; 
+						var temp2 = sileft - swapslot2left + 3 + 39 ; 
 						var swapslot2anim2 = swapslot2.animate(
 							[ {
-								transform: "translateY(50px) translateX(50px)"
+								transform: "translateY(50px) translateX(40px)"
 							},{
-								transform: "translateY(50px) translateX(50px)"
+								transform: "translateY(50px) translateX(40px)"
 							},{
 								transform: "translateY(50px) translateX("+ temp2 +"px)"
 							},{
@@ -2493,7 +2495,7 @@
 						return swapslot2anim2;
 					}
 
-					function stage3animation(){    // loop, pause/run the stage2 animation
+					function stage3animation(){    // loop, pause/run the animation
 						if ( stage3stepcount >= 23 ){ 
 							stage3stepcount = 0;  
 							itracker += 1;
@@ -2639,6 +2641,8 @@
 					}
 
 					function stage3forward(){
+						elementsi.style.opacity = "1";     
+						elementsj.style.opacity = "1";    
 						stage3updateS();
 						var targetround = parseInt(stage3counter.textContent) ;
 						var tempi1 = 0;

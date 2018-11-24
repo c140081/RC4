@@ -9,6 +9,8 @@
 h1 {
 	margin-top:50px; 
 	margin-bottom: 30px; 
+	padding: 30px;
+	font-size: 25px;
 }
 
 h2 {
@@ -16,19 +18,21 @@ h2 {
 	text-align: left;
 	margin-left: 10%;
 	margin-top: 60px;
+	font-size: 18px;
 }
 
 h3 {
 	text-align: left;
 	margin-left: 10%;
 	margin-top: 30px;
+	font-size: 15px;
 }
 
 p {
 	text-align: left;
 	margin: 2% 10% 2%;	
 	line-height: 35px;
-	font-size: 18px;
+	font-size: 14px;
 }
 
 
@@ -39,7 +43,7 @@ p {
 	margin-left: 10%;	
 	margin-right: 2%;
 	line-height: 35px;
-	font-size: 18px;
+	font-size: 14px;
 }
 
 .flowbox {                /* box used to show RC4 flow */
@@ -56,7 +60,7 @@ p {
 	border-color: #3B5998; 
 	background-color: skyblue;
 	text-decoration: none;   /* to remove underline of links*/
-	font-size: 20px;
+	font-size: 14px;
 	color: #3B5998;
 }
 
@@ -96,12 +100,16 @@ img {
 .gridcontainer0 {
 	margin: 2% 5% 2%;
 	display: grid;
-	grid-template-columns: 55% 40%;
+	grid-template-columns: 60% 40%;
 	grid-template-areas:
 	'column1 column2';	
 }
 
-.gridcol1 {grid-area: column1; }
+.gridcol1 {
+	grid-area: column1; 
+	max-width: 600px;
+	min-width: 500px;
+}
 .gridcol2 {
 	grid-area: column2;
 	padding: 25px; 
@@ -109,12 +117,13 @@ img {
 
 .velement {
 	border-style: solid;
-	border-width: 5px;
+	border-width: 3px;
 	border-color: #3B5998;
 	background-color: skyblue;
-	width: 40px;
-	height: 40px;
-	line-height: 30px;
+	width: 32px;
+	height: 32px;
+	font-size: 12px;
+	line-height: 24px;
 	display: inline-block;
 	position: relative;
 	float: left;
@@ -122,8 +131,9 @@ img {
 }
 
 .vbox {
-	width: 50px;
-	height: 80px;
+	font-size: 14px;
+	width: 40px;
+	height: 70px;
 	position: relative;
 	float: left;
 	left: 10%;
@@ -134,8 +144,8 @@ img {
 	display: inline-block;
 	overflow-x: scroll;
 	overflow-y: hidden;
-	max-width: 450px;
-	min-width: 255px;
+	max-width: 300px;
+	min-width: 210px;
 	position: relative;
 	float: left;
 	right:-10%;
@@ -160,8 +170,10 @@ input {
 }
 
 button {
+	font-size: 11px;
 	height: 30px;
-	width: 160px;
+	max-width: 160px;
+	width: 120px;
 	margin-left: 1%;
 	margin-top: 30px;
 	display: inline-block;
@@ -202,32 +214,34 @@ button.question {
 .descriptionbox {
 	margin-top: 62px;
 	display: block;
-	max-width: 80%;
+	max-width: 100%;
 	padding: 8px;
 	opacity: 0;
 	color: #555555;
 	border: none;
 	border-radius: 4px;
 	background-color: #e7e7e7;
-	font-size: 18px;
+	font-size: 12px;
 }
 
 #backbutton, #togglebutton, #stepforthbutton, #forthbutton {
 	max-width: 100px;
 	width: 90px;
-	height: 40px;
+	max-height: 40px;
+	min-height: 30px;
 	margin: 3px 2px 3px;
 	vertical-align: top;
 }
 
 div.bpfc {
 	display: block;
-	border: 1px solid white;
-	margin: 5% 8% 8%;
-	padding: 15px;
+	border: none;
+	margin: 3% 8% 8%;
+	padding: 10px 25px 10px;
 }
 
 .counterbox {
+	font-size: 14px;
 	width: 70%;
 	height: 40%;
 	border: 1px dotted #008CBA;
@@ -265,6 +279,7 @@ th {
 .gridelement5 {
 	grid-area: QandA; 
 	border-left-style: none;
+	padding-left: 30px;
 }
 
 #swapslot1 {
@@ -479,7 +494,7 @@ stage3vectorspace {
 	margin: 1% auto 1% 10%;
 	grid-row-gap: 10px;
 	grid-template-columns: 18% 12% 30% 30% ;
-	grid-template-rows: 250px auto;
+	grid-template-rows: 190px auto;
 	grid-template-areas:
 	'forbuttons forvectorS forvectorS forvectorS'
 	'QA QA QA QA'
@@ -501,8 +516,18 @@ stage3vectorspace {
 div.bpf {
 	display: block;
 	border: 1px solid black;
-	padding:10%;
+	padding:10% 20% 10%;
 }	
+
+#stage3back, #stage3toggle, #stage3forth{
+	display: block;
+	max-width: 140px;
+	width: 110px;
+	max-height: 40px;
+	min-height: 30px;
+	margin: 15px 10px 10px;
+	vertical-align: center;
+}
 
 .griditem6 > h3 {
 	color: #3B5998;
@@ -520,7 +545,7 @@ div.bpf {
     transition-duration: 0.4s;
 }
 .griditem7 > p {
-	font-size: 20px;
+	font-size: 12px;
 }
 
 .stage3questionmark{
