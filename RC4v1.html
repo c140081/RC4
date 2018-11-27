@@ -1244,7 +1244,7 @@
 							recordswap(siid, sjid);
 
 							if ( siid <= 7 ) {
-								$("#swapslot1").offset({ left:sileft + 3 });
+								$("#swapslot1").offset({ left:sileft + 5 });
 								tempdistance = defaultSoffset - sileft ;
 
 								if ( sjid <= 7 ) {
@@ -1256,7 +1256,7 @@
 							}
 
 							else if ( siid >= 249 ) {
-								$("#swapslot1").offset({ left:sileft + 3 });
+								$("#swapslot1").offset({ left:sileft + 5 });
 								tempdistance = defaultSoffset - sileft ;
 
 								if ( sjid <= 7 ) {
@@ -1314,7 +1314,7 @@
 									500, 
 									function(){
 										sjleft = $("#" + stage2step9sjid).first().offset().left;
-										$("#swapslot2").offset({left: sjleft + 3 });
+										$("#swapslot2").offset({left: sjleft + 5 });
 										swapslot2.innerHTML = stage2step9sjvalue;
 										stage2step9sj.style.opacity = "0";
 										swapslot2.style.opacity = "1";
@@ -1351,7 +1351,7 @@
 									function(){
 										sileft = $("#" + stage2step9siid).first().offset().left;
 										swapslot2left = $("#swapslot2").offset().left;
-										var temp2 = sileft - swapslot2left + 3 + 39 ; 
+										var temp2 = sileft - swapslot2left + 5 + 39 ; 
 										var swapslot2anim2 = swapslot2.animate(
 											[ {
 												transform: "translateY(50px) translateX(40px)"
@@ -2060,7 +2060,7 @@
 					var	sjvalue = parseInt(elementsj.textContent);  
 					var sileft = $("#stage3S0").first().offset().left;            
 					var sjleft = $("#stage3S1").first().offset().left; 
-					var stage3S7offset = $("#stage3S7").first().offset().left;
+					var stage3S6offset = $("#stage3S6").first().offset().left;
 					var S248offset = $("#stage3S248").first().offset().left;
 					var tempdistance = 0; 
 					var stage3step8started = false;
@@ -2121,7 +2121,7 @@
 						};
 
 					function stage3hscrollto(sindex, duration, callbacktype, callbackname){  // animclassname or false
-						var defaultSoffset = $("#stage3S7").offset().left;
+						var defaultSoffset = $("#stage3S6").offset().left;
 						var elementoffset = $("#section3 #stage3S" + sindex).offset().left ;
 						var element = section3.querySelector("#stage3S" + sindex ).firstChild ;
 						if( callbacktype == 0 ){
@@ -2334,30 +2334,39 @@
 						elementsj = section3.querySelector("#" + sjid).firstChild;	      
 						sivalue = parseInt(elementsi.textContent);                
 						sileft = $("#" + siid).first().offset().left;            
-						sjleft = $("#" + sjid).first().offset().left;  
+						sjleft = $("#" + sjid).first().offset().left; 
+						tempdistance = 0; 
+						$("#section3 #swapslot1").offset({ left:sileft + 5 });
 						var swapslot1left = $("#section3 #swapslot1").offset().left;
 						
 						if ( ivalue2 <= 7 ) {
 							$("#section3 #swapslot1").offset({ left:sileft + 5 });
-							tempdistance = stage3S7offset - sileft ;
+							tempdistance = stage3S6offset - sileft ;
 							if ( jvalue3 <= 7 ) {
 								tempdistance = sjleft - sileft ;
 							}
 							else if ( jvalue3 >= 249) {
-								tempdistance = S248offset - sjleft + 39;
+								tempdistance = (stage3S6offset - sileft ) + (jvalue3 - 249) * 40 + 15 ; 
 								}
 						}
 
 						else if ( ivalue2 >= 249 ) {
 							$("#section3 #swapslot1").offset({ left:sileft + 3 });
-							tempdistance = stage3S7offset - sileft ;
+							tempdistance = stage3S6offset - sileft ;
 							if ( jvalue3 <= 7 ) {
 								tempdistance = sjleft - sileft ;
 							}
 							else if ( jvalue3 >= 249) {
-								tempdistance = S248offset - sjleft + 39;
+								tempdistance = (stage3S6offset - sileft ) + (jvalue3 - 249) * 40 + 15 ; 
 								}
 							}
+
+						else if (jvalue3 <= 7 ) {
+							tempdistance = sjleft - sileft ;
+						}
+						else if ( jvalue3 >= 249) {
+								tempdistance =  (jvalue3 - 249) * 40 + 15 ; 
+								}
 
 						//alert("ivalue2 is called, stage3S7offset = " + stage3S7offset + "; sileft = " + sileft + "; sjleft = " + sjleft );						
 
@@ -2438,7 +2447,7 @@
 									elementsj.style.opacity = "1";
 									swapslot1.style.opacity = "0";
 									$("#section3 .hscrollS").first().animate(
-									{ scrollLeft:( sileft - stage3S7offset) 
+									{ scrollLeft:( sileft - stage3S6offset) 
 									}, 
 									500);} )
 
