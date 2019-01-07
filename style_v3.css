@@ -8,7 +8,9 @@
 
 h1 {
 	margin-top:50px; 
-	margin-bottom: 50px; 
+	margin-bottom: 30px; 
+	padding: 30px;
+	font-size: 25px;
 }
 
 h2 {
@@ -16,19 +18,32 @@ h2 {
 	text-align: left;
 	margin-left: 10%;
 	margin-top: 60px;
+	font-size: 18px;
 }
 
 h3 {
 	text-align: left;
-	margin-left: 15%;
+	margin-left: 10%;
 	margin-top: 30px;
+	font-size: 15px;
 }
 
 p {
 	text-align: left;
 	margin: 2% 10% 2%;	
 	line-height: 35px;
-	font-size: 18px;
+	font-size: 14px;
+}
+
+
+.styledlikep {
+	display: inline-block;
+	float: left;
+	text-align: left;
+	margin-left: 10%;	
+	margin-right: 2%;
+	line-height: 35px;
+	font-size: 14px;
 }
 
 .flowbox {                /* box used to show RC4 flow */
@@ -37,18 +52,23 @@ p {
 	right:-10%;
 	display: inline-block;
 	width: 15%;
-	height: 120px;
+	min-height: 130px;
 	margin:10px;
-	border-style: groove;
+	padding: 5px;
+	border-style: outset;
 	border-width: 5px;
-	border-color: lightblue;
-	background-color: lavender;
+	border-color: #3B5998; 
+	background-color: skyblue;
 	text-decoration: none;   /* to remove underline of links*/
+	font-size: 14px;
+	color: #3B5998;
 }
 
 .flowbox:hover {
+	background-color: #e6f2ff;
+	color: black;
 	border-width: 8px;
-	font-size: 20px;
+	cursor: pointer;
 }
 
 .arrowbox {               /* boxed used to contain arrow*/
@@ -59,11 +79,12 @@ p {
 	width: 10%;
 	height: 120px;
 	margin:10px;
-	padding-top:40px;     /* centralize the arrow */
+	/*padding-top:40px;     /* centralize the arrow */
+	padding: 10px;
 }
 
 img {
-	height: 50%;
+	height: 80%;
 	width: 80%;
 	display: inline-block;
 	vertical-align: middle;
@@ -76,23 +97,33 @@ img {
 	opacity: 0;
 }
 
-
-ul {
-	display: table;
+.gridcontainer0 {
+	margin: 2% 5% 2%;
+	display: grid;
+	grid-template-columns: 60% 40%;
+	grid-template-areas:
+	'column1 column2';	
 }
 
-li {
-	display: table-cell;
+.gridcol1 {
+	grid-area: column1; 
+	max-width: 600px;
+	min-width: 500px;
+}
+.gridcol2 {
+	grid-area: column2;
+	padding: 25px; 
 }
 
 .velement {
 	border-style: solid;
-	border-width: 5px;
-	border-color: forestgreen;
-	background-color: yellowgreen;
-	width: 40px;
-	height: 40px;
-	line-height: 30px;
+	border-width: 3px;
+	border-color: #3B5998;
+	background-color: skyblue;
+	width: 32px;
+	height: 32px;
+	font-size: 12px;
+	line-height: 24px;
 	display: inline-block;
 	position: relative;
 	float: left;
@@ -100,11 +131,12 @@ li {
 }
 
 .vbox {
-	width: 50px;
-	height: 80px;
+	font-size: 14px;
+	width: 40px;
+	height: 70px;
 	position: relative;
 	float: left;
-	right:-10%;
+	left: 10%;
 	display: inline-block;
 }
 
@@ -112,10 +144,19 @@ li {
 	display: inline-block;
 	overflow-x: scroll;
 	overflow-y: hidden;
-	width: 40%;
+	max-width: 300px;
+	min-width: 210px;
 	position: relative;
 	float: left;
 	right:-10%;
+}
+
+ul {
+	display: table;
+}
+
+li {
+	display: table-cell;
 }
 
 input {
@@ -129,19 +170,27 @@ input {
 }
 
 button {
-	margin-left: 1%;
+	font-size: 11px;
 	height: 30px;
-	width: 160px;
+	max-width: 160px;
+	width: 120px;
+	margin-left: 1%;
 	margin-top: 30px;
 	display: inline-block;
 	position: relative;
 	float: center;
+	background-color: white; 
+    color: black; 
+    border-radius: 4px;
+    border: 2px solid #008CBA;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
 }
 
-button#initiate {
-	width: 340px;
-	margin: 1% 10% 1%;
-	display: block;	
+button:hover {
+	cursor: pointer;
+    background-color: #008CBA;
+    color: white;
 }
 
 button.confirm {
@@ -149,25 +198,54 @@ button.confirm {
 	float: left;
 }
 
-#backbutton, #togglebutton, #forthbutton {
-	max-width: 100px;
-	width: 90px;
-	height: 40px;
-	margin: 5% 2% 5%;
-
+button.question {
+	display: block;
+	float: left;
+	margin-left: 10%;
+	width: 30px;
+	height: 30px;
+	font-size: 20px;
+	font-weight: bold;
+	background-color: #008CBA;
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
 }
 
-div.bpf {
+.descriptionbox {
+	margin-top: 62px;
 	display: block;
-	margin: 5% 8% 8%;
-	border: 1px solid black;
+	max-width: 100%;
+	padding: 8px;
+	opacity: 0;
+	color: #555555;
+	border: none;
+	border-radius: 4px;
+	background-color: #e7e7e7;
+	font-size: 12px;
+}
+
+#backbutton, #togglebutton, #stepforthbutton, #forthbutton {
+	max-width: 100px;
+	width: 90px;
+	max-height: 40px;
+	min-height: 30px;
+	margin: 3px 2px 3px;
+	vertical-align: top;
+}
+
+div.bpfc {
+	display: block;
+	border: none;
+	margin: 3% 8% 8%;
+	padding: 10px 25px 10px;
 }
 
 .counterbox {
-	width: 84%;
+	font-size: 14px;
+	width: 70%;
 	height: 40%;
-	border: 1px solid black;
-	margin: 8% 8% 1%;
+	border: 1px dotted #008CBA;
+	margin: 8% 15% 1%;
 }
 
 tr {
@@ -175,16 +253,9 @@ tr {
 }
 
 th {
-	width: 40%;
+	width: 35%;
 	font-size: 30px;
 }
-
-.gridelement1, .gridelement2, .gridelement3, .gridelement4 { border: 1px solid black; }
-
-.gridelement1 {grid-area: column1; }
-.gridelement2 {grid-area: column2; }
-.gridelement3 {grid-area: column3; }
-.gridelement4 {grid-area: rowforvector; }
 
 .gridcontainer1 {
 	margin: 1% auto 1% 10%;
@@ -193,20 +264,46 @@ th {
 	grid-template-columns: 30% 30% 30%;
 	grid-template-areas:
 	'column1 column2 column3'
-	'rowforvector rowforvector rowforvector';	
+	'rowforvector rowforvector QandA';	
 }
 
-.gridcontainer2 {
-	display: grid;
-	grid-template-columns: 40% auto;
-	padding: 15px 50px 20px 50px ;
-	background-color: rebeccapurple;
+.gridelement1, .gridelement2, .gridelement3, .gridelement4, .gridelement5 { border: 1px solid black; }
+
+.gridelement1 {grid-area: column1; }
+.gridelement2 {grid-area: column2; }
+.gridelement3 {grid-area: column3; }
+.gridelement4 {
+	grid-area: rowforvector; 
+	border-right-style: none;
+}
+.gridelement5 {
+	grid-area: QandA; 
+	border-left-style: none;
+	padding-left: 30px;
 }
 
-.gridcontainer2 > div {
-	background-color: lightblue;
-	padding: 5px;
-	margin: 15px;
+#swapslot1 {
+	left: -28%;
+	opacity: 0;
+	background-color: #e6f2ff;
+	border-color: #3B5998;
+}
+
+#swapslot2 {
+	left: -25%;
+	opacity: 0;
+	background-color: #e6f2ff;
+	border-color: #3B5998;
+}
+
+.zindex1 {
+	z-index: 1;
+	position: relative;
+}
+
+.zindex2 {
+	z-index: 2;
+	position: absolute;
 }
 
 .super{
@@ -230,44 +327,234 @@ th {
 	width:100%;
 }  
 
-.bottomspace {
-	display: block;
-	margin-bottom: 150px;
-}
-
 .stage2counter {
 	margin-bottom: 0px;
 	color: black;
 	font-size: 200%;
-	transition: all .2s ease-out;
-	transition-delay: 0.5s;
 }
 
-.stage2counterrunning {
-	color: red;
-	transform: translate(0px, -3px);
-	font-size: 220%;
-	transition: color .2s ease-out, transform .2s ease-out, font-size .2s ease-out;	
+.stage2counteranim {
+	animation: bounce 0.5s 2, blacktored 1s 1;
+	animation-play-state: paused;
+}
+
+@keyframes bounce {
+	0% {
+		transform: translate(0px, 0px);
+		font-size: 200%;
+		animation-timing-function: ease-in;
+
+	}
+	50% { 
+		transform: translate(0px, -3px);
+		font-size: 220%;
+		animation-timing-function: ease-out;
+
+	}
+	100% {
+		transform: translate(0px, 0px);
+		font-size: 200%;
+		animation-delay: 0.4s;
+		animation-timing-function: ease-in;
+	}
+}
+
+@keyframes blacktored {
+	0%{ color: black;	}
+	5%{ color: #BD081C; }
+	95%{ color: #BD081C; }
+	100%{ color: black; }
 }
 
 .stage2var {
 	color: black;
 	font-weight: normal;
-	transition: all .1s linear;
-	transition-delay: 3s;
 }
 
-.stage2highlight {
-	color: blue;
-	font-weight: bold;
-	transition: color .1s linear, font-weight .1s linear;
+.stage2step1 {
+	color: black;
+	font-weight: normal;
+}
+
+.stage2highlight6s {
+	animation: highlight 6s 1;
+	animation-play-state: paused;
 }
 
 
+.stage2highlight4s {
+	animation: highlight 4s 1;
+	animation-play-state: paused;
+}
 
 
+.stage2highlight3s {
+	animation: highlight 3s 1;
+	animation-play-state: paused;
+}
+
+.stage2highlight2s {
+	animation: highlight 2s 1;
+	animation-play-state: paused;
+}
+
+.stage2highlight1s {
+		animation: highlight 1s 1;
+		animation-play-state: paused;
+}
+
+@keyframes highlight {
+	0% {
+		color: black;
+		font-weight: normal;  
+		animation-timing-function: linear;
+		}
+	5% {
+		color: #0073e6;
+		font-weight: bold;
+		animation-timing-function: linear;
+	}
+	95% {
+		color: #0073e6;
+		font-weight: bold;
+		animation-timing-function: linear;
+	}
+	100% {
+		color: black;
+		font-weight: normal; 
+		animation-timing-function: linear;
+	}
+
+}
 
 
+.vectorredfast {
+		animation: vectorred 1.5s 1;
+		animation-play-state: paused;
+}
+
+.vectorred {
+		animation: vectorred 2s 1;
+		animation-play-state: paused;
+}
+
+@keyframes vectorred {
+	0% {
+		border-color: #3B5998;
+		background-color: skyblue;
+	}
+	5% {
+		background-color: white;
+		border-color: #990099;
+	}
+	95% {
+		background-color: white;
+		border-color: #990099;
+	}
+	100% {
+		border-color: #3B5998;
+		background-color: skyblue;
+	}
+}
+
+.placeholder2s {
+	animation: voidanim 2s 1;
+	animation-play-state: paused;
+}
+
+.placeholder1s {
+	animation: voidanim 1.5s 1;
+	animation-play-state: paused;
+}
+
+
+@keyframes voidanim {
+	0% {
+		background-color: white;
+	}
+	50% {
+		background-color: white;
+	}
+	100% {
+		background-color: white;
+	}
+}
+
+
+stage3vectorspace {
+	width: 10%;
+	display: block;
+	margin: 5% 8% 8%;
+	border: 1px solid black;
+	text-align: right;
+}
+
+.gridcontainer2 {
+	display: grid;
+	margin: 1% auto 1% 10%;
+	grid-row-gap: 10px;
+	grid-template-columns: 18% 12% 30% 30% ;
+	grid-template-rows: 190px auto;
+	grid-template-areas:
+	'forbuttons forvectorS forvectorS forvectorS'
+	'QA QA QA QA'
+	'col1 col1 col2 col3'
+	'randomkeyarray randomkeyarray randomkeyarray randomkeyarray';
+}
+
+.griditem1, .griditem2, .griditem3, .griditem4, .griditem5 { border: 1px solid black; }
+
+.griditem7 {grid-area: QA; }
+.griditem1 {grid-area: forbuttons; }
+.griditem2 {grid-area: forvectorS; }
+.griditem3 {grid-area: col1; }
+.griditem4 {grid-area: col2; }
+.griditem5 {grid-area: col3; }
+.griditem6 {grid-area: randomkeyarray; }
+
+
+div.bpf {
+	display: block;
+	border: 1px solid black;
+	padding:10% 20% 10%;
+}	
+
+#stage3back, #stage3toggle, #stage3forth{
+	display: block;
+	max-width: 140px;
+	width: 110px;
+	max-height: 40px;
+	min-height: 30px;
+	margin: 15px 10px 10px;
+	vertical-align: center;
+}
+
+.griditem6 > h3 {
+	color: #3B5998;
+	margin-left: 2%;
+}
+
+.griditem7 {
+	border: none;
+	border-radius: 4px;
+	background-color: #e7e7e7;
+	color: #555555;
+	padding: 10px;
+	display: none;
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+.griditem7 > p {
+	font-size: 12px;
+}
+
+.stage3questionmark{
+	float: right;
+	margin-top: 0%;
+	padding: 0px 30px 20px;
+	left: 20%;
+	vertical-align: top;
+}
 
 
 
