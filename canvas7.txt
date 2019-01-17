@@ -1,3 +1,0 @@
-<div class="vbox" id="stage3S253"><div class="velement">253</div><div>S<span class="sub">253</span></div></div>
-<div class="vbox" id="stage3S254"><div class="velement">254</div><div>S<span class="sub">254</span></div></div>
-<div class="vbox" id="stage3S255"><div class="velement">255</div><div>S<span class="sub">255</span></div></div>
