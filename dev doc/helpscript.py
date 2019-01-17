@@ -48,3 +48,23 @@ def f4 ():
         
 
 f4()
+
+
+#'<div class="frameK"><input id="keyvalue">
+#<button type="button" id='confirm' class='confirm'>&#8594;</button>
+#<div>K<span class="sub">1</span></div></div>'
+exampleK = '<div class="frameK"><input id="keyvalue" name="keyvalue"><button type="button" id='confirm' class='confirm'>&#8594;</button><div>K<span class="sub">1</span></div></div>'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
