@@ -1,4 +1,4 @@
-<h1>Web-based Demonstration of Pseudo-Random Number Generator RC4<h1/>
+<h1>Web-based Demonstration of Pseudo-Random Number Generator RC4</h1>
 
 Rivest Cipher 4 is a stream cipher designed in 1987 for RSA Security. Its algorithm uses a key of adjustable length (range of length is from 1 to 256 bytes), and produces pseudo-random bytes through a random permutation. The period of this cipher has been estimated to be above 10100. For a widely-implemented cipher like RC4, an interactive demonstration that explains its algorithm is however not found available on the Internet. This causes a need for an implementation of RC4 web demonstration.
 
