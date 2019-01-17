@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+		<link rel='stylesheet' type='text/css' href='style_s3.css' />
+		<title>RC4-Stage2</title>
+	</head>
+
+	<body>
+		<h1>Stream Generation</h1>
+
+		<div class="grid-container">
+			<div class="grid-item1">
+
+				<h2>Initial condition: </h2>
+				<p>i, j = 0</p>
+
+				<h2>Generation of <a class="srncount">1st</a> pseudorandom bit:</h2>
+				<h3> Step 1:</h3>
+				<p>i = (<a class="ivalue">i</a> + 1) mod 256 <br>
+					i = <a class="ivaluenext">i</a> <br><br>
+					j = (j + S[i]) mod 256 <br>
+					j = (<a class="jvalue">0</a> + <a class="sivalue">1</a>) mod 256 <br>
+					j = <a class="jvaluenext">j</a>
+				</p>
+
+				<h3> Step 2:</h3>
+				<p>
+					S[i] = <a class="sivalue"></a>, S[j]= <a class="sjvalue"></a> <br><br>
+					Swap S[i], S[j] <br><br>
+					S[i] = <a class="sivaluenext"></a>, S[j]= <a class="sjvaluenext"></a> <br>
+				</p>
+
+				<h3> Step 3:</h3>
+
+				<p>
+					n = (S[i] + S[j]) mod 256 <br>
+					n = <a class="sivaluenext">x</a> + <a class="sjvaluenext">y</a> <br>
+					n = <a class="nvalue"></a> <br>
+					byte-key = S[n] = S[<a class="nvalue">n</a>] <br>
+					byte-key = <a class="bkvalue">0</a>		
+				</p>
+
+				<div class="bottomspace"></div>
+			</div>
+
+		<div class="grid-item2"> 
+			<h2>Vector S:</h2>
+		</div>
+
+		</div>
+
+		<div class="bpf">
+			<button type="button" id="backward">BACKWARD</button>
+			<button type="button" id="pause">PAUSE</button>
+			<button type="button" id="forward">FORWARD</button>
+		</div>
+
+
+
+
+
+		
+
+	
+
+
+
+
+
+
+	</body>	
+
+
+</html>
+
+

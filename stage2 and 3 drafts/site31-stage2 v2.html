@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+		<link rel='stylesheet' type='text/css' href='style_v4.css' />
+		<title>RC4-Stage2</title>
+
+		<script type="text/javascript">
+
+			function getValue(varname) {
+			  var url = window.location.href;
+			  var qparts = url.split("?");
+			  if (qparts.length == 0)
+			  	{ return ""; } 
+			  var query = qparts[1];
+			  var vars = query.split("&");
+			  var value = "";
+			  for (i=0;i<vars.length;i++)
+			  {
+			    var parts = vars[i].split("=");
+			    if (parts[0] == varname)
+			    {
+			      value = parts[1];
+			      break;
+			    }
+			  }
+			  
+			  value = unescape(value);
+			  value.replace(/\+/g," ");
+			  return value;
+			}
+
+		</script>
+
+
+
+	</head>
+
+	<body>
+		<h1>Initial Permutation of S</h1>
+
+		<h2>Throughout this stage, temporary vector T remains unchanged: </h2>		
+
+		<script type="text/javascript">
+		var keyvalue = getValue("keyvalue");		
+		var s1 = '<div class="vbox"><div class="velement">' ;
+		var s2 = '</div><div>T<span class="sub">' ;
+		var s3 = '</span></div></div>' ;
+		var li = '<li>' ;
+		var liend = '</li>' ;
+		var divclear = '<div class="clear"> </div>' ;
+		var keylen = keyvalue.length ;
+		if ( keylen == 0 ){ keyvalue = "2"; }
+		// keyvalue = keyvalue.toString() ;				
+		var keyindex = 0 ;
+		var tvector ='' ;
+		for (i=0 ; i<256 ; i++) {
+			keyindex = i % keylen ;
+			var keyelement = keyvalue[keyindex] ;
+			var selement = s1 + keyelement + s2 + i.toString() + s3 ;
+			if ( i == 3 ) { tvector = tvector + '<div class="hscroll"><ul>' ; }
+			if ( i == 253 ) { tvector = tvector + '</ul></div>' ; }
+			if ( (i > 2) & (i < 253 ) ) {	selement = li + selement + liend ; }
+			tvector = tvector + selement ;
+			 }
+		document.write(tvector + divclear);
+		</script>
+
+		<h2>When i = <a class="ivalue" >0</a> :</h2>
+		<p>j = <a class="jvalue">0</a></p>
+		<p></br>S:
+			<div></div>   <!---JS needed to show changing vector--->
+		</p>
+
+
+		<h2>Permute S:</h2>
+		<p>j = (j + S[i] + T[i]) mod 256 <br>
+			j = (<a class="jvalue">j</a> + S[<a class="ivalue">i</a>] + T[<a class="ivalue">i</a>]) mod 256 <br>
+			j = <a class="jvaluenext">j</a> 
+		</p>
+		<p><br>S:
+			<div></div>   <!---JS needed to show changing vector--->
+		</p>
+
+		<h2>After permutation of S:</h2>
+		<p>j = <a class="jvaluenext">j</a></p>
+		<p><br>S:
+			<div></div>   <!---JS needed to show changing vector--->
+		</p>
+
+		<div class="bpf">
+			<button type="button" id="backward">BACKWARD</button>
+			<button type="button" id="pause">PAUSE</button>
+			<button type="button" id="forward">FORWARD</button>
+		</div>
+
+
+
+
+
+		
+
+	
+
+
+
+
+
+
+	</body>	
+
+
+</html>
+
+
