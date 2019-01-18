@@ -5,7 +5,7 @@ Rivest Cipher 4 is a stream cipher designed in 1987 for RSA Security. Its algori
 <br><br>
 This repository contains:
 
-1. RC4v1.html --> web demo 
+1. RC4v2.html --> web demo 
 
 2. RC4v1 - SwapDemo.html --> explains how swap animation is implemented
 
