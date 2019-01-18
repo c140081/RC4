@@ -632,15 +632,12 @@
 						<div>K<span class="sub">0</span></div>
 					</div>
 
-					<div id="testoutput"></div>
-
 
 					<script type="text/javascript">
 						var keyarray = [8];
 						var keylength = 0;
 						var lastkeyele =  document.getElementsByClassName("frameK")[0];
 
-						var testhtmlel = document.getElementById("testoutput");
 
 						function checkkeyarray(ith){
 							var arrayframeK = document.getElementsByClassName("frameK");
@@ -665,8 +662,6 @@
 									lastkeyele.insertAdjacentHTML("afterend", createframeK(keylength));
 									lastkeyele = document.getElementsByClassName("frameK")[keylength];
 								}
-
-							testhtmlel.innerHTML = keyarray;
 
 							fillt("tvalue", false);
 							fillt("tvalue2", true); 
